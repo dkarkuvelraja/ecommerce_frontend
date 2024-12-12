@@ -46,6 +46,11 @@ function SignUp() {
       try {
         const submitData = await submitForm({ variables: { data: formData } });
         console.log("submitData", submitData)
+        setFormData({
+          email: "",
+          password: "",
+          phone_number: "",
+        })
       } catch (e) {
         console.error(e)
       }

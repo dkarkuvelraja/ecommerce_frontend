@@ -6,3 +6,12 @@ export const USER_RGN = gql
       result
     }
   }`
+
+  export const USER_LOGIN = gql`
+  mutation Login($data: loginIn) {
+  login(data: $data) {
+    status
+    result
+    response
+  }
+}`

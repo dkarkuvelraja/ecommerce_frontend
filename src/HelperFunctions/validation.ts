@@ -30,7 +30,9 @@ export const validation = (page: string, data: any) => {
           : "";
   
         break;
-  
+  case "login":
+    errors.email = !data.email ? "Email is required" : ""
+    errors.password = !data.password ? "Password is required" : ""
       default:
         console.warn("Validation not implemented for this page:", page);
         break;
