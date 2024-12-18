@@ -3,33 +3,31 @@ import { USER_RGN } from '../apollo/mutation.ts';
 import { useMutation } from '@apollo/client';
 import { validation } from '../HelperFunctions/validation.ts';
 import { isValid } from '../HelperFunctions/basicHelpers.ts';
+import TextField from './Fields/textField.tsx';
+import { Box, Button, Container, Grid2 } from '@mui/material';
 
 interface IFormData {
-  firstName : string
-  lastName : string
+  firstName: string
+  lastName: string
   email: string;
-  gender: string
-  age: number
+  // gender: string
+  // age: number
   password: string;
   phone_number: string;
 }
 
-function SignUp() {
+function SignUp(props: any) {
   const [formData, setFormData] = useState<IFormData>({
-    firstName : "",
-    lastName : "",
+    firstName: "",
+    lastName: "",
     email: "",
-    gender: "",
-    age: 0,
     password: "",
     phone_number: "",
   });
   const [errors, setErrors] = useState<IFormData>({
-    firstName : "",
-    lastName : "",
+    firstName: "",
+    lastName: "",
     email: "",
-    gender: "",
-    age: 0,
     password: "",
     phone_number: "",
   });
@@ -47,7 +45,7 @@ function SignUp() {
     }))
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement >) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); // Prevent page reload
     console.log("Form submitted:", formData);
     const errors = validation("signUp", formData)
@@ -60,14 +58,14 @@ function SignUp() {
         const submitData = await submitForm({ variables: { data: formData } });
         console.log("submitData", submitData)
         setFormData({
-          firstName : "",
-    lastName : "",
-    email: "",
-    gender: "",
-    age: 0,
-    password: "",
-    phone_number: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          phone_number: "",
         })
+        props.handleClose()
+
       } catch (e) {
         console.error(e)
       }
@@ -77,83 +75,84 @@ function SignUp() {
 
   return (
     <form onSubmit={handleSubmit}>
-    <div>
-        <label>First Name:</label>
-        <input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          placeholder="firstName"
-          />
-        {errors.firstName && <p style={{ color: "red" }}>{errors.firstName}</p>}
-      </div>
-      <div>
-        <label>Last Name:</label>
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          placeholder="last Name"
-          />
-        {errors.lastName && <p style={{ color: "red" }}>{errors.lastName}</p>}
-      </div>
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Email"
-        />
-        {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
-      </div>
-      <div>
-        <label>Phone Number:</label>
-        <input
-          type="number"
-          name="phone_number"
-          value={formData.phone_number}
-          onChange={handleChange}
-          placeholder="Phone Number"
-        />
-        {errors.phone_number && <p style={{ color: "red" }}>{errors.phone_number}</p>}
-      </div>
-      <div>
-        <label>Gender:</label>
-        <select name='gender' value={formData.gender} onChange={handleChange}>
-        <option value={""} disabled>Gender</option>
-          <option value={"male"}>Male</option>
-          <option value={"female"}>Female</option>
-          <option value={"others"}>Others</option>
-        </select>
-        {errors.gender && <p style={{ color: "red" }}>{errors.gender}</p>}
-      </div>
-      <div>
-        <label>Age:</label>
-        <input
-          type="number"
-          name="age"
-          value={formData.age}
-          onChange={handleChange}
-          placeholder="Age"
-        />
-        {errors.age && <p style={{ color: "red" }}>{errors.age}</p>}
-      </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="Password"
-        />
-        {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
-      </div>
-      <button type="submit">Submit</button>
+      <Grid2 container>
+
+        <Grid2 size={{ xs: 12, sm: 6, md: 6 }}>
+          <div className="padLR5">
+            {/* <label>First Name:</label> */}
+            <TextField
+              label="Firstname"
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              changeFunction={handleChange}
+            />
+            {errors.firstName && <p className="errorText" style={{ color: "red" }}>{errors.firstName}</p>}
+          </div>
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 6, md: 6 }}>
+
+          <div className="padLR5">
+            {/* <label>Last Name:</label> */}
+            <TextField
+              label="Lastname"
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              changeFunction={handleChange}
+            />
+            {errors.lastName && <p className="errorText" style={{ color: "red" }}>{errors.lastName}</p>}
+          </div>
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 6, md: 6 }}>
+
+          <div className="padLR5">
+            {/* <label>Email:</label> */}
+            <TextField
+              label="Email"
+              type="email"
+              name="email"
+              value={formData.email}
+              changeFunction={handleChange}
+            />
+            {errors.email && <p className="errorText" style={{ color: "red" }}>{errors.email}</p>}
+          </div>
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 6, md: 6 }}>
+
+          <div className="padLR5">
+            {/* <label>Phone Number:</label> */}
+            <TextField
+              label="Number"
+              type="number"
+              name="phone_number"
+              value={formData.phone_number}
+              changeFunction={handleChange}
+            />
+            {errors.phone_number && <p className="errorText" style={{ color: "red" }}>{errors.phone_number}</p>}
+          </div>
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 12, md: 12 }}>
+
+          <div className="padLR5">
+            {/* <label>Password:</label> */}
+            <TextField
+              label="Password"
+              type="password"
+              name="password"
+              value={formData.password}
+              changeFunction={handleChange}
+            />
+            {errors.password && <p className="errorText" style={{ color: "red" }}>{errors.password}</p>}
+          </div>
+        </Grid2>
+        <Grid2 size={{ xs: 12, sm: 12, md: 12 }}>
+
+          <Box sx={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
+            <Button type="submit" variant="outlined" className="submitBtn">Submit</Button>
+          </Box>
+        </Grid2>
+      </Grid2>
     </form>
   );
 }
