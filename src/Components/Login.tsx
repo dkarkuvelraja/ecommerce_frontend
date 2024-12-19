@@ -42,7 +42,6 @@ export default function Login(props: any) {
         const loginSubmission = await login({ variables: { data: formData } })
         console.log("loginSubmission", loginSubmission.data.login)
         if (loginSubmission.data.login.status === 200) {
-          alert("hi")
           Cookies.set("accessToken", loginSubmission.data.login.response, 7)
           naviagate('/home')
         } else {
