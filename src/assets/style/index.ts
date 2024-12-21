@@ -20,7 +20,11 @@ export const GlobalStyle = createGlobalStyle`
 font-size : 12px;
 margin:0px !important;}
 .padLR5{
-padding : 0px 5px !Important;}
+padding : 0px 5px !important;}
+.sideBarContent{
+background-color : #ffa50033 !important;
+border-radius : 10px !important;
+margin-top : 10px !important;}
 `;
 export const TextFieldBox = styled(TextField)<TextFieldBoxProps>`
 ${(props : TextFieldBoxProps) => props.searchBox &&`
