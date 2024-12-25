@@ -1,7 +1,7 @@
 import React from 'react';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import { TextFieldBox } from '../../assets/style/index.ts';
+import { TextFieldBox } from '../../assets/style/index';
 interface Iprops {
   placeHolder?: string
   name: string

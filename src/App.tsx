@@ -1,15 +1,15 @@
 import './App.css';
-import Header from './Components/Header.tsx';
-import Home from './Components/Home.tsx';
-import About from './Components/About.tsx';
-import Login from './Components/Login.tsx';
-import SignUp from './Components/SignUp.tsx';
+import Header from './Components/Header/Header';
+import Home from './Home';
+import About from './Components/About';
+import Login from './Components/Login';
+import SignUp from './Components/SignUp';
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import client from './apollo/apolloClient.ts';
+import client from './apollo/apolloClient';
 import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { GlobalStyle } from './assets/style/index.ts';
+import { GlobalStyle } from './assets/style/index';
 // import GlobalStyle from '../'
 function App() {
   const theme = createTheme({
@@ -18,6 +18,7 @@ function App() {
         styleOverrides: {
           root: {
             backgroundColor: "#ffffff", // Force white background
+            color: '#000'
           },
         },
       },

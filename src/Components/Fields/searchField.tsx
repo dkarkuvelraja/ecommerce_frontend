@@ -2,11 +2,11 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import { TextFieldBox } from '../../assets/style/index.ts';
+import { TextFieldBox } from '../../assets/style/index';
 interface Iprops {
   placeHolder: string
   name: string
-  changeFunction: (e) => void
+  changeFunction: (e: any) => void
   value: string
   icon: boolean
 }

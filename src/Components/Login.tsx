@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
-import { validation } from '../HelperFunctions/validation.ts';
-import { isValid } from '../HelperFunctions/basicHelpers.ts';
+import { validation } from '../HelperFunctions/validation';
+import { isValid } from '../HelperFunctions/basicHelpers';
 import { useMutation } from '@apollo/client';
-import { USER_LOGIN } from '../apollo/mutation.ts';
+import { USER_LOGIN } from '../apollo/mutation';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Grid2, IconButton, Typography } from '@mui/material';
-import { LoginPop, LoginSignUp, StyledHR } from '../assets/style/index.ts';
-import { SparklezLogo } from '../assets/imageSvg/SparklezLogo.tsx';
-import { SparklezTitle } from '../assets/imageSvg/SparklezTitle.tsx';
+import { LoginPop, LoginSignUp, StyledHR } from '../assets/style/index';
+import { SparklezLogo } from '../assets/imageSvg/SparklezLogo';
+import { SparklezTitle } from '../assets/imageSvg/SparklezTitle';
 import LoginImg from '../assets/images/loginImg.png'
 import Box from '@mui/material/Box';
-import TextField from './Fields/textField.tsx'
+import TextField from './Fields/textField'
 import { styled } from '@mui/material/styles';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import SignUp from './SignUp.tsx';
+import SignUp from './SignUp';
 const CustomDialog = styled(Dialog)({
   '& .MuiDialog-paper': {
     width: '710px',
@@ -42,7 +42,7 @@ export default function Login(props: any) {
         const loginSubmission = await login({ variables: { data: formData } })
         console.log("loginSubmission", loginSubmission.data.login)
         if (loginSubmission.data.login.status === 200) {
-          Cookies.set("accessToken", loginSubmission.data.login.response, 7)
+          Cookies.set("accessToken", loginSubmission.data.login.response, { expires: 7 })
           naviagate('/home')
         } else {
           alert(loginSubmission.data.login.result)
