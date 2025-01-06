@@ -1,0 +1,14 @@
+@tailwind utilities;
+
+
+.slider-arrow-button {
+    @apply w-7 h-7 bg-white  rounded-full shadow-xl ring ring-1 ring-slate-200 absolute top-44 flex items-center justify-center;
+}
+
+.slider-arrow{
+    @apply stroke-primary 
+}
+
+.rating-arrow-button{
+    @apply w-7 h-7 bg-white  rounded-full shadow-xl ring ring-1 ring-slate-200 absolute flex items-center justify-center;
+}
