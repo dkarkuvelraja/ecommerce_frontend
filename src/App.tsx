@@ -10,6 +10,8 @@ import client from './apollo/apolloClient.ts';
 import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { GlobalStyle } from './assets/style/index.ts';
+import ManageCategory from './Components/admin/manageCategory.tsx';
+import AddListing from './Components/admin/addListing.tsx';
 // import GlobalStyle from '../'
 function App() {
   const theme = createTheme({
@@ -62,6 +64,9 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
+          <Route path='/admin/manageCategory' element ={<ManageCategory/>}/>
+          <Route path='/admin/addListing' element ={<AddListing/>}/>
+
         </Routes>
       </Router>
     </ApolloProvider>

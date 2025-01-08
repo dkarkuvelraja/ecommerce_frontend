@@ -15,3 +15,12 @@ export const USER_RGN = gql
     response
   }
 }`
+
+export const CREATE_CATEGORY = gql`
+mutation CreateCategory($data: CreateCategoryInput!) {
+  createCategory(data: $data) {
+    response
+    result
+    status
+  }
+}`

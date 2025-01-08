@@ -31,6 +31,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SideBar from './sideBar.tsx';
 import LoginIcon from '@mui/icons-material/Login';
+import { useNavigate } from 'react-router-dom';
 const Header = () => {
   const [loginPopOpen, setLoginPopOpen] = useState(false)
   const [open, setOpen] = React.useState(false);
@@ -44,13 +45,27 @@ const Header = () => {
   const handleClose = () => {
     setLoginPopOpen(!loginPopOpen)
   }
+  const navigate = useNavigate();
+  const routerFunction = (url : string) => {
+    navigate(url)
+}
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
+              {window.location.pathname.split("/")[1] === "admin" ? 
               <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: "flex-start" }}>
+              <Button color="inherit" sx={{ ml: 1, justifyContent: "flex-start" }} className="minWidth45 sideBarContent" onClick = {() => routerFunction("/admin/manageCategory")}> Manage Category </Button>
+              <Button color="inherit" sx={{ ml: 1, justifyContent: "flex-start" }} className="minWidth45 sideBarContent" onClick = {() => routerFunction("/admin/addListing")}>Listing Management</Button>
+              {/* <Button color="inherit">Contact</Button> */}
+              <Button className="sideBarContent" sx={{ ml: 1, justifyContent: "flex-start" }} color="inherit" onClick={() => setLoginPopOpen(!loginPopOpen)}><LoginIcon /> {" "} <Typography variant="body1" component="div" sx={{ flexGrow: 1, fontWeight: "500", textAlign: 'left', fontSize: '0.875rem' }}>
+                Login
+              </Typography></Button>
+            </Box>
+            :
+            <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: "flex-start" }}>
                 <SearchField value="" placeHolder="Search" icon={true} changeFunction={searchFunction} name="search" />
                 <Button color="inherit" sx={{ ml: 1, justifyContent: "flex-start" }} className="minWidth45 sideBarContent"><FavoriteBorderOutlinedIcon /> Favourites </Button>
                 <Button color="inherit" sx={{ ml: 1, justifyContent: "flex-start" }} className="minWidth45 sideBarContent"><ShoppingCartOutlinedIcon /> Cart</Button>
@@ -59,6 +74,7 @@ const Header = () => {
                   Login
                 </Typography></Button>
               </Box>
+              }
             </ListItemIcon>
           </ListItemButton>
         </ListItem>
