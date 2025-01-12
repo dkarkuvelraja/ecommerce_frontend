@@ -43,6 +43,9 @@ coverage/
 .DS_Store
 Thumbs.db
 
+#package file
+package-lock.json
+
 # Temporary files
 *.swp
 *.bak

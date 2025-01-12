@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { USER_RGN } from '../apollo/mutation.ts';
+import { USER_RGN } from '../apollo/mutation';
 import { useMutation } from '@apollo/client';
-import { validation } from '../HelperFunctions/validation.ts';
-import { isValid } from '../HelperFunctions/basicHelpers.ts';
-import TextField from './Fields/textField.tsx';
+import { validation } from '../HelperFunctions/validation';
+import { isValid } from '../HelperFunctions/basicHelpers';
+import TextField from './Fields/textField';
 import { Box, Button, Container, Grid2 } from '@mui/material';
 
 interface IFormData {

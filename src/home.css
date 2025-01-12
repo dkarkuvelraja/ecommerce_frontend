@@ -1,0 +1,30 @@
+@tailwind utilities;
+
+.react-multi-carousel-dot button {
+ @apply bg-gray-200 border-none;
+}
+
+.react-multi-carousel-dot--active button{
+    @apply bg-primary;
+}
+
+
+.section {
+    @apply p-5 px-32 my-6;
+}
+
+.viewMore{
+    @apply flex justify-center items-center mt-5;
+}
+
+.step-action-div{
+    @apply flex items-center justify-center flex-col text-center space-y-2
+}
+
+.step-action-div img{
+    @apply h-14 w-14
+}
+
+.step-action-div p{
+    @apply text-sm w-64
+}
