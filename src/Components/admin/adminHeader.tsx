@@ -6,14 +6,14 @@ import IconButton from '@mui/material/IconButton';
 // import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { SparklezLogo } from '../../assets/imageSvg/SparklezLogo.tsx';
-import { SparklezTitle } from '../../assets/imageSvg/SparklezTitle.tsx';
+import { SparklezLogo } from '../../assets/imageSvg/SparklezLogo';
+import { SparklezTitle } from '../../assets/imageSvg/SparklezTitle';
 import { Container, List, ListItem, ListItemButton, ListItemIcon } from '@mui/material';
-import SearchField from '../Fields/searchField.tsx';
-import Login from '../Login.tsx'
+import SearchField from '../Fields/searchField';
+import Login from '../Login'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import SideBar from '../sideBar.tsx';
+import SideBar from '../sideBar';
 import LoginIcon from '@mui/icons-material/Login';
 export default function AdminHeader() {
   return (
