@@ -1,8 +1,8 @@
 import React from 'react'
-import { AdminSideBar } from '../../assets/style/index.ts'
+import { AdminSideBar } from '../../assets/style/index'
 import { useNavigate } from 'react-router-dom'
 
-export default function AdminSideBarComponent(props) {
+export default function AdminSideBarComponent(props : any) {
     const navigate = useNavigate();
 
     const routerFunction = (url : string) => {

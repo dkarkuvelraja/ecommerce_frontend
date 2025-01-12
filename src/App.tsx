@@ -10,8 +10,8 @@ import client from './apollo/apolloClient';
 import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { GlobalStyle } from './assets/style/index';
-import ManageCategory from './Components/admin/manageCategory.tsx';
-import AddListing from './Components/admin/addListing.tsx';
+import ManageCategory from './Components/admin/manageCategory';
+import AddListing from './Components/admin/addListing';
 // import GlobalStyle from '../'
 function App() {
   const theme = createTheme({

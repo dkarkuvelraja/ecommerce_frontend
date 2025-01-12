@@ -1,13 +1,13 @@
 import { Box, Container, Grid2, Typography } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { AdminSideBar, Button, CategoryDragTable, ImageInput, ImagePreview, ManageCategoryCss, SelectInput, StyledHR } from '../../assets/style/index.ts'
-import TextInputComponent from './fieldInputs/TextInput.tsx';
+import { AdminSideBar, Button, CategoryDragTable, ImageInput, ImagePreview, ManageCategoryCss, SelectInput, StyledHR } from '../../assets/style/index'
+import TextInputComponent from './fieldInputs/TextInput';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_CATEGORY } from '../../apollo/mutation.ts';
-import AdminSideBarComponent from './adminSideBar.tsx';
-import { GET_ALL_CATEGORIES } from '../../apollo/query.ts';
+import { CREATE_CATEGORY } from '../../apollo/mutation';
+import AdminSideBarComponent from './adminSideBar';
+import { GET_ALL_CATEGORIES } from '../../apollo/query';
 const initialData = {
     parents: {
       kids: { id: "kids", title: "Kids", children: ["kurthis", "tops", "tshirts", "jeans"] },
@@ -17,12 +17,12 @@ const initialData = {
   };
   
 export default function ManageCategory() {
-    const [data, setData] = useState(initialData);
+    const [data, setData] = useState<any>(initialData);
     const [createCategory] = useMutation(CREATE_CATEGORY);
     // const [getAllCategory] = useQuery(GET_ALL_CATEGORIES)
     const [preview, setPreview] = useState<any>("");
-    const [expanded, setExpanded] = useState({ kids: true, adults: false, elders: false });
-    const [formData,setFormData] = useState({
+    const [expanded, setExpanded] = useState<any>({ kids: true, adults: false, elders: false });
+    const [formData,setFormData] = useState<any>({
       category_name: "",
       image: {},
       is_parent: true,
@@ -32,11 +32,11 @@ export default function ManageCategory() {
       if (categoriesData) {
         console.log("Fetched categories:", categoriesData.getAllCategory.response);
         const categoriesResponse = categoriesData.getAllCategory.response
-        const parents = {};
+        const parents : any = {};
 
-        categoriesResponse.forEach((parent) => {
+        categoriesResponse.forEach((parent: { category_name: any; children: any; }) => {
           const { category_name, children } = parent;
-          const childNames = children.map((child) => child.category_name);
+          const childNames = children.map((child: { category_name: any; }) => child.category_name);
       
           parents[category_name.toLowerCase()] = {
             id: category_name.toLowerCase(),
@@ -60,7 +60,7 @@ export default function ManageCategory() {
       // Trigger the file input's click event
       fileInputRef.current.click();
     };
-    const onDragEnd = (result) => {
+    const onDragEnd = (result: { source: any; destination: any; }) => {
       const { source, destination } = result;
   
       if (!destination) return;
@@ -98,17 +98,17 @@ export default function ManageCategory() {
       });
     };
   
-    const toggleDropdown = (parentId) => {
+    const toggleDropdown = (parentId: string) => {
       setExpanded({ ...expanded, [parentId]: !expanded[parentId] });
     };
-    const changeFunction = (e) => {
+    const changeFunction = (e: { target: { files?: any; name?: any; value?: any; }; }) => {
       const { name } = e.target;
   
       if (name === "image") {
         const files = e.target.files; // Corrected from `e.target` to `e.target.files`
         if (files && files.length > 0) {
           const file = files[0]; // Get the first file
-          let FileObject = {};
+          let FileObject : any = {};
       
           const reader = new FileReader(); // Initialize FileReader
           reader.onloadend = () => {
@@ -119,7 +119,7 @@ export default function ManageCategory() {
             setPreview(reader.result);
       
             // Update form data with the file object
-            setFormData((prev) => ({
+            setFormData((prev: any) => ({
               ...prev,
               [name]: FileObject, // Dynamically update the field with name "image"
             }));
@@ -138,7 +138,7 @@ export default function ManageCategory() {
         // Update formData with the file object
       } else {
         const { value } = e.target;
-        setFormData((prev) => ({
+        setFormData((prev : any) => ({
           ...prev,
           [name]: value,
         }));
@@ -179,7 +179,7 @@ export default function ManageCategory() {
                 <CategoryDragTable>
 
             <DragDropContext onDragEnd={onDragEnd}>
-        {Object.values(data.parents).map((parent) => (
+        {Object.values(data.parents).map((parent : any) => (
           <div
             key={parent.id}
             style={{
@@ -192,31 +192,33 @@ export default function ManageCategory() {
               <span className = "arrow">{expanded[parent.id] ? "▲" : "▼"}</span>
             </div>
             {expanded[parent.id] && (
-              <Droppable droppableId={parent.id}>
-                {(provided) => (
-                  <div className = "child"
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                  >
-                    {parent.children.map((childId, index) => (
-                      <Draggable key={childId} draggableId={childId} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={{...provided.draggableProps.style,
-                            }}
-                          >
-                            {childId}
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
+             <Droppable droppableId={parent.id}>
+             {(provided) => (
+               <div
+                 className="child"
+                 ref={provided.innerRef}
+                 {...provided.droppableProps}
+               >
+                 {parent.children.map((childId : any, index : any) => (
+                   <Draggable key={childId} draggableId={childId} index={index}>
+                     {(provided) => (
+                       <div
+                         ref={provided.innerRef}
+                         {...provided.draggableProps}
+                         {...provided.dragHandleProps}
+                         style={{
+                           ...provided.draggableProps.style,
+                         }}
+                       >
+                         {childId}
+                       </div>
+                     )}
+                   </Draggable>
+                 ))}
+                 {provided.placeholder}
+               </div>
+             )}
+           </Droppable>
             )}
           </div>
         ))}

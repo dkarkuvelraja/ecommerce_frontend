@@ -1,8 +1,8 @@
 import { Container, Grid2, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import { AddListingCss, StyledHR } from '../../assets/style/index.ts'
-import AdminSideBarComponent from './adminSideBar.tsx'
-import TextInputComponent from './fieldInputs/TextInput.tsx'
+import { AddListingCss, StyledHR } from '../../assets/style/index'
+import AdminSideBarComponent from './adminSideBar'
+import TextInputComponent from './fieldInputs/TextInput'
 
 export default function AddListing() {
     const [inputs, setInputs] = useState<any>([
@@ -14,10 +14,10 @@ export default function AddListing() {
         { type: "text", placeholder: "Price", value: "", name: "price" }
       ]);   
     const [formData,setFormData] = useState<any>({})
-            const changeFunction = (name, value) => {
+            const changeFunction = (name: any, value: string) => {
                 console.log("name",name,value)
-            setInputs(prevInputs =>
-              prevInputs.map(input =>
+            setInputs((prevInputs: any[]) =>
+              prevInputs.map((input: any) =>
                 input.name === name ? { ...input, value } : input
               )
             );
@@ -41,7 +41,7 @@ export default function AddListing() {
             <Grid2 size = {{xs: 12,md: 12}}>
                 <AddListingCss>
                 <form>
-      {inputs.map((input, index) => (
+      {inputs.map((input: any, index: React.Key | null | undefined) => (
         <>
           {input.type === "text" || input.type === "number" || input.type === "price" ? (
             <Grid2 container spacing={2} key={index}>
@@ -53,7 +53,7 @@ export default function AddListing() {
               {/* Input Field */}
               <Grid2 size = {{xs: 12,md: 9}}>
                 <TextInputComponent
-                  change={(e) => changeFunction(input.name, e.target.value)}
+                  change={(e: { target: { value: any } }) => changeFunction(input.name, e.target.value)}
                   name={input.name}
                   value={inputs[input.name] || ''}
                   placeholder={input.placeholder}
@@ -75,7 +75,7 @@ export default function AddListing() {
                   name={input.name}
                 >
                   <option value="" disabled>Select {input.placeholder}</option>
-                  {input.options.map((option, idx) => (
+                  {input.options.map((option: any,idx : any) => (
                     <option key={idx} value={option}>
                       {option}
                     </option>
@@ -92,7 +92,7 @@ export default function AddListing() {
 
               {/* Radio Buttons */}
               <Grid2 size = {{xs: 12,md: 9}}>
-                {input.options.map((option, idx) => (
+                {input.options.map((option: any, idx: React.Key | null | undefined) => (
                   <label key={idx}>
                     <input
                       type="radio"
