@@ -105,30 +105,44 @@ export default function ManageCategory() {
       const { name } = e.target;
   
       if (name === "image") {
-        const files = e.target.files; // Corrected from `e.target` to `e.target.files`
-        if (files && files.length > 0) {
-          const file = files[0]; // Get the first file
-          let FileObject : any = {};
-      
+        const { files } = e.target; // Corrected from `e.target` to `e.target.files`
+        const files1 : any = Array.from(files)
+        console.log("filesssssssss",files1)
+        console.log("files1",files1.length)
+        if(files1.length > 0){
           const reader = new FileReader(); // Initialize FileReader
           reader.onloadend = () => {
-            // FileObject["image_name"] =  file.name; // Store file name
-            FileObject["image"] = file; // Store the file object
-            console.log("filessss",files)
-            // Set preview for the image (Base64 data)
             setPreview(reader.result);
-      
-            // Update form data with the file object
             setFormData((prev: any) => ({
               ...prev,
-              [name]: FileObject, // Dynamically update the field with name "image"
+              [name]: files1[0], // Dynamically update the field with name "image"
             }));
-      
-            console.log("FileObject:", FileObject);
-          };
-      
-          reader.readAsDataURL(file); // Read file and trigger `onloadend`
+          }
+          reader.readAsDataURL(files1[0]); // Read file and trigger `onloadend`
         }
+        // if (files && files.length > 0) {
+        //   const file = files[0]; // Get the first file
+        //   let FileObject = {};
+      
+        //   const reader = new FileReader(); // Initialize FileReader
+        //   reader.onloadend = () => {
+        //     // FileObject["image_name"] =  file.name; // Store file name
+        //     FileObject["image"] = file; // Store the file object
+        //     console.log("filessss",files)
+        //     // Set preview for the image (Base64 data)
+        //     setPreview(reader.result);
+      
+        //     // Update form data with the file object
+        //     setFormData((prev) => ({
+        //       ...prev,
+        //       [name]: FileObject, // Dynamically update the field with name "image"
+        //     }));
+      
+        //     console.log("FileObject:", FileObject);
+        //   };
+      
+        //   reader.readAsDataURL(file); // Read file and trigger `onloadend`
+        // }
         // console.log("Selected File:", file);
         // const reader : any = new FileReader();
         // reader.onloadend = () => {

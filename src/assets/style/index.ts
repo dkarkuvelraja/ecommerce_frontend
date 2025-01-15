@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import { createGlobalStyle } from 'styled-components';
+// import { SelectInputProps } from '@mui/material/Select/SelectInput';
 
 
 const mainColor = "#FE8315"
@@ -16,6 +17,13 @@ interface StyledHR{
 interface ButtonProps{
   saveBtn? : boolean
   cancelBtn? : boolean
+  wid100? : boolean
+}
+interface SelectInputProps{
+  wid100? : boolean 
+}
+interface TextInputProps{
+  error? : boolean
 }
 export const GlobalStyle = createGlobalStyle`
   .minWidth45{
@@ -37,6 +45,17 @@ width :100%;}
 .title{
 font-weight : 500 !important;
 font-size : 25px !important; }
+.font_16{
+font-size : 16px !important;}
+.d-flex{
+display : flex;
+}
+.align-items-center{
+align-items : center;
+ }
+.mtb10{
+margin : 10px 0px; }
+
 `;
 export const TextFieldBox = styled(TextField)<TextFieldBoxProps>`
 ${(props : TextFieldBoxProps) => props.searchBox &&`
@@ -210,10 +229,11 @@ background: ${mainColor};
    }`
 
 
-export const TextInput = styled.input`
-border : 1px solid ${mainColor};
+export const TextInput = styled.input<TextInputProps>`
+border : 1px solid ${(props : TextInputProps) => props.error ? "red" : mainColor};
 width: 92%;
-  padding: 10px 25px;
+  padding: 10px;
+  font-size : 14px !important;
   border-radius: 10px;`
 
 export const ImageInput = styled.div`
@@ -231,17 +251,17 @@ width: 92%;
   top : 6px;
   }
 `
-export const SelectInput = styled.select`
+export const SelectInput = styled.select<SelectInputProps>`
 border : 1px solid ${mainColor};
   padding: 10px 25px;
   border-radius: 10px;
-  width : 30%;
+  width : ${(props : SelectInputProps) => props.wid100 ? "90%" : "30%"} ;
 `
 
 export const Button = styled.button<ButtonProps>`
 padding : 10px;
 border : 1px solid ${mainColor};
-width : 20%;
+width : ${(props : ButtonProps) => props.wid100 ? "100%" : "20%" };
 border-radius : 6px;
 margin : 10px 5px;
 ${(props : ButtonProps) => props.saveBtn && `
@@ -257,7 +277,15 @@ ${(props : ButtonProps) => props.saveBtn && `
 export const AddListingCss = styled.div`
 box-shadow: 1px 1px 9px 0 rgba(0, 0, 0, 0.21);
 padding: 60px;
-  margin: 40px 60px;`
+  margin: 40px 60px;
+.posRelative{
+position : relative;
+}
+.closeBtn{
+position: absolute;
+  right: 0px;
+  top: -12px;
+}`
 
 export const ImagePreview = styled.div`
 img{
