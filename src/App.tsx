@@ -12,6 +12,9 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { GlobalStyle } from './assets/style/index';
 import ManageCategory from './Components/admin/manageCategory';
 import AddListing from './Components/admin/addListing';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // import GlobalStyle from '../'
 function App() {
   const theme = createTheme({
@@ -71,6 +74,7 @@ function App() {
         </Routes>
       </Router>
     </ApolloProvider>
+    <ToastContainer position="bottom-right" />
     </ThemeProvider>
   );
 }

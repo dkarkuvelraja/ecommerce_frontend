@@ -11,6 +11,9 @@ interface TextFieldBoxProps{
     searchBox?: boolean
     Text? : boolean
 }
+interface DragImg{
+  count : number
+}
 interface StyledHR{
   wid12? : boolean
 }
@@ -24,6 +27,7 @@ interface SelectInputProps{
 }
 interface TextInputProps{
   error? : boolean
+  wid100? : boolean
 }
 export const GlobalStyle = createGlobalStyle`
   .minWidth45{
@@ -231,14 +235,14 @@ background: ${mainColor};
 
 export const TextInput = styled.input<TextInputProps>`
 border : 1px solid ${(props : TextInputProps) => props.error ? "red" : mainColor};
-width: 92%;
+width:  ${(props : TextInputProps) => props.wid100 ? "100%" : "92%"};
   padding: 10px;
   font-size : 14px !important;
   border-radius: 10px;`
 
 export const ImageInput = styled.div`
 border : 1px solid ${mainColor};
-width: 92%;
+width: 100%;
   padding: 18px 25px;
   border-radius: 10px;
   position: relative;
@@ -255,7 +259,7 @@ export const SelectInput = styled.select<SelectInputProps>`
 border : 1px solid ${mainColor};
   padding: 10px 25px;
   border-radius: 10px;
-  width : ${(props : SelectInputProps) => props.wid100 ? "90%" : "30%"} ;
+  width : ${(props : SelectInputProps) => props.wid100 ? "100%" : "30%"} ;
 `
 
 export const Button = styled.button<ButtonProps>`
@@ -293,4 +297,51 @@ margin-top: 10px;
   height: 100px;
   width: 100px;
   object-fit: cover;}
+`
+
+export const PageLoader = styled.div`
+position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #80808094;
+  display : flex;
+  align-items :center;
+  justify-content : center;
+  z-index : 10000;
+`
+
+export const DragIng = styled.div<DragImg>`
+.dropzone {
+margin: 0 -2px;
+> div {
+padding: 6px;
+}
+height: ${(props : DragImg) => (
+  (((props.count % 3) ? (Math.ceil(props.count/3)) : (props.count / 3 )) * 169)
+)}px;
+@media (max-width: 800px) {
+height:${(props: DragImg) => (((props.count % 2) ? (Math.ceil (props.count / 2)) : (props.count / 2)) * 169)
+}px;
+}
+}
+.grid-item {
+border-radius: 10px;
+position: relative;
+width : 100%;
+height : 100%;
+background-size : cover;
+background-position : center;
+>svg{
+position : absolute;
+right :-6px;
+top :-6px;
+color : white;
+cursor : pointer;
+z-index : 1;
+background-color : black;
+color : white;
+padding : 3px;
+font-size :1.3rem;
+border-radius : 50%;
+}
 `
