@@ -9,7 +9,7 @@ interface ProductImageProps {
 
 function RatingCard({ name, rating, message }: ProductImageProps) {
   return (
-    <Card className="w-56" sx={{ borderRadius: '18px' }}>
+    <Card sx={{ borderRadius: '18px' }}>
       <CardContent className="space-y-2">
         <p className="font-medium text-base mb-0">{name}</p>
         <Rating defaultValue={rating} readOnly size="small" precision={0.5}/>

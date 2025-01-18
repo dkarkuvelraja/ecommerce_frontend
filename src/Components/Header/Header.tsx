@@ -6,7 +6,7 @@ import { Heart, Search, ShoppingCart } from 'lucide-react';
 function Header() {
   return (
     <>
-       <Box className="bg-primary flex flex-grow justify-center p-1 text-sm"> 
+       <Box className="bg-primary flex flex-grow justify-center p-2 text-sm"> 
          <span className='text-white'>Get Exclusive Offers !!!</span>
        </Box>
        <Box sx={{ flexGrow : 1 }}>

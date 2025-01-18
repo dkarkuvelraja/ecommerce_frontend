@@ -2,7 +2,7 @@ import { Card, CardActionArea, CardContent, CardMedia, IconButton } from '@mui/m
 import { Heart, IndianRupee, Star } from 'lucide-react'
 import React from 'react'
 
-interface ProductImageProps {
+interface ProductCardProps {
     imageSrc: string,
     produtName: string,
     rating: any,
@@ -11,14 +11,14 @@ interface ProductImageProps {
     originalPrice: any
 }
 
-function ProductImage({ imageSrc, produtName, rating, ratingCount, actualprice, originalPrice } : ProductImageProps) {
+function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, originalPrice } : ProductCardProps) {
   return (
-    <Card className='w-72' style={{ boxShadow: 'none' }}>
+    <Card style={{ boxShadow: 'none', borderRadius: 0 }}>
         <CardActionArea className='relative shadow-sm'>
             <CardMedia
                 component="img"
                 image={imageSrc}
-                className='w-full'
+                className='w-full rounded-sm'
                 alt="Product Image"
             />
             <IconButton size='small' sx={{ '&.MuiIconButton-root': { position: 'absolute', bgcolor: '#fff', border: '1px solid #4747474D' } }} classes={{ root: 'top-4 right-3' }}>
@@ -54,4 +54,4 @@ function ProductImage({ imageSrc, produtName, rating, ratingCount, actualprice, 
   )
 }
 
-export default ProductImage
+export default ProductCard

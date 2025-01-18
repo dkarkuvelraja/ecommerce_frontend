@@ -28,3 +28,11 @@
 .step-action-div p{
     @apply text-sm w-64
 }
+
+.slick-dots li button:before{
+    font-size: 12px !important;
+}
+.slick-dots li.slick-active button:before{
+    color: #F68B29 !important;
+}
+

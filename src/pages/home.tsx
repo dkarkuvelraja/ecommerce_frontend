@@ -1,66 +1,62 @@
 import { Box, Divider } from '@mui/material';
 import React from 'react'
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 import './home.css'
-import bannerImg from './assets/images/banner.png';
-import enthiCollection from './assets/images/enthic_collection.png';
-import festivalImg from './assets/images/festival_sale.png';
-import bageImg from './assets/images/icons/badge.png';
-import payementImg from './assets/images/icons/payment.png';
-import dayReturnImg from './assets/images/icons/day_return.png';
-import SectionHeader from './Components/Header/SectionHeader';
-import { ProductCardSlider, RatingsSlider } from './Components/Slider';
-import { LargeButtonArrow } from './Components/Buttons/Buttons';
+import bannerImg from '../assets/images/banner.png';
+import enthiCollection from '../assets/images/enthic_collection.png';
+import festivalImg from '../assets/images/festival_sale.png';
+import bageImg from '../assets/images/icons/badge.png';
+import payementImg from '../assets/images/icons/payment.png';
+import dayReturnImg from '../assets/images/icons/day_return.png';
+import SectionHeader from '../Components/Header/SectionHeader';
+import { ProductCardSlider, RatingsSlider } from '../Components/Slider';
+import { LargeButtonArrow } from '../Components/Buttons/Buttons';
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import { newArrivalList, productList, saleList, sellingList } from '../utils';
 
 export default function Home() {
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 1,
-      slidesToSlide: 1 // optional, default to 1.
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 1,
-      slidesToSlide: 1 // optional, default to 1.
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-      slidesToSlide: 1 // optional, default to 1.
-    }
+  const settings = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   return (
     <>
       <Box className='relative'>
-        <Carousel containerClass="h-80 pb-7" itemClass="h-full" sliderClass='h-full' arrows={false} renderDotsOutside={true} responsive={responsive} showDots={true}>
-          <div className='h-full'>
+        <div className="slider-container">
+          <Slider {...settings}>
+            <div className='h-full'>
+                <img src={bannerImg} alt='banner images' className='h-full w-full' />
+            </div>
+            <div className='h-full'>
               <img src={bannerImg} alt='banner images' className='h-full w-full' />
-          </div>
-          <div className='h-full'>
-            <img src={bannerImg} alt='banner images' className='h-full w-full' />
-          </div>
-          <div className='h-full'>
-            <img src={bannerImg} alt='banner images' className='h-full w-full' />
-          </div>
-        </Carousel>
+            </div>
+            <div className='h-full'>
+              <img src={bannerImg} alt='banner images' className='h-full w-full' />
+            </div>
+          </Slider>
+        </div>
       </Box>
       <Box className='section'>
         <SectionHeader classStyles='mb-4' title='Explore Products' />
-        <ProductCardSlider products={[]} />
+        <ProductCardSlider products={productList} />
       </Box>
       <Box className='section'>
         <SectionHeader classStyles='mb-4' title='New Arrivals' />
-        <ProductCardSlider products={[]} />
+        <ProductCardSlider products={newArrivalList} />
         <div className='viewMore'>
             <LargeButtonArrow />
         </div>
       </Box>
       <Box className='section'>
         <SectionHeader classStyles='mb-4' title='Top Selling Products' />
-        <ProductCardSlider products={[]} />
+        <ProductCardSlider products={sellingList} />
         <div className='viewMore'>
             <LargeButtonArrow />
         </div>
@@ -71,7 +67,7 @@ export default function Home() {
       </div>
       <Box className='section'>
         <SectionHeader classStyles='mb-4' title='Clearance sale' />
-        <ProductCardSlider products={[]} />
+        <ProductCardSlider products={saleList} />
       </Box>
       <Box className='my-16 relative h-96'>
           <div className='absolute bottom-0 h-80 w-full'>
@@ -132,7 +128,6 @@ export default function Home() {
             </div>
          </div>
       </Box>
-
     </>
   )
 }

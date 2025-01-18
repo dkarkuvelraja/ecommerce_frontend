@@ -1,8 +1,15 @@
 @tailwind utilities;
 
 
+.slick-next:before, .slick-prev:before{
+    display: none !important;
+}
+.slick-prev:hover, .slick-prev:focus, .slick-next:hover, .slick-next:focus{
+    @apply bg-white
+}
+
 .slider-arrow-button {
-    @apply w-7 h-7 bg-white  rounded-full shadow-xl ring ring-1 ring-slate-200 absolute top-44 flex items-center justify-center;
+    @apply w-7 h-7 bg-white  z-10 rounded-full drop-shadow-md ring ring-1 ring-slate-200 absolute top-52 flex items-center justify-center;
 }
 
 .slider-arrow{
@@ -10,5 +17,5 @@
 }
 
 .rating-arrow-button{
-    @apply w-7 h-7 bg-white  rounded-full shadow-xl ring ring-1 ring-slate-200 absolute flex items-center justify-center;
+    @apply w-7 h-7 bg-white rounded-full drop-shadow-md ring ring-1 ring-slate-200 absolute flex items-center justify-center;
 }

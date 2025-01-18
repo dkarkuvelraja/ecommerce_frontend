@@ -1,15 +1,21 @@
+import React from 'react';
 import './App.css';
-import Header from './Components/Header/Header';
-import Home from './Home';
+// pages
+import Home from './pages/home';
+import ProductDetails from './pages/productDetails';
 import About from './Components/About';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
+// state management
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import client from './apollo/apolloClient';
-import React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { GlobalStyle } from './assets/style/index';
+// components
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
+
 // import GlobalStyle from '../'
 function App() {
   const theme = createTheme({
@@ -60,10 +66,12 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/productDetails" element={<ProductDetails />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
         </Routes>
+        <Footer />
       </Router>
     </ApolloProvider>
     </ThemeProvider>

@@ -1,0 +1,11 @@
+.productSize{
+    @apply flex text-sm space-x-2;
+}
+
+.productSize li{
+    @apply border p-1 px-2.5; 
+}
+
+.productSize .active{
+    @apply bg-black text-white;
+}
