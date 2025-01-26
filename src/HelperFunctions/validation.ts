@@ -59,7 +59,7 @@ export const validation = (page: string, data: any) => {
       break;
     case "addProduct":
       errors.title = !data.title ? "Title is Required" : "";
-      errors.description = !data.description ? "Description is Required" : data.description.length < 10 ? "Description need atleat 3 letters" :  data.description.length > 500 ?   "Description need to be below 500 letters" : ""
+      errors.description = !data.description ? "Description is Required" : data.description.length < 10 ? "Description need atleat 10 letters" :  data.description.length > 500 ?   "Description need to be below 500 letters" : ""
       break;
     case "manageCategory": 
     errors.category_name = !data.category_name ? "Category title is required" : ""

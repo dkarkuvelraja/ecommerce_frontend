@@ -46,3 +46,11 @@ export const DELETE_CATEGORY =  gql`mutation DeleteCategory($data: deleteCategor
     status
   }
 }`
+
+export const EDIT_CATEGORY = gql`
+mutation EditProduct($data: EditProductInput!) {
+  editProduct(data: $data) {
+    result
+    status
+  }
+}`

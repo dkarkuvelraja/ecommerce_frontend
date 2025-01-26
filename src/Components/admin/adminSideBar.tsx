@@ -14,7 +14,7 @@ export default function AdminSideBarComponent(props : any) {
             <ul>
                 <li onClick={() => routerFunction("/admin/manageCategory")} className = {props.page === "category" ? "active" : ""}>ManageCategories</li>
                 <li>User Management</li>
-                <li onClick={() => routerFunction("/admin/addListing")} className = {props.page === "listing" ? "active" : ""}>Listing Management</li>
+                <li onClick={() => routerFunction("/admin/manageListings")} className = {props.page === "listing" ? "active" : ""}>Listing Management</li>
                 <li>AD Management</li>
                 {/* <li></li> */}
             </ul>

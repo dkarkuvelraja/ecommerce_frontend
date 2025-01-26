@@ -59,7 +59,11 @@ align-items : center;
  }
 .mtb10{
 margin : 10px 0px; }
-
+.errorRed{
+border : 1px solid red !important;
+}
+.btnMargin{
+margin : -2px 0px !important;}
 `;
 export const TextFieldBox = styled(TextField)<TextFieldBoxProps>`
 ${(props : TextFieldBoxProps) => props.searchBox &&`
@@ -243,7 +247,7 @@ width:  ${(props : TextInputProps) => props.wid100 ? "100%" : "92%"};
 export const ImageInput = styled.div`
 border : 1px solid ${mainColor};
 width: 100%;
-  padding: 18px 25px;
+  padding: 10px 25px;
   border-radius: 10px;
   position: relative;
   .icon{
@@ -252,7 +256,7 @@ width: 100%;
   color: white;
   background: ${mainColor};
   border-radius: 25px;
-  top : 6px;
+  top : 10px;
   }
 `
 export const SelectInput = styled.select<SelectInputProps>`
@@ -266,6 +270,9 @@ export const Button = styled.button<ButtonProps>`
 padding : 10px;
 border : 1px solid ${mainColor};
 width : ${(props : ButtonProps) => props.wid100 ? "100%" : "20%" };
+@media (max-width : 767px){
+width : ${(props : ButtonProps) => props.wid100 ? "100%" : "50% !important" };
+}
 border-radius : 6px;
 margin : 10px 5px;
 ${(props : ButtonProps) => props.saveBtn && `
@@ -282,14 +289,45 @@ export const AddListingCss = styled.div`
 box-shadow: 1px 1px 9px 0 rgba(0, 0, 0, 0.21);
 padding: 60px;
   margin: 40px 60px;
+  border-radius : 10px;
+  @media (max-width : 767px){
+  margin: 10px 10px 10px 0px;
+  }
 .posRelative{
 position : relative;
 }
 .closeBtn{
 position: absolute;
-  right: 0px;
+  right: -5px;
   top: -12px;
-}`
+  background: orange;
+  padding: 4px;
+  border-radius: 12px;
+}
+  .colorBox{
+  border: 1px solid #FE8315;
+  position: relative;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  padding: 5px 0px 0px 10px;
+  input{
+  width: 35px;
+  height: 38px;
+  border: medium;
+  cursor: pointer;
+  position: absolute;
+  border-radius: 10px;
+  right: 0px;
+  bottom: 0px;
+  }}
+  .closeIconBtn{
+  position: absolute;
+  top: -12px;
+  background: orange;
+  border-radius: 15px;
+  padding: 4px;
+  right : -8px;}`
 
 export const ImagePreview = styled.div`
 img{
