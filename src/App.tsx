@@ -16,6 +16,12 @@ import { GlobalStyle } from './assets/style/index';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 
+import ManageCategory from './Components/admin/manageCategory';
+import AddListing from './Components/admin/addListing';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ManageListings from './Components/admin/manageListings';
+
 // import GlobalStyle from '../'
 function App() {
   const theme = createTheme({
@@ -70,10 +76,17 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
+          <Route path='/admin/manageCategory' element ={<ManageCategory/>}/>
+          <Route path='/admin/addListing' element ={<AddListing/>}/>
+
+          <Route path='/admin/addListing/:id' element ={<AddListing/>}/>
+          <Route path = '/admin/manageListings' element = {<ManageListings/>}/>
+
         </Routes>
         <Footer />
       </Router>
     </ApolloProvider>
+    <ToastContainer position="bottom-right" />
     </ThemeProvider>
   );
 }

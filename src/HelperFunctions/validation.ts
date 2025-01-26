@@ -57,7 +57,14 @@ export const validation = (page: string, data: any) => {
       errors.email = !data.email ? "Email is required" : "";
       errors.password = !data.password ? "Password is required" : "";
       break;
-
+    case "addProduct":
+      errors.title = !data.title ? "Title is Required" : "";
+      errors.description = !data.description ? "Description is Required" : data.description.length < 10 ? "Description need atleat 10 letters" :  data.description.length > 500 ?   "Description need to be below 500 letters" : ""
+      break;
+    case "manageCategory": 
+    errors.category_name = !data.category_name ? "Category title is required" : ""
+    errors.image = !data.image ? "Image is required" : ""
+    break;
     default:
       console.warn("Validation not implemented for this page:", page);
       break;
