@@ -1,13 +1,31 @@
 import { AppBar, Autocomplete, Box, Button, IconButton, TextField } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SparklezLogo } from '../../assets/imageSvg/SparklezLogo';
 import { Heart, Search, ShoppingCart } from 'lucide-react';
-
+import Login from '../../Components/Login'
+import { getCookie } from 'HelperFunctions/basicHelpers';
+import { useNavigate } from 'react-router-dom';
 function Header() {
+  const navigate = useNavigate()
+  const [open , setOpen] = useState<boolean>(false)
+  const popClose = () => {
+    setOpen(false)
+  }
+  useEffect(() => {
+    setTimeout(() => {
+      setOpen(true)
+    },5000)
+  },[])
+  const logOut = () => {
+    document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+    navigate('/')
+  }
   return (
     <>
+    {open && <Login loginPopOpen = {open} popClose = {popClose}/> }
+    
        <Box className="bg-primary flex flex-grow justify-center p-2 text-sm"> 
-         <span className='text-white'>Get Exclusive Offers !!!</span>
+         <span className='text-white'>Get Exclusive Offerss !!!</span>
        </Box>
        <Box sx={{ flexGrow : 1 }}>
           <AppBar className='border-b p-3 px-20' elevation={0} sx={{ position: 'relative' }}>
@@ -52,7 +70,9 @@ function Header() {
                     <IconButton>
                     <ShoppingCart  size={20} />
                     </IconButton>
-                    <Button sx={{ '&.MuiButton-root': { color: '#000 !important', textTransform: 'capitalize', fontSize: '14px'  } }} size='small' className='text-black lowercase'>Login</Button>
+                    {!getCookie("accessToken") ?
+                    <Button sx={{ '&.MuiButton-root': { color: '#000 !important', textTransform: 'capitalize', fontSize: '14px'  } }} size='small' className='text-black lowercase' onClick={() => setOpen((curr) => !curr)}>Login</Button> : <Button sx={{ '&.MuiButton-root': { color: '#000 !important', textTransform: 'capitalize', fontSize: '14px'  } }} size='small' className='text-black lowercase' onClick={() => logOut()}>LogOut</Button>
+                    }
                   </div>
                 </div>
               </div>

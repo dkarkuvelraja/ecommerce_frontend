@@ -340,7 +340,7 @@ export default function ManageCategory() {
                   {errors.category_name && <p style={{ color: "red", fontSize: "12px" }} className="marNone">{errors.category_name}</p>}
 
                   <Typography variant='h6' className="categoryTitle">Image</Typography>
-                  <ImageInput onClick={handleDivClick}><input type="file" name="image" onChange={changeFunction} placeholder="Image" style={{ display: "none" }} ref={fileInputRef} /><AddOutlinedIcon className="icon" /></ImageInput>
+                  <ImageInput onClick={handleDivClick}><input type="file" name="image" onChange={changeFunction} placeholder="Image" style={{ display: "none" }} ref={fileInputRef} /><AddOutlinedIcon className="icon" /><p>Image</p></ImageInput>
                   {errors.image && <p style={{ color: "red", fontSize: "12px" }} className="marNone">{errors.image}</p>}
                   {preview &&
                     <ImagePreview>

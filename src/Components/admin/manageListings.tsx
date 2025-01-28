@@ -36,12 +36,13 @@ function createData(
 export default function ManageListings() {
     const [variables, setVariables] = useState<any>({
         orderBy: { field: "likes", order: 1 },
-        limit: 10,
+        limit: 5,
         skip: 0,
       });
+      const [apiDataCount,setApiDataCount] = useState(0)
       const [page, setPage] = useState(0);
       const [rowsPerPage, setRowsPerPage] = useState(5);
-      const [totalCount, setTotalCount] = useState(10);
+      const [totalCount, setTotalCount] = useState(0);
       const navigate = useNavigate();
     const [rows,setRows] = useState<any>()
       const { data, loading, error, refetch } = useQuery(GET_ALL_LISTINGS, {
@@ -50,8 +51,9 @@ export default function ManageListings() {
   useEffect(() => {
     if(data){
         
-        console.log("allCategories",data.getAllProductAdminTable.responce )
+        console.log("allCategories",data.getAllProductAdminTable )
         setRows(data.getAllProductAdminTable.responce)
+        setTotalCount(data.getAllProductAdminTable.count)
     }
   },[data]) 
   const sort = (type : string) => {
@@ -70,13 +72,26 @@ export default function ManageListings() {
     const handleChangeRowsPerPage = (event : any) => {
       console.log("eeeeeeeeeeeeee",event.target)
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    // setPage(0);
+    setVariables((prev : any) => ({...prev,limit : parseInt(event.target.value)}) )
+    refetch();
   };
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
     console.log("eeeeeeeeeeeeee123",newPage)
+    setVariables((prev : any) => ({...prev,skip : newPage}) )
+    refetch();
+
     setPage(newPage);
   };
   const handleTotalCountChange = (event : any) => {
+    const changes = {
+      orderBy: { field: "likes", order: 1 },
+      limit: 10,
+      skip: 0,
+    }
+    setVariables((prev : any) => ({...prev,limit : parseInt(event.target.value)}) )
+    refetch();
+
     setTotalCount(parseInt(event.target.value, 10));
     // Logic to fetch data with the new total count can be added here
   };
@@ -135,7 +150,7 @@ navigate("/admin/addlisting")
     <TablePagination
             rowsPerPageOptions={[5, 10, 20,30,50]}
             component="div"
-            count={rows?.length}
+            count={totalCount}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

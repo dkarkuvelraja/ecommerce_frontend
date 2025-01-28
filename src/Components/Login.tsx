@@ -43,7 +43,9 @@ export default function Login(props: any) {
         console.log("loginSubmission", loginSubmission.data.login)
         if (loginSubmission.data.login.status === 200) {
           Cookies.set("accessToken", loginSubmission.data.login.response, { expires: 7 })
-          naviagate('/home')
+          props.popClose()
+          naviagate('/admin/managelistings')
+
         } else {
           alert(loginSubmission.data.login.result)
         }
@@ -68,6 +70,9 @@ export default function Login(props: any) {
   // const handleClose = () => {
 
   // }
+  const moveToLogin = () => {
+    setloginTab(true)
+  }
   return (
     <div>
       <CustomDialog open={props.loginPopOpen} maxWidth={"sm"} fullWidth={true} >
@@ -94,7 +99,7 @@ export default function Login(props: any) {
             </Grid2>
             <Grid2 size={{ xs: 12, sm: 6, md: 6 }}>
               <LoginSignUp>
-                <CancelOutlinedIcon className="closeIcon" onClick={props.handleClose} />
+                <CancelOutlinedIcon className="closeIcon" onClick={props.popClose} />
                 <Box sx={{ display: "flex" }}>
                   <Typography variant="body2" onClick={() => setloginTab(!loginTab)} className={loginTab ? "logBtn black" : "logBtn"}>Login</Typography>
                   <Typography variant="body2" onClick={() => setloginTab(!loginTab)} className={!loginTab ? "logBtn black" : "logBtn"}>Signup</Typography>
@@ -129,7 +134,7 @@ export default function Login(props: any) {
                       <Button type="submit" variant="outlined" className="submitBtn">Submit</Button>
                     </Box>
                   </form> :
-                  <SignUp handleClose={props.handleClose} />
+                  <SignUp handleClose={props.handleClose} moveToLogin = {moveToLogin}/>
                 }
               </LoginSignUp>
             </Grid2>

@@ -534,11 +534,16 @@ export default function AddListing() {
           }
           </div>
         </Grid2>
+        {field.colors.length -1 === colorIndex ? 
+        <Grid2 size={{ xs: 12, md: 4 }}>
+        <Button className='btnMargin' wid100 cancelBtn onClick={() => handleAddColor(fieldIndex)}>Add Color</Button>
+                </Grid2> : 
+        <Grid2 size={{ xs: 12, md: 4 }}></Grid2>
+
+        }
           </>
     ))}
-        <Grid2 size={{ xs: 12, md: 4 }}>
-<Button className='btnMargin' wid100 cancelBtn onClick={() => handleAddColor(fieldIndex)}>Add Color</Button>
-        </Grid2>
+        
 
   </>
 ))}

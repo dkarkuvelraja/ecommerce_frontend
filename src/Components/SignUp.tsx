@@ -17,6 +17,7 @@ interface IFormData {
 }
 
 function SignUp(props: any) {
+  console.log("propssss",props)
   const [formData, setFormData] = useState<IFormData>({
     firstName: "",
     lastName: "",
@@ -64,7 +65,8 @@ function SignUp(props: any) {
           password: "",
           phone_number: "",
         })
-        props.handleClose()
+        // props.handleClose()
+        props.moveToLogin()
 
       } catch (e) {
         console.error(e)

@@ -117,7 +117,7 @@ background-color : white;
 padding : 20px;
 margin: 10px;
 border-radius: 10px;
-height : 388px;
+height : 430px;
 position : relative;
 .closeIcon{
 cursor :pointer;
