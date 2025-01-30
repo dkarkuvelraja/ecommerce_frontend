@@ -16,6 +16,12 @@
     @apply stroke-primary 
 }
 
+@media screen and (max-width: 480px) {
+    .slider-arrow-button{
+        display: none !important
+    } 
+}
+
 .rating-arrow-button{
     @apply w-7 h-7 bg-white rounded-full drop-shadow-md ring ring-1 ring-slate-200 absolute flex items-center justify-center;
 }

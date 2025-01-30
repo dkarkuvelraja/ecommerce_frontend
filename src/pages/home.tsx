@@ -61,7 +61,7 @@ export default function Home() {
             <LargeButtonArrow />
         </div>
       </Box>
-      <div className='h-96 relative bg-cover bg-no-repeat my-4' style={{ 
+      <div className='h-40 md:h-96 relative bg-cover bg-no-repeat my-4' style={{ 
         backgroundImage: `url(${festivalImg})`
       }}>
       </div>
@@ -69,8 +69,8 @@ export default function Home() {
         <SectionHeader classStyles='mb-4' title='Clearance sale' />
         <ProductCardSlider products={saleList} />
       </Box>
-      <Box className='my-16 relative h-96'>
-          <div className='absolute bottom-0 h-80 w-full'>
+      <Box className='my-16 relative h-40 md:h-96'>
+          <div className='absolute bottom-0 h-full w-full'>
             <div className='h-full relative overflow-hidden' style={{ background: 'linear-gradient(to right, #F6D41C, #F68B29)' }}>
                 <div className='bg-primary absolute h-48 w-48 rounded-full -top-16 -left-16'></div>
                 <div className='bg-primary absolute h-8 w-8 rounded-full top-7' style={{ left: '56%' }}></div>
@@ -83,7 +83,7 @@ export default function Home() {
           </div>
       </Box>
       <Box className='section space-y-7'>
-        <div className='grid grid-cols-3 gap-3'>
+        <div className='grid md:grid-cols-3 gap-3'>
           <div className='step-action-div'>
             <img src={bageImg} alt='badge' />
             <h5>Premium Quality</h5>
@@ -106,7 +106,7 @@ export default function Home() {
          <div className='flex justify-center'>
             <SectionHeader classStyles='mb-4' title='Let’s see How much love we got!' />
          </div>
-         <div className='grid grid-cols-4 mt-4'>
+         <div className='grid grid-cols-1 md:grid-cols-4 mt-4 gap-4'>
             <div className='flex flex-col justify-center space-y-3'>
               <p className='font-medium text-xl mb-0'>Our customers</p>
               <div>
@@ -121,7 +121,7 @@ export default function Home() {
                 </span>
               </button>
             </div>
-            <div className='col-span-3'>
+            <div className='md:col-span-3'>
               <div className='bg-primary py-5 px-4'>
                 <RatingsSlider ratings={[]} />
               </div>

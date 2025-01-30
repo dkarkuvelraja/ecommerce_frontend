@@ -10,7 +10,7 @@
 
 
 .section {
-    @apply p-5 px-32 my-6;
+    @apply p-1 md:p-5 px-6 md:px-32 my-4 md:my-6;
 }
 
 .viewMore{
@@ -34,5 +34,12 @@
 }
 .slick-dots li.slick-active button:before{
     color: #F68B29 !important;
+}
+
+
+@media screen and (max-width: 480px) {
+    .slick-dots{
+        display: none !important
+    } 
 }
 

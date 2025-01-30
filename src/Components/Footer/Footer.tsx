@@ -4,14 +4,18 @@ import { Box, Divider } from '@mui/material';
 import { Instagram, Twitter, WhatsApp, X, YouTube } from '@mui/icons-material';
 import './footer.css';
 
+import logoName from "../../assets/images/logo/logo-name-light.png";
+import logo from "../../assets/images/logo/logo-light.png";
+
 function Footer() {
   return (
     <>
         <Box className='section bg-black text-white w-full relative bottom-0 mb-0'>
-            <div className='grid grid-cols-4 py-6 mb-3 gap-10'>
+            <div className='grid md:grid-cols-4 py-6 mb-3 gap-10'>
             <div className='space-y-2.5'>
                 <div className='flex gap-2 items-center'>
-                {SparklezLogo} <span className='text-lg italic text-white'>Li sparklez</span>
+                    <img className="h-6" src={logo} alt="logo" />
+                    <img className="h-6" src={logoName} alt="company name" />
                 </div>
                 <div className='space-y-1.5'>
                 <h3 className='text-sm font-medium'>Registered Office Address</h3>
@@ -56,7 +60,7 @@ function Footer() {
             </div>
             </div>
             <Divider sx={{ borderColor: '#fff' }} />
-            <div className='flex justify-between items-center py-3'>
+            <div className='flex justify-between items-center py-3 space-x-1'>
                 <div className='text-xs'>
                     <p className='mb-0'>© 2024, sparklez. All Rights Reserved.</p>
                 </div>

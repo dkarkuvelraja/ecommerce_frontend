@@ -2,7 +2,7 @@ import React from 'react';
 
 export function LargeButtonArrow() {
   return (
-    <button className='flex items-center justify-center text-primary text-sm p-1.5 px-3 border border-primary rounded'>
+    <button className='flex items-center justify-center text-primary text-xs md:text-sm p-1.5 px-2 md:px-3 border border-primary rounded'>
         <span>
             View more
         </span>

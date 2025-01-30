@@ -37,6 +37,31 @@ export const ProductCardSlider = ({ products }: SliderProps) => {
     slidesToScroll: 1,
     prevArrow: <LeftArrow classStyles={'slick-arrow slick-prev slider-arrow-button -left-1'} />,
     nextArrow: <RightArrow classStyles={'slick-arrow slick-next slider-arrow-button -right-1'} />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      }
+    ]
   };
 
   return(
@@ -70,6 +95,31 @@ export const RatingsSlider = ({ ratings }: RatingsSliderProps) => {
     slidesToScroll: 1,
     prevArrow: <LeftArrow classStyles={'slick-arrow slick-prev rating-arrow-button -left-8'} />,
     nextArrow: <RightArrow classStyles={'slick-arrow slick-next rating-arrow-button -right-8'} />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   };
 
   return(
