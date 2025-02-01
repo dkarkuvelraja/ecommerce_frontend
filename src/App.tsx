@@ -8,7 +8,7 @@ import Login from './Components/Login';
 import SignUp from './Components/SignUp';
 // state management
 import { ApolloProvider } from '@apollo/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import client from './apollo/apolloClient';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { GlobalStyle } from './assets/style/index';
@@ -22,6 +22,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ManageListings from './Components/admin/manageListings';
 import PrivateRoute from './protectedRoutes';
+import Products from 'pages/products';
 
 // import GlobalStyle from '../'
 function App() {
@@ -74,6 +75,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/productDetails" element={<ProductDetails />} />
+          <Route path='/products' element={<Products />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
@@ -82,7 +84,7 @@ function App() {
               <Route path='/admin/addListing' element={<AddListing />} />
               <Route path='/admin/addListing/:id' element={<AddListing />} />
               <Route path='/admin/manageListings' element={<ManageListings />} />
-            </Route>
+          </Route>
         </Routes>
         <Footer />
       </Router>

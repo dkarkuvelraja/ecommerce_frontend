@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // components
 import { Box, Divider } from '@mui/material';
 import SectionHeader from '../Components/Header/SectionHeader';
@@ -9,21 +9,46 @@ import './products.css'
 import { LargeButtonArrow } from '../Components/Buttons/Buttons';
 import { ChartColumnBig } from 'lucide-react';
 import { productList } from '../utils';
+import { InputNumber } from '../Components/input/InputRange';
 
 
 export default function ProductDetails() {
+  const [activeImg, setActiveImg] = useState(0);
+  const [productSize, setProductSize]= useState('s');
+  const [productCount, setProductCount] = useState(1);
+  const defaultSize = ['s', 'm', 'l', 'xl', 'xxl'];
+
+  const handleAddQuanity = () =>{
+     setProductCount((count) => count +1);
+  }
+  
+  const handleRemoveQuanity = () =>{
+    if(productCount > 1){
+      setProductCount((count) => count-1);
+    }
+  }
 
   return (
     <>
       <Box className="section">
-         <div className='grid grid-cols-2 gap-4'>
-            <div className='flex justify-end'>
-              <img className='w-2/3' src={productList[4].src} alt='product Image' />
+         <div className='grid md:grid-cols-2 gap-4 md:gap-0'>
+            <div className='flex justify-center md:justify-start gap-4'>
+              <div className='flex flex-col gap-4 order-last md:order-first'>
+                {
+                  productList.slice(0,5).map((item : any, index: number) => {
+                    if(activeImg === index) return <></>;
+                    return (<img onClick={()=>setActiveImg(index)} className='h-10 md:h-20 rounded-sm cursor-pointer' src={item.src} alt='product' />)
+                  })
+                }
+              </div>
+              <div className=''>
+                <img className='rounded-sm h-60 md:h-5/6' src={productList[activeImg].src} alt='product' />
+              </div>
             </div>
-            <div className='p-3'>
+            <div className='p-1 md:p-3'>
               <div className='space-y-4'>
                 <div className='space-y-1.5'>
-                  <h3 className='text-lg font-medium'>Trendy yellow kurthi</h3>
+                  <h3 className='text-lg md:text-2xl font-medium'>Trendy yellow kurthi</h3>
                   <p className='text-xs'>A vibrant yellow kurthi that radiates warmth and elegance, perfect for adding a cheerful touch to any occasion. Its lightweight fabric ensures comfort while maintaining a stylish, contemporary look.</p>
                 </div>
                 <div>
@@ -33,26 +58,26 @@ export default function ProductDetails() {
                   </ul>
                 </div>
                 <div className='flex items-center'>
-                  <div className='font-medium text-sm mr-2'>Size :</div>
+                  <div className='font-medium text-xs md:text-sm mr-2'>Size :</div>
                   <ul className='productSize'>
-                    <li className='active'>S</li>
-                    <li>M</li>
-                    <li>L</li>
-                    <li>Xl</li>
-                    <li>XXl</li>
+                    {defaultSize.map((size) => (
+                      <li onClick={()=>setProductSize(size)} className={`${size === productSize ? 'active' : ''}`}>{size}</li>
+                    ))}
                   </ul>
                 </div>
-                <div className='flex space-x-7'>
+                <div className='flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-7 text-xs md:text-sm'>
                   <div className='flex items-center'>
-                    <div className='font-medium text-sm mr-2'>Quanity :</div>
-                    <div>1</div>
+                    <div className='font-medium mr-2'>Quanity :</div>
+                    <div>
+                      <InputNumber value={productCount} addQuanity={handleAddQuanity} removeQuanity={handleRemoveQuanity} />
+                    </div>
                   </div>
                   <div className='flex items-center'>
-                    <div className='font-medium text-sm mr-2'>Size Chart :</div>
+                    <div className='font-medium mr-2'>Size Chart :</div>
                     <div><ChartColumnBig height={14} width={14} stroke='#F68B29' /></div>
                   </div>
                 </div>
-                <div className='space-x-4'>
+                <div className='flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0'>
                   <button className='px-8 p-2 border border-primary rounded-md text-sm'>Add to cart</button>
                   <button className='bg-primary text-white px-8 p-2 border border-primary rounded-md text-sm'>Buy Now</button>
                 </div>
@@ -102,7 +127,7 @@ export default function ProductDetails() {
       </Box>
       <Box className='section'>
         <SectionHeader classStyles='mb-4' title='Related Products' />
-        <div className='grid grid-cols-4 gap-6 py-5 mb-5'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-6 py-5 mb-5'>
           {
             productList.map((item: any)=> (
               <ProductCard imageSrc={item.src} produtName={"Slim Fit T-Shirt"} rating={4.3} ratingCount={470} actualprice={500} originalPrice={700} />

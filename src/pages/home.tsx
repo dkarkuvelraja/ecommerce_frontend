@@ -78,7 +78,7 @@ export default function Home() {
                 <div className='absolute h-52 w-52 rounded-full -bottom-12 -right-14' style={{ background: '#F6D41C' }} ></div>
             </div>
           </div>
-          <div className='absolute overflow-hidden top-0' style={{ height: '450px', width: '48%', transform: 'translate(12%,-14.5%)'}}>
+          <div className='absolute overflow-hidden top-0 hidden md:block' style={{ height: '450px', width: '48%', transform: 'translate(12%,-14.5%)'}}>
             <img src={enthiCollection} alt='ethnic collection' className='w-full top-0'  />
           </div>
       </Box>

@@ -136,7 +136,6 @@ function Header() {
         </div>
         <div className="px-4">
           <Autocomplete
-            className="h-8"
             freeSolo
             fullWidth
             size="small"
@@ -145,6 +144,7 @@ function Header() {
               "& .MuiOutlinedInput-root": {
                 borderRadius: "50px", // Adjust the border radius
                 padding: "3px 10px !important",
+                height: '30px'
               },
             }}
             renderOption={() => <p>hi</p>}
@@ -157,7 +157,7 @@ function Header() {
                   startAdornment: (
                     <>
                       {params.InputProps.endAdornment}
-                      <Search size={20} />
+                      <Search size={16} />
                     </>
                   ),
                 }}

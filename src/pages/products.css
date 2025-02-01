@@ -1,11 +1,11 @@
 .productSize{
-    @apply flex text-sm space-x-2;
+    @apply flex text-xs md:text-sm space-x-1 md:space-x-2;
 }
 
 .productSize li{
-    @apply border p-1 px-2.5; 
+    @apply border hover:border-primary p-1 px-2.5 cursor-pointer select-none uppercase; 
 }
 
 .productSize .active{
-    @apply bg-black text-white;
+    @apply bg-black text-white hover:border-transparent;
 }
