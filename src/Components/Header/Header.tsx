@@ -16,7 +16,9 @@ function Header() {
   };
   useEffect(() => {
     setTimeout(() => {
-      setOpen(true);
+      if(!getCookie("accessToken")){
+        setOpen(true);
+      }
     }, 5000);
   }, []);
   const logOut = () => {

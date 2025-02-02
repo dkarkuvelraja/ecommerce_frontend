@@ -312,7 +312,7 @@ position: absolute;
   border-radius: 10px;
   padding: 5px 0px 0px 10px;
   input{
-  width: 35px;
+  width: 100%;
   height: 38px;
   border: medium;
   cursor: pointer;

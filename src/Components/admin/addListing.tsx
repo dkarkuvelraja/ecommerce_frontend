@@ -15,6 +15,7 @@ import { isValid } from 'HelperFunctions/basicHelpers';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { toast } from 'react-toastify'
 import { useParams } from 'react-router-dom'
+import { ChromePicker, ColorResult } from 'react-color';
 export default function AddListing() {
     const [inputs, setInputs] = useState<any>([
         { type: "text", placeholder: "Product Name", value: "", name: "productname" },
@@ -25,6 +26,7 @@ export default function AddListing() {
         { type: "text", placeholder: "Price", value: "", name: "price" }
       ]);   
       const [images, setImages] = useState<any>([]);
+      const [color, setColor] = useState('#FF0000');
       const [deletedImages, setDeletedImages] = useState<any>([])
       const [createProduct] = useMutation(CREATE_PRODUCT);
       const [editProduct] = useMutation(EDIT_CATEGORY);
@@ -42,7 +44,10 @@ export default function AddListing() {
           ],
         },
       ]);
-      const [editedData,setEditedData] =useState<any>([])
+      const [editedData,setEditedData] =useState<any>([]);
+      const [showPicker, setShowPicker] = useState<any>(null);
+      const pickerRefs : any = useRef([]); // Ref for multiple pickers
+      const inputRefs : any = useRef([]); // Ref for multiple input areas
     const [categoriesResponse, setCategoriesResponse] = useState<any>([])
     const [formData,setFormData] = useState<any>({parent_category : "",category_id : ""})
     const { data: categoriesData, loading, error } = useQuery(GET_ALL_CATEGORIES);
@@ -121,6 +126,34 @@ export default function AddListing() {
         // options = parentOptions
       }
     },[categoriesData]) 
+    const handleChangeComplete = (color: ColorResult, fieldIndex : any, colorIndex: number, field : string) => {
+      setColor(color.hex);
+      const updatedFields : any = [...fields];
+      updatedFields[fieldIndex].colors[colorIndex][field] =
+      color.hex;
+      setFields(updatedFields);
+      // handleColorChange(fieldIndex, colorIndex, "color", color.hex); // Update form data
+    };
+  
+    const handleClick = (colorIndex: number | boolean | ((prevState: boolean) => boolean)) => {
+      setShowPicker(showPicker === colorIndex ? null : colorIndex); // Toggle for specific index
+    };
+  
+    const handleOutsideClick = (event: { target: any }) => {
+      if (showPicker !== null &&
+          inputRefs.current[showPicker] && !inputRefs.current[showPicker].contains(event.target) &&
+          pickerRefs.current[showPicker] && !pickerRefs.current[showPicker].contains(event.target)) {
+        setShowPicker(null); // Close any open picker
+      }
+    };
+  
+    useEffect(() => {
+      document.addEventListener('click', handleOutsideClick);
+      return () => {
+        document.removeEventListener('click', handleOutsideClick);
+      };
+    }, [showPicker]); // Add showPicker to dependency array
+  
     const transformData = (data : any) => {
       return data.map((item : any) => ({
         size: item.size,
@@ -173,8 +206,9 @@ export default function AddListing() {
     const handleInputChange = (index: number, field: string, value: string) => {
       console.log("valueeeeeeeeeeee",value)
       const updatedFields : any = [...fields];
-      const sanitizedValue = value.replace(/[^0-9]/g, "");
-      updatedFields[index][field] = field === "color" ? value : sanitizedValue === "" ? 0  : Number(value);
+      const sanitizedValue : any = value.replace(/[^0-9]/g, "");
+      console.log("sanitizedValuesanitizedValue",sanitizedValue)
+      updatedFields[index][field] = !["price","discount"].includes(field) ? value : sanitizedValue === "" || sanitizedValue === 0 ? 0  : Number(value);
       setFields(updatedFields);
   
       // Clear error if input becomes valid
@@ -303,7 +337,6 @@ export default function AddListing() {
       if(id){
         const image = images.filter((_ : any,id : any) => id === index) 
         if(editedData.image.includes(image[0])){
-          alert("hello")
           setDeletedImages((prev : any) => [...prev,...image])
         }
       }
@@ -347,6 +380,14 @@ export default function AddListing() {
         e.preventDefault();
       }
     };
+    const numberRestrictions = (event : any) => {
+      console.log("sssssssssssssssssss",event.charCode)
+      if((event.charCode >= 40 && event.charCode <=57) || event.charCode === 46){
+        return true
+      }else{
+        event.preventDefault()
+      }
+    }
   return (
     <div>
          <Container maxWidth = "lg">
@@ -473,8 +514,7 @@ export default function AddListing() {
         value={field.size}
         placeholder={"Size"}
         error={!!errors[fieldIndex]?.size}
-        onKeyPress={(e: React.KeyboardEvent<Element>) => restrictToNumbers(e)}
-  onPaste={(e: React.ClipboardEvent<Element>) => restrictPasteToNumbers(e)} 
+  // onPaste={(e: React.ClipboardEvent<Element>) => restrictPasteToNumbers(e)} 
       />
     </Grid2>
     <Grid2 size={{ xs: 12, md: 4 }}>
@@ -486,6 +526,8 @@ export default function AddListing() {
         value={field.price}
         placeholder={"Price"}
         error={!!errors[fieldIndex]?.price}
+        onKeyPress={(e: React.KeyboardEvent<Element>) => numberRestrictions(e)}
+
       />
     </Grid2>
     <Grid2 size={{ xs: 12, md: 4 }}>
@@ -497,6 +539,8 @@ export default function AddListing() {
         value={field.discount}
         placeholder={"Discount"}
         error={!!errors[fieldIndex]?.discount}
+        onKeyPress={(e: React.KeyboardEvent<Element>) => numberRestrictions(e)}
+
       />
     </Grid2>
 
@@ -505,7 +549,7 @@ export default function AddListing() {
       // <div key={colorIndex} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <>
         <Grid2 size={{ xs: 12, md: 4 }}>
-          <div  className = { !!errors[fieldIndex]?.colors?.[colorIndex]?.color ? "errorRed colorBox" : "colorBox"}>
+          {/* <div  className = { !!errors[fieldIndex]?.colors?.[colorIndex]?.color ? "errorRed colorBox" : "colorBox"}>
             <input
               type="color"
               value={colorField.color}
@@ -516,7 +560,22 @@ export default function AddListing() {
               // error={!!errors[fieldIndex]?.colors?.[colorIndex]?.color}
             />
             <p>{colorField.color}</p>
-          </div>
+          </div> */}
+                    <div onClick={() => handleClick(colorIndex)} ref={(el : any) => inputRefs.current[colorIndex] = el} style={{ cursor: 'pointer' }} className={ !!errors[fieldIndex]?.colors?.[colorIndex]?.color ? "errorRed colorBox" : "colorBox"}>
+                <input
+                 className={ !!errors[fieldIndex]?.colors?.[colorIndex]?.color ? "errorRed colorBox" : "colorBox"}
+                  type="text"
+                  value={colorField.color}  // Use the common color state
+                  readOnly
+                   // Use colorField.color here
+                />
+              </div>
+
+              {showPicker === colorIndex && ( // Show picker only for clicked input
+                <div style={{ position: 'absolute', zIndex: '1' }} ref={(el : any) => pickerRefs.current[colorIndex] = el}>
+                  <ChromePicker color={color} onChangeComplete={(c) => handleChangeComplete(c, fieldIndex, colorIndex, "color")} /> {/* Pass colorIndex */}
+                </div>
+              )}
         </Grid2>
         <Grid2 size={{ xs: 12, md: 4 }}>
           <div style={{position : "relative"}}>
@@ -528,7 +587,14 @@ export default function AddListing() {
             value={colorField.available_count}
             placeholder={"Available"}
             error={!!errors[fieldIndex]?.colors?.[colorIndex]?.available_count}
+        onKeyPress={(e: React.KeyboardEvent<Element>) => numberRestrictions(e)}
+
           />
+          <div>
+          {/* <div onClick={handleClick} ref={inputRef} style={{cursor: 'pointer'}}> Make the input area clickable */}
+
+            {/* </div> */}
+    </div>
           {colorIndex !== 0 &&
           <button onClick={() => handleRemoveColor(fieldIndex, colorIndex)}><CloseOutlinedIcon className = "closeBtn"/></button>
           }

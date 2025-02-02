@@ -72,10 +72,10 @@ export default function ProductDetails() {
                       <InputNumber value={productCount} addQuanity={handleAddQuanity} removeQuanity={handleRemoveQuanity} />
                     </div>
                   </div>
-                  <div className='flex items-center'>
+                  {/* <div className='flex items-center'>
                     <div className='font-medium mr-2'>Size Chart :</div>
                     <div><ChartColumnBig height={14} width={14} stroke='#F68B29' /></div>
-                  </div>
+                  </div> */}
                 </div>
                 <div className='flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0'>
                   <button className='px-8 p-2 border border-primary rounded-md text-sm'>Add to cart</button>
