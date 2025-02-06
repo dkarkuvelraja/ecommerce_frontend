@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // components
 import { Box, Divider } from '@mui/material';
 import SectionHeader from '../Components/Header/SectionHeader';
@@ -10,14 +10,83 @@ import { LargeButtonArrow } from '../Components/Buttons/Buttons';
 import { ChartColumnBig } from 'lucide-react';
 import { productList } from '../utils';
 import { InputNumber } from '../Components/input/InputRange';
-
-
+import { GET_PRODUCT_BY_ID } from 'apollo/query';
+import { useQuery } from '@apollo/client';
+interface ProductData{
+  id : string
+  title : string
+  description : string
+  category_id : string
+  size_and_price : Array<{
+    _id : string
+    size : number
+    price : number
+    discount : number
+    display_price : number
+    colors  : Array<{
+      color : string
+      available_count : number
+      sold_out : boolean
+      __typename : string
+    }>
+    __typename : string
+  }>
+  status : string
+  image : Array<any>
+  sold_out_count : number
+  likes : number
+  total_available_count : number
+  createdAt : string
+  updatedAt: string
+  __typename : string
+}
 export default function ProductDetails() {
   const [activeImg, setActiveImg] = useState(0);
   const [productSize, setProductSize]= useState('s');
   const [productCount, setProductCount] = useState(1);
   const defaultSize = ['s', 'm', 'l', 'xl', 'xxl'];
-
+  // const variables = {getProductByIdId : "6793d5cbdcbfd502dc151408"}
+  const [productData , setProductData] = useState<any>({
+    "id": "",
+    "title": "new ",
+    "description": "",
+    "category_id": "",
+    "size_and_price": [
+        {
+            "_id": "",
+            "size": 0,
+            "price": 0,
+            "discount": 0,
+            "display_price": 0,
+            "colors": [
+                {
+                    "color": "",
+                    "available_count": 0,
+                    "sold_out": false,
+                    "__typename": ""
+                }
+            ],
+            "__typename": "SizeAndPrice"
+        }
+    ],
+    
+    "status": "",
+    "image": [ ],
+    "sold_out_count": 0,
+    "likes": 0,
+    "total_available_count": 0,
+    "createdAt": "",
+    "updatedAt": "",
+    "__typename": "Product"
+})
+    const { data }  = useQuery(GET_PRODUCT_BY_ID, {
+            variables : {getProductByIdId : "6793d5cbdcbfd502dc151408"},
+            // skip : !id,
+          });
+          useEffect(() => {
+            console.log("datadata",data.getProductById.responce) // Check this data
+            setProductData(data.getProductById.responce)
+          },[data])
   const handleAddQuanity = () =>{
      setProductCount((count) => count +1);
   }
