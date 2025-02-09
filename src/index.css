@@ -5,9 +5,35 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @apply select-none
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* login modal css */
+.log-modal-tab-active{
+  @apply bg-black text-white;
+}
+
+.log-modal-tab-inactive{
+  @apply bg-white text-black;
+}
+
+.nav-menu li{
+  @apply cursor-pointer hover:text-primary;
+}
+
+.sidebar-menu:hover .icon{
+  @apply text-black
+}
+
+.admin-Content-view{
+  @apply my-5 space-y-6
+}
+
+.form-control-space-y{
+  @apply space-y-3
 }

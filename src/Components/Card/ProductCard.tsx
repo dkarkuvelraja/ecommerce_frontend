@@ -1,59 +1,55 @@
-import { Card, CardActionArea, CardContent, CardMedia, IconButton } from '@mui/material'
-import { Heart, IndianRupee, Star } from 'lucide-react'
-import React from 'react'
+import React from "react";
+import { AddShoppingCartOutlined, CurrencyRupee, FavoriteBorderOutlined, Star } from "@mui/icons-material";
+import { Card, CardActionArea, CardContent, CardMedia } from "@mui/material";
 
 interface ProductCardProps {
-    imageSrc: string,
-    produtName: string,
-    rating: any,
-    ratingCount: any,
-    actualprice: any, 
-    originalPrice: any
+  imageSrc: string;
+  produtName: string;
+  rating: any;
+  ratingCount: any;
+  actualprice: any;
+  originalPrice: any;
 }
 
-function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, originalPrice } : ProductCardProps) {
+function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, originalPrice }: ProductCardProps) {
   return (
-    <Card style={{ boxShadow: 'none', borderRadius: 0 }}>
-        <CardActionArea className='relative shadow-sm'>
-            <CardMedia
-                component="img"
-                image={imageSrc}
-                className='w-full rounded-sm'
-                alt="Product Image"
-            />
-            <IconButton size='small' sx={{ '&.MuiIconButton-root': { position: 'absolute', bgcolor: '#fff', border: '1px solid #4747474D' } }} classes={{ root: 'top-1.5 md:top-4 right-1 md:right-3' }}>
-                <Heart className='relative' style={{ top: '0.5px', left: '0.3px' }} height={14} width={14} strokeWidth={2}  stroke='#4747474D'/>
-            </IconButton>
-            {/* <div className='absolute top-4 right-3 ring ring-1 ring-slate-200 bg-white rounded-full p-1'>
-                <Heart height={18} width={18} strokeWidth={2}  stroke='gray'/>
-            </div> */}
-        </CardActionArea>
-        <CardContent className='text-sm space-y-2 md:space-y-3 mt-3' sx={{ '&.MuiCardContent-root': { padding: '6px', backgroundColor: 'transparent' } }}>
-            <div className='flex flex-col md:flex-row justify-between mb-1 font-medium'>
-                <div className='text-xs md:text-sm'>{produtName}</div>
-                <div className='hidden md:block'>
-                    <div className='flex items-center'>
-                        <span className='flex items-center text-sm mr-1.5'>
-                            <Star className='mr-1' fill='yellow' height={15} width={15} stroke='none' />
-                            {rating}
-                        </span>
-                        <span className='text-sm'>({ratingCount})</span>
-                    </div>
-                </div>
+    <Card style={{ boxShadow: "none", borderRadius: 0 }}>
+      <CardActionArea
+        className="relative shadow-sm !rounded-sm sm:!rounded-md cart-action-area"
+        classes={{
+          focusHighlight: "!opacity-55 z-10 ",
+        }}
+        sx={{ "& .MuiTouchRipple-root": { display: "none" } }}
+      >
+        <CardMedia component="img" image={imageSrc} className="w-full rounded-sm sm:rounded-md" alt="Product Image" />
+        <div className="flex flex-col space-y-2 items-center justify-center absolute top-2 sm:top-3 right-2 z-20">
+          <FavoriteBorderOutlined className="!text-xs sm:!text-base !fill-white" />
+          <AddShoppingCartOutlined className="!text-xs sm:!text-base !fill-white" />
+        </div>
+      </CardActionArea>
+      <CardContent className="text-xs sm:text-sm space-y-0.5 sm:space-y-1 mt-1 sm:mt-1.5" sx={{ "&.MuiCardContent-root": { padding: "6px", backgroundColor: "transparent" } }}>
+        <div className="text-xs sm:text-sm">{produtName}</div>
+        <div className="flex justify-between items-center">
+          <div className="flex space-x-1 items-center">
+            <span>
+              <CurrencyRupee className="!text-xs sm:!text-sm" />
+              <span>{actualprice}</span>
+            </span>
+            <span className="line-through text-xs text-gray-400">{originalPrice}</span>
+          </div>
+          <div className="hidden md:block">
+            <div className="flex items-center space-x-1 text-xs">
+              <span className="flex items-center rounded-md bg-primary text-white px-1">
+                <Star className="!text-white !text-xs" />
+                {rating}
+              </span>
+              <span>({ratingCount})</span>
             </div>
-            <div className='flex justify-start text-xs md:text-sm'>
-                <div className='flex items-center mr-1'>
-                    <IndianRupee className='mr-0.5' height={12} width={12} />
-                    <span className='font-medium' style={{ lineHeight: 0 }}>{actualprice}</span>
-                </div>
-                <div className='flex items-center line-through text-slate-400'>
-                    <IndianRupee height={12} width={12} />
-                    <span style={{ lineHeight: 0 }}>{originalPrice}</span>
-                </div>
-            </div>
-        </CardContent>
+          </div>
+        </div>
+      </CardContent>
     </Card>
-  )
+  );
 }
 
-export default ProductCard
+export default ProductCard;

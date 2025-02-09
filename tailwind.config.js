@@ -10,6 +10,9 @@ module.exports = {
           DEFAULT: '#F68B29', // Primary color
           light: '#353535',   // Light variant
         },
+        secondary: {
+          DEFAULT: '#FEAE01'
+        }
       }
     }
   },

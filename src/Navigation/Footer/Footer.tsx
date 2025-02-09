@@ -1,11 +1,9 @@
 import React from 'react'
-import { SparklezLogo } from '../../assets/imageSvg/SparklezLogo';
 import { Box, Divider } from '@mui/material';
-import { Instagram, Twitter, WhatsApp, X, YouTube } from '@mui/icons-material';
+import { Instagram, WhatsApp, X, YouTube } from '@mui/icons-material';
 import './footer.css';
+import { logoLight, logoLightName } from 'HelperFunctions/utils';
 
-import logoName from "../../assets/images/logo/logo-name-light.png";
-import logo from "../../assets/images/logo/logo-light.png";
 
 function Footer() {
   return (
@@ -14,8 +12,8 @@ function Footer() {
             <div className='grid md:grid-cols-4 py-6 mb-3 gap-10'>
             <div className='space-y-2.5'>
                 <div className='flex gap-2 items-center'>
-                    <img className="h-6" src={logo} alt="logo" />
-                    <img className="h-6" src={logoName} alt="company name" />
+                    <img className="h-6" src={logoLight} alt="logo" />
+                    <img className="h-6" src={logoLightName} alt="company name" />
                 </div>
                 <div className='space-y-1.5'>
                 <h3 className='text-sm font-medium'>Registered Office Address</h3>

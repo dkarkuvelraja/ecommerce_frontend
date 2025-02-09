@@ -1,147 +1,146 @@
-import React, { useState } from 'react'
-import { validation } from '../HelperFunctions/validation';
-import { isValid } from '../HelperFunctions/basicHelpers';
-import { useMutation } from '@apollo/client';
-import { USER_LOGIN } from '../apollo/mutation';
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Grid2, IconButton, Typography } from '@mui/material';
-import { LoginPop, LoginSignUp, StyledHR } from '../assets/style/index';
-import { SparklezLogo } from '../assets/imageSvg/SparklezLogo';
-import { SparklezTitle } from '../assets/imageSvg/SparklezTitle';
-import LoginImg from '../assets/images/loginImg.png'
-import Box from '@mui/material/Box';
-import TextField from './Fields/textField'
-import { styled } from '@mui/material/styles';
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
-import SignUp from './SignUp';
-const CustomDialog = styled(Dialog)({
-  '& .MuiDialog-paper': {
-    width: '710px',
-    maxWidth: '90%', // Adjust for responsiveness
-    overflow: 'hidden',
-  },
-});
-interface Ilogin {
-  email: string;
-  password: string;
-}
-export default function Login(props: any) {
-  const [formData, setFormData] = useState<Ilogin>({ email: "", password: "" })
-  const [errors, setErrors] = useState<Ilogin>({ email: "", password: "" })
-  const [loginTab, setloginTab] = useState(true)
-  const [login, { data, loading, error }] = useMutation(USER_LOGIN);
-  const naviagate = useNavigate()
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("formData")
-    const errors = validation("login", formData)
-    setErrors(errors)
-    if (isValid(errors)) {
-      try {
-        const loginSubmission = await login({ variables: { data: formData } })
-        console.log("loginSubmission", loginSubmission.data.login)
-        if (loginSubmission.data.login.status === 200) {
-          Cookies.set("accessToken", loginSubmission.data.login.response, { expires: 7 })
-          props.popClose()
-          naviagate('/admin/managelistings')
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { USER_LOGIN } from "../apollo/mutation";
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { Dialog, DialogContent, DialogTitle, Divider, IconButton } from "@mui/material";
 
-        } else {
-          alert(loginSubmission.data.login.result)
+import logoName from "../assets/images/logo/logo-name-light.png";
+import logo from "../assets/images/logo/logo-light.png";
+
+import LoginImg from "../assets/images/loginImg.png";
+import { TextFieldWithLabel } from "./input/TextField";
+import { OutlinedButton } from "./Buttons/Button";
+import { X } from "lucide-react";
+import { loginSuccess } from "HelperFunctions/message";
+import { sucessToast } from "HelperFunctions/utils";
+
+interface loginProps{
+  onClose: Function
+}
+
+export default function Login({ onClose } : loginProps) {
+  const [tabActive, setTabActive] = useState({ islogin: true, isSignup: false });
+  const [loginData, setLoginData] = useState<{ email: string; password: string }>({ email: "", password: "" });
+  const [isLogin, setLogin]= useState<boolean>(false);
+  const [signupData, setSignupData] = useState<{ fullName: string; email: string; password: string; mobileNo: string }>({ fullName: "", email: "", password: "", mobileNo: "" });
+  const [login, { data, loading: logingLoader, error }] = useMutation(USER_LOGIN);
+  const navigate = useNavigate();
+
+
+  const handleChangeLogin = (value: string, condition: { isEmail?: boolean; isPassword?: boolean }) => {
+    const { isEmail, isPassword } = condition;
+    if (isEmail) {
+      setLoginData((prev) => ({ ...prev, email: value }));
+    }
+    if (isPassword) {
+      setLoginData((prev) => ({ ...prev, password: value }));
+    }
+  };
+
+  const handleChangeSignup = (value: string, condition: { isFullName?: boolean; isMobileNumber?: boolean }) => {
+    const { isFullName, isMobileNumber } = condition;
+    if (isFullName) {
+      setSignupData((prev) => ({ ...prev, fullName: value }));
+    }
+    if (isMobileNumber) {
+      setSignupData((prev) => ({ ...prev, mobileNo: value }));
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (tabActive.islogin) {
+      if (loginData.email !== "" && loginData.password !== "") {
+        try {
+          setLogin(true);
+          const loginSubmission = await login({ variables: { data: loginData } });
+          console.log("loginSubmission ", loginSubmission)
+          if (loginSubmission.data.login.status === 200) {
+            Cookies.set("accessToken", loginSubmission.data.login.response, { expires: 7 });
+            const message = loginSuccess('Praveen');
+            sucessToast(message);
+            setTimeout(()=>{
+              onClose();
+              // navigate("/admin/managelistings");
+              setLogin(false);
+            }, 200)
+          }
+        } catch (e) {
+          setLogin(false);
+          console.error(e);
         }
-      } catch (e) {
-        console.error(e)
       }
     }
+  };
 
-  }
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    console.log("sdssssssssssss", name, value)
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    setErrors((prevState) => ({
-      ...prevState,
-      [name]: ""
-    }))
-  }
-  // const handleClose = () => {
-
-  // }
-  const moveToLogin = () => {
-    setloginTab(true)
-  }
   return (
-    <div>
-      <CustomDialog open={props.loginPopOpen} maxWidth={"sm"} fullWidth={true} >
-        <LoginPop>
-          <Grid2 container spacing={2} sx={{ height: "445px", overflow: "hidden" }}>
-            <Grid2 sx={{ display: { xs: 'none', sm: 'block' } }} size={{ xs: 6, md: 6 }}>
-              <div className="logo">
-                {/* <MenuIcon /> */}
-                {SparklezLogo}
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  {SparklezTitle}
-                </Typography>
+    <Dialog
+      open={true}
+      maxWidth="md"
+      fullWidth
+      PaperProps={{
+        classes: { root: "!bg-gradient-to-r from-primary to-secondary !max-w-2xl !rounded-md md:!h-3/5 !overflow-hidden relative" },
+      }}
+    >
+      <DialogTitle className="absolute -top-1 !p-0 right-2">
+        <IconButton onClick={() => onClose(false)} size="small" className="!p-0.5 !bg-white">
+          <X stroke="red" size={16} />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent className="!p-2.5 !px-4">
+        <div className="grid md:grid-cols-2 h-full">
+          <div className="text-white space-y-5 p-5 px-2 hidden md:block">
+            <div className="flex gap-2 items-center">
+              <img className="h-6" src={logo} alt="logo" />
+              <img className="h-6" src={logoName} alt="company name" />
+            </div>
+            <div className="tracking-wide">
+              <h2 className="text-4xl font-semibold">Welcome!</h2>
+              <p className="text-sm font-medium">Register to avail the best deals!</p>
+            </div>
+            <div className="absolute -bottom-11">
+              <img src={LoginImg} alt="welcome-image" />
+            </div>
+          </div>
+          <div className="bg-white rounded-md h-full p-5 px-2 space-y-6">
+            <div className="grid grid-cols-2 tracking-wide">
+              <button onClick={() => setTabActive({ islogin: true, isSignup: false })} className={`broder font-medium rounded-md p-2 log-modal-tab-${tabActive.islogin ? "active" : "inactive"}`}>
+                Login
+              </button>
+              <button onClick={() => setTabActive({ isSignup: true, islogin: false })} className={`broder font-medium rounded-md p-2 log-modal-tab-${tabActive.isSignup ? "active" : "inactive"}`}>
+                Signup
+              </button>
+            </div>
+            <Divider className="!border-primary !border" />
+            {tabActive?.islogin ? (
+              <div className="grid gap-4">
+                <TextFieldWithLabel label="Email Id" placeHolder="Email" type="email" handleOnChange={(e: any) => handleChangeLogin(e.target.value, { isEmail: true })} />
+                <TextFieldWithLabel label="Password" placeHolder="Password" type="password" handleOnChange={(e: any) => handleChangeLogin(e.target.value, { isPassword: true })} />
+                <div className="text-end">
+                  <Link to="/" className="text-primary text-sm">
+                    Forget Password?
+                  </Link>
+                </div>
               </div>
-              <Typography variant="h4" component="div" sx={{ flexGrow: 1, color: "white", fontWeight: "600", fontSize: "36px", padding: "5px 10px 0px 30px" }}>
-                Welcome!
-              </Typography>
-              <Typography variant="body1" component="div" sx={{ flexGrow: 1, color: "white", fontWeight: "600", fontSize: "20px", padding: "5px 10px 20px 30px" }}>
-                Register to avail the best deals!
-              </Typography>
-              <div className="popImg">
-                <img src={LoginImg} alt="loginImg" className="posAbsolute" />
+            ) : (
+              <div className="grid gap-4">
+                <div className="grid md:grid-cols-2 gap-3">
+                  <TextFieldWithLabel label="Full name" placeHolder="Full name" type="text" handleOnChange={(e: any) => handleChangeSignup(e.target.value, { isFullName: true })} />
+                  <TextFieldWithLabel label="Mobile number" placeHolder="Mobile number" type="text" handleOnChange={(e: any) => handleChangeSignup(e.target.value, { isMobileNumber: true })} />
+                </div>
+                <TextFieldWithLabel label="Email Id" placeHolder="Email" type="email" handleOnChange={(e: any) => handleChangeLogin(e.target.value, { isEmail: true })} />
+                <TextFieldWithLabel label="Password" placeHolder="Password" type="password" handleOnChange={(e: any) => handleChangeLogin(e.target.value, { isPassword: true })} />
               </div>
-              {/* Title */}
-            </Grid2>
-            <Grid2 size={{ xs: 12, sm: 6, md: 6 }}>
-              <LoginSignUp>
-                <CancelOutlinedIcon className="closeIcon" onClick={props.popClose} />
-                <Box sx={{ display: "flex" }}>
-                  <Typography variant="body2" onClick={() => setloginTab(!loginTab)} className={loginTab ? "logBtn black" : "logBtn"}>Login</Typography>
-                  <Typography variant="body2" onClick={() => setloginTab(!loginTab)} className={!loginTab ? "logBtn black" : "logBtn"}>Signup</Typography>
-
-                </Box>
-                <StyledHR />
-                {loginTab ?
-
-                  <form onSubmit={handleSubmit}>
-                    <TextField
-                      // className = "wid100"
-                      label={"Email"}
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      changeFunction={handleChange}
-                      placeHolder="Email" />
-                    {errors.email && <p style={{ color: "red", fontSize: "12px" }} className="marNone">{errors.email}</p>}
-
-                    <TextField
-                      // className = "wid100"
-                      label={"Password"}
-                      type="password"
-                      name="password"
-                      value={formData.password}
-                      changeFunction={handleChange}
-                      placeHolder="Password" />
-                    {errors.password && <p style={{ color: "red", fontSize: "12px" }} className="marNone">{errors.password}</p>}
-
-                    <Typography variant="body1" component="div" className="forgotPass">Forgot Password?</Typography>
-                    <Box sx={{ display: "flex", justifyContent: "center", marginTop: "30px" }}>
-                      <Button type="submit" variant="outlined" className="submitBtn">Submit</Button>
-                    </Box>
-                  </form> :
-                  <SignUp handleClose={props.handleClose} moveToLogin = {moveToLogin}/>
-                }
-              </LoginSignUp>
-            </Grid2>
-          </Grid2>
-        </LoginPop>
-      </CustomDialog>
-    </div>
-
-  )
+            )}
+            <div className="flex justify-center w-full">
+              <OutlinedButton propoerty={{ 
+                isLoader: isLogin,
+                isDisable: isLogin
+              }} name={`${tabActive.islogin ? "Submit" : "SignUp"}`} handleClick={handleSubmit} />
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
 }

@@ -1,8 +1,8 @@
 import { Container, Grid2, Typography } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import { AddListingCss, Button, DragIng, ImageInput, SelectInput, StyledHR } from '../../assets/style/index'
-import AdminSideBarComponent from './adminSideBar'
-import TextInputComponent from './fieldInputs/TextInput'
+import AdminSideBarComponent from '../Navigation/Sidebar/adminSideBar'
+import TextInputComponent from '../fieldInputs/TextInput'
 import { useMutation, useQuery } from '@apollo/client'
 import { GET_ALL_CATEGORIES, GET_PRODUCT_BY_ID } from 'apollo/query'
 import { GridContextProvider, GridDropZone, GridItem, swap } from "react-grid-dnd";
@@ -45,7 +45,7 @@ export default function AddListing() {
         },
       ]);
       const [editedData,setEditedData] =useState<any>([]);
-      const [showPicker, setShowPicker] = useState<{ fieldIndex: number; colorIndex: number } | null>(null);
+      const [showPicker, setShowPicker] = useState<any>(null);
       const pickerRefs : any = useRef([]); // Ref for multiple pickers
       const inputRefs : any = useRef([]); // Ref for multiple input areas
     const [categoriesResponse, setCategoriesResponse] = useState<any>([])
@@ -135,40 +135,24 @@ export default function AddListing() {
       // handleColorChange(fieldIndex, colorIndex, "color", color.hex); // Update form data
     };
   
-    const handleClick = (fieldIndex: number, colorIndex: number) => {
-      setShowPicker(
-        showPicker && showPicker.fieldIndex === fieldIndex && showPicker.colorIndex === colorIndex
-          ? null
-          : { fieldIndex, colorIndex }
-      );
+    const handleClick = (colorIndex: number | boolean | ((prevState: boolean) => boolean)) => {
+      setShowPicker(showPicker === colorIndex ? null : colorIndex); // Toggle for specific index
     };
   
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (!showPicker) return;
-    
-      const inputRef = inputRefs.current[`${showPicker.fieldIndex}-${showPicker.colorIndex}`];
-      const pickerRef = pickerRefs.current[`${showPicker.fieldIndex}-${showPicker.colorIndex}`];
-    
-      console.log("Clicked element:", event.target);
-      console.log("Checking refs -> InputRef:", inputRef, "PickerRef:", pickerRef);
-    
-      if (
-        inputRef &&
-        pickerRef &&
-        !inputRef.contains(event.target) &&
-        !pickerRef.contains(event.target)
-      ) {
-        console.log("Closing Picker");
-        setShowPicker(null);
+    const handleOutsideClick = (event: { target: any }) => {
+      if (showPicker !== null &&
+          inputRefs.current[showPicker] && !inputRefs.current[showPicker].contains(event.target) &&
+          pickerRefs.current[showPicker] && !pickerRefs.current[showPicker].contains(event.target)) {
+        setShowPicker(null); // Close any open picker
       }
     };
-    
+  
     useEffect(() => {
-      document.addEventListener("mousedown", handleOutsideClick);
+      document.addEventListener('click', handleOutsideClick);
       return () => {
-        document.removeEventListener("mousedown", handleOutsideClick);
+        document.removeEventListener('click', handleOutsideClick);
       };
-    }, [showPicker]);
+    }, [showPicker]); // Add showPicker to dependency array
   
     const transformData = (data : any) => {
       return data.map((item : any) => ({
@@ -358,7 +342,6 @@ export default function AddListing() {
       }
       setImages((prev : any) => prev.filter((_ : any, i : any) => i !== index));
     };
-    console.log("imagesssss",images)
     const handleAddColor = (fieldIndex: number) => {
       const updatedFields : any = [...fields];
       updatedFields[fieldIndex].colors.push({
@@ -578,7 +561,7 @@ export default function AddListing() {
             />
             <p>{colorField.color}</p>
           </div> */}
-                    <div onClick={() => handleClick(fieldIndex, colorIndex)}      ref={(el) => { inputRefs.current[`${fieldIndex}-${colorIndex}`] = el; }} style={{ cursor: 'pointer' }} className={ !!errors[fieldIndex]?.colors?.[colorIndex]?.color ? "errorRed colorBox" : "colorBox"}>
+                    <div onClick={() => handleClick(colorIndex)} ref={(el : any) => inputRefs.current[colorIndex] = el} style={{ cursor: 'pointer' }} className={ !!errors[fieldIndex]?.colors?.[colorIndex]?.color ? "errorRed colorBox" : "colorBox"}>
                 <input
                  className={ !!errors[fieldIndex]?.colors?.[colorIndex]?.color ? "errorRed colorBox" : "colorBox"}
                   type="text"
@@ -588,18 +571,10 @@ export default function AddListing() {
                 />
               </div>
 
-              {showPicker && showPicker.fieldIndex === fieldIndex && showPicker.colorIndex === colorIndex && ( // Show picker only for clicked input
-         <div
-         style={{ position: 'absolute', zIndex: '1' }}
-         ref={(el) => {
-          pickerRefs.current[`${fieldIndex}-${colorIndex}`] = el;
-        }}
-       >
-         <ChromePicker
-           color={colorField.color} // Ensure correct colorField usage
-           onChangeComplete={(c) => handleChangeComplete(c, fieldIndex, colorIndex, "color")}
-         />
-       </div>
+              {showPicker === colorIndex && ( // Show picker only for clicked input
+                <div style={{ position: 'absolute', zIndex: '1' }} ref={(el : any) => pickerRefs.current[colorIndex] = el}>
+                  <ChromePicker color={color} onChangeComplete={(c : any) => handleChangeComplete(c, fieldIndex, colorIndex, "color")} /> {/* Pass colorIndex */}
+                </div>
               )}
         </Grid2>
         <Grid2 size={{ xs: 12, md: 4 }}>
@@ -645,7 +620,7 @@ export default function AddListing() {
         onChange={handleImageChange}
         style={{ marginBottom: "20px" }}
       /> */}
-       <ImageInput onClick={handleDivClick}><input type="file" name="image" multiple accept="image/*" onChange={handleImageChange} placeholder="Image" style={{ display: "none" }} ref={fileInputRef} /><p>Image</p><AddOutlinedIcon className="icon" /></ImageInput>
+       <ImageInput onClick={handleDivClick}><input type="file" name="image" onChange={handleImageChange} placeholder="Image" style={{ display: "none" }} ref={fileInputRef} /><p>Image</p><AddOutlinedIcon className="icon" /></ImageInput>
        {/* <DragIng count = {images.length}> */}
   
     <DragDropContext onDragEnd={onDragEndd}>
@@ -661,7 +636,6 @@ export default function AddListing() {
               }}
             >
               {images.map((src : any, index : any) => (
-                
                 <Draggable key={src} draggableId={src} index={index}>
                   {(provided) => (
                     <div
@@ -675,7 +649,7 @@ export default function AddListing() {
                       }}
                     >
                       <img
-                        src={id && typeof src === "string" ?  `https://assets.lisparklez.com/${src}` : src.preview || src}
+                        src={src.preview || src}
                         alt="Draggable"
                         style={{
                           width: 100,

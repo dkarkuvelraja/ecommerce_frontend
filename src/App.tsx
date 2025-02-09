@@ -1,28 +1,81 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 // pages
-import Home from './pages/home';
-import ProductDetails from './pages/productDetails';
-import About from './Components/About';
-import Login from './Components/Login';
-import SignUp from './Components/SignUp';
+import Home from "./pages/Home/home";
+import ProductDetails from "./pages/productDetails";
+import Products from "pages/products";
+// admin pages
+import ManageCategory from "admin/pages/manageCategory";
+import AddListing from "admin/pages/addListing";
+import ManageListings from "admin/pages/manageListings";
+// page not found
+import NotFound from "NotFound";
 // state management
-import { ApolloProvider } from '@apollo/client';
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
-import client from './apollo/apolloClient';
-import { createTheme, ThemeProvider } from '@mui/material';
-import { GlobalStyle } from './assets/style/index';
+import { ApolloProvider } from "@apollo/client";
+import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom";
+import client from "./apollo/apolloClient";
+import { Container, createTheme, ThemeProvider } from "@mui/material";
+import { GlobalStyle } from "./assets/style/index";
 // components
-import Header from './Components/Header/Header';
-import Footer from './Components/Footer/Footer';
+import Header from "./Navigation/Header/Header";
+import Footer from "./Navigation/Footer/Footer";
+import AdminHeader from "admin/Navigation/Header/adminHeader";
+import AdminSideBarComponent from "admin/Navigation/Sidebar/adminSideBar";
 
-import ManageCategory from './Components/admin/manageCategory';
-import AddListing from './Components/admin/addListing';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import ManageListings from './Components/admin/manageListings';
-import PrivateRoute from './protectedRoutes';
-import Products from 'pages/products';
+// instruction modal
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// comon layout
+const DefaultLayout = () => {
+  return (
+    <>
+      <Header />
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
+
+// admin layout
+const AdminLayout = () => {
+  return (
+    <div className="overflow-hidden relative h-dvh">
+      <AdminHeader />
+      <Container className="h-full my-3" maxWidth="xl">
+        <div className="grid grid-cols-6 gap-4 h-full">
+          <AdminSideBarComponent />
+          <div className="col-span-5 overflow-y-scroll mb-20 relative">
+            <Outlet />
+          </div>
+        </div>
+      </Container>
+    </div>
+  );
+};
+
+const RootRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <DefaultLayout />,
+    children: [
+      { path: "/", element: <Home /> },
+      { path: "productDetails", element: <ProductDetails /> },
+      { path: "products", element: <Products /> },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      { path: "manageCategory", element: <ManageCategory /> },
+      { path: "addListing", element: <AddListing /> },
+      { path: "addListing/:id", element: <AddListing /> },
+      { path: "manageListings", element: <ManageListings /> },
+    ],
+  },
+  { path: "*", element: <NotFound /> },
+]);
 
 // import GlobalStyle from '../'
 function App() {
@@ -32,21 +85,21 @@ function App() {
         styleOverrides: {
           root: {
             backgroundColor: "#ffffff", // Force white background
-            color: '#000'
+            color: "#000",
           },
         },
       },
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: 'gray', // Default color
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "gray", // Default color
             },
-            '&:hover .MuiOutlinedInput-notchedOutline': {
-              borderColor: 'orange', // Hover color
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: "orange", // Hover color
             },
-            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: 'orange', // Focused color
+            "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "orange", // Focused color
             },
           },
         },
@@ -54,42 +107,26 @@ function App() {
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            color: 'gray',
-            top :"-6px",
-            fontSize: '14px', // Default label color
-            '&.Mui-focused': {
-              color: 'orange',
-              fontSize: '1rem !important' // Focused label color
+            color: "gray",
+            top: "-6px",
+            fontSize: "14px", // Default label color
+            "&.Mui-focused": {
+              color: "orange",
+              fontSize: "1rem !important", // Focused label color
             },
           },
         },
       },
     },
   });
+
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle/>
-    <ApolloProvider client={client}>
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/productDetails" element={<ProductDetails />} />
-          <Route path='/products' element={<Products />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signUp" element={<SignUp />} />
-          <Route element={<PrivateRoute />}>
-              <Route path='/admin/manageCategory' element={<ManageCategory />} />
-              <Route path='/admin/addListing' element={<AddListing />} />
-              <Route path='/admin/addListing/:id' element={<AddListing />} />
-              <Route path='/admin/manageListings' element={<ManageListings />} />
-          </Route>
-        </Routes>
-        <Footer />
-      </Router>
-    </ApolloProvider>
-    <ToastContainer position="bottom-right" />
+      <GlobalStyle />
+      <ApolloProvider client={client}>
+        <RouterProvider router={RootRouter} />
+      </ApolloProvider>
+      <ToastContainer position="top-right" />
     </ThemeProvider>
   );
 }
