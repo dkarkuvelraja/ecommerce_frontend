@@ -9,7 +9,7 @@
 }
 
 .slider-arrow-button {
-    @apply w-7 h-7 bg-white  z-10 rounded-full drop-shadow-md ring ring-1 ring-slate-200 absolute top-52 flex items-center justify-center;
+    @apply w-7 h-7 bg-white z-10 rounded-full drop-shadow-md ring ring-1 ring-slate-200 absolute top-32 flex items-center justify-center;
 }
 
 .slider-arrow{

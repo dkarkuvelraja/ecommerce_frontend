@@ -1,8 +1,8 @@
 import { Container, Grid2, Typography } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
 import { AddListingCss, Button, DragIng, ImageInput, SelectInput, StyledHR } from '../../assets/style/index'
-import AdminSideBarComponent from './adminSideBar'
-import TextInputComponent from './fieldInputs/TextInput'
+import AdminSideBarComponent from '../Navigation/Sidebar/adminSideBar'
+import TextInputComponent from '../fieldInputs/TextInput'
 import { useMutation, useQuery } from '@apollo/client'
 import { GET_ALL_CATEGORIES, GET_PRODUCT_BY_ID } from 'apollo/query'
 import { GridContextProvider, GridDropZone, GridItem, swap } from "react-grid-dnd";
@@ -573,7 +573,7 @@ export default function AddListing() {
 
               {showPicker === colorIndex && ( // Show picker only for clicked input
                 <div style={{ position: 'absolute', zIndex: '1' }} ref={(el : any) => pickerRefs.current[colorIndex] = el}>
-                  <ChromePicker color={color} onChangeComplete={(c) => handleChangeComplete(c, fieldIndex, colorIndex, "color")} /> {/* Pass colorIndex */}
+                  <ChromePicker color={color} onChangeComplete={(c : any) => handleChangeComplete(c, fieldIndex, colorIndex, "color")} /> {/* Pass colorIndex */}
                 </div>
               )}
         </Grid2>

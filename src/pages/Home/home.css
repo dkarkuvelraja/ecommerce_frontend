@@ -10,11 +10,11 @@
 
 
 .section {
-    @apply p-1 md:p-5 px-6 md:px-32 my-4 md:my-6;
+    @apply p-1 md:p-5 px-4 md:px-32;
 }
 
 .viewMore{
-    @apply flex justify-center items-center mt-5;
+    @apply flex justify-center items-center mt-2 sm:mt-5;
 }
 
 .step-action-div{

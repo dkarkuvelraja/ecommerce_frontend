@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput } from '../../../assets/style/index'
+import { TextInput } from '../../assets/style/index'
 
 export default function TextInputComponent(props : any) {
   return (

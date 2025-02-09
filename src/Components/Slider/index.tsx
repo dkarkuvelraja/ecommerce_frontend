@@ -33,7 +33,7 @@ export const ProductCardSlider = ({ products }: SliderProps) => {
     arrows: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 6,
     slidesToScroll: 1,
     prevArrow: <LeftArrow classStyles={'slick-arrow slick-prev slider-arrow-button -left-1'} />,
     nextArrow: <RightArrow classStyles={'slick-arrow slick-next slider-arrow-button -right-1'} />,
@@ -41,7 +41,7 @@ export const ProductCardSlider = ({ products }: SliderProps) => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 6,
           slidesToScroll: 1,
           infinite: true,
           dots: true
@@ -50,7 +50,7 @@ export const ProductCardSlider = ({ products }: SliderProps) => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 4,
           slidesToScroll: 1,
         }
       },

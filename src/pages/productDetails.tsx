@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 // components
 import { Box, Divider } from '@mui/material';
-import SectionHeader from '../Components/Header/SectionHeader';
+import SectionHeader from '../Navigation/Header/SectionHeader';
 import ProductCard from '../Components/Card/ProductCard';
 // styles
 import './products.css'
 // images
-import { LargeButtonArrow } from '../Components/Buttons/Buttons';
-import { ChartColumnBig } from 'lucide-react';
-import { productList } from '../utils';
+import { LargeButtonArrow } from '../Components/Buttons/Button';
+import { productList } from '../HelperFunctions/utils';
 import { InputNumber } from '../Components/input/InputRange';
+import { ChartColumnBig } from 'lucide-react';
 import { GET_PRODUCT_BY_ID } from 'apollo/query';
 import { useQuery } from '@apollo/client';
 interface ProductData{
@@ -101,8 +101,8 @@ export default function ProductDetails() {
     <>
       <Box className="section">
          <div className='grid md:grid-cols-2 gap-4 md:gap-0'>
-            <div className='flex justify-center md:justify-start gap-4'>
-              <div className='flex flex-col gap-4 order-last md:order-first'>
+            <div className='flex justify-center md:justify-start gap-6 h-fit'>
+              <div className='flex w-20 flex-col gap-4 order-last md:order-first'>
                 {
                   productList.slice(0,5).map((item : any, index: number) => {
                     if(activeImg === index) return <></>;
@@ -110,8 +110,8 @@ export default function ProductDetails() {
                   })
                 }
               </div>
-              <div className=''>
-                <img className='rounded-sm h-60 md:h-5/6' src={productList[activeImg].src} alt='product' />
+              <div className='h-60 md:h-5/6 w-4/6'>
+                <img className='rounded-sm h-full' src={productList[activeImg].src} alt='product' />
               </div>
             </div>
             <div className='p-1 md:p-3'>
@@ -141,10 +141,10 @@ export default function ProductDetails() {
                       <InputNumber value={productCount} addQuanity={handleAddQuanity} removeQuanity={handleRemoveQuanity} />
                     </div>
                   </div>
-                  {/* <div className='flex items-center'>
+                  <div className='flex items-center'>
                     <div className='font-medium mr-2'>Size Chart :</div>
                     <div><ChartColumnBig height={14} width={14} stroke='#F68B29' /></div>
-                  </div> */}
+                  </div>
                 </div>
                 <div className='flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0'>
                   <button className='px-8 p-2 border border-primary rounded-md text-sm'>Add to cart</button>
@@ -196,7 +196,7 @@ export default function ProductDetails() {
       </Box>
       <Box className='section'>
         <SectionHeader classStyles='mb-4' title='Related Products' />
-        <div className='grid grid-cols-2 md:grid-cols-4 gap-6 py-5 mb-5'>
+        <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6 py-5 mb-5'>
           {
             productList.map((item: any)=> (
               <ProductCard imageSrc={item.src} produtName={"Slim Fit T-Shirt"} rating={4.3} ratingCount={470} actualprice={500} originalPrice={700} />
