@@ -10,7 +10,7 @@
 
 
 .section {
-    @apply p-1 md:p-5 px-4 md:px-32;
+    @apply p-1 sm:p-5 px-1 sm:px-32;
 }
 
 .viewMore{
@@ -25,8 +25,12 @@
     @apply h-14 w-14
 }
 
+.step-action-div h5{
+    @apply text-sm sm:text-base
+}
+
 .step-action-div p{
-    @apply text-sm w-64
+    @apply text-xs sm:text-sm w-auto sm:w-64
 }
 
 .slick-dots li button:before{

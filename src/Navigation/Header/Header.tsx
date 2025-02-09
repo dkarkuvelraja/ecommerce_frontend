@@ -57,12 +57,12 @@ function Header(props: Props) {
               <h6 className="text-white tracking-wide">Get Exclusive Offers !!!</h6>
             </Container>
           </HideOnScroll>
-          <Container maxWidth="xl">
-            <Toolbar sx={{ px: { xs: 0, md: 3 }, minHeight: { xs: "48px", sm: "60px" } }}>
+          <Container maxWidth='xl'>
+            <Toolbar sx={{ px: { xs: 0, sm: 3 }, minHeight: { xs: "48px", sm: "60px" } }}>
               <div className="flex justify-between w-full">
                 <div className="flex gap-2 items-center">
-                  <img className="h-4 md:h-6" src={logoDark} alt="logo" />
-                  <img className="h-4 md:h-6" src={logoDarkName} alt="company name" />
+                  <img className="h-3 sm:h-6" src={logoDark} alt="logo" />
+                  <img className="h-3 sm:h-6" src={logoDarkName} alt="company name" />
                 </div>
                 <div className="grow">
                   <div className="flex items-center justify-end md:gap-16">
@@ -96,7 +96,7 @@ function Header(props: Props) {
                         />
                       )}
                     />
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-1 sm:space-x-3">
                       <div className="hover:text-primary cursor-pointer flex items-center">
                         <FavoriteBorder className="!text-lg md:!text-2xl !font-normal !text-gray-400" />
                       </div>
@@ -107,7 +107,7 @@ function Header(props: Props) {
                         {isAuth ? (
                           <Tooltip title='Account Settings'>
                             <IconButton size="small" onClick={(e) => handleMenuOpen(e)}>
-                              <Avatar className="!text-base !size-8">U</Avatar>
+                              <Avatar className="!text-sm sm:!text-base !size-6 sm:!size-8">U</Avatar>
                             </IconButton>
                           </Tooltip>
                         ) : (
@@ -120,12 +120,13 @@ function Header(props: Props) {
                           classes={{ 
                             paper: '!border !text-sm mt-2'
                           }}
+                          className="profile-menu"
                           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                         >
-                          <MenuItem className="!text-sm !px-3 !py-1" onClick={() => handleProfile()}>Profile</MenuItem>
+                          <MenuItem className="menu-item" onClick={() => handleProfile()}>Profile</MenuItem>
                           <Divider />
-                          <MenuItem className="!text-sm !px-3 !py-1" onClick={() => logOut()}>
+                          <MenuItem className="menu-item" onClick={() => logOut()}>
                             <ListItemIcon className="!min-w-5">
                               <Logout className="!text-base" />
                             </ListItemIcon>

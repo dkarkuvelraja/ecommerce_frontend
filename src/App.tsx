@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 // pages
 import Home from "./pages/Home/home";
@@ -14,13 +14,13 @@ import NotFound from "NotFound";
 import { ApolloProvider } from "@apollo/client";
 import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom";
 import client from "./apollo/apolloClient";
-import { Container, createTheme, ThemeProvider } from "@mui/material";
+import { Box, Container, createTheme, ThemeProvider } from "@mui/material";
 import { GlobalStyle } from "./assets/style/index";
 // components
 import Header from "./Navigation/Header/Header";
 import Footer from "./Navigation/Footer/Footer";
 import AdminHeader from "admin/Navigation/Header/adminHeader";
-import AdminSideBarComponent from "admin/Navigation/Sidebar/adminSideBar";
+import AdminSideBar from "admin/Navigation/Sidebar/adminSideBar";
 
 // instruction modal
 import { ToastContainer } from "react-toastify";
@@ -39,16 +39,26 @@ const DefaultLayout = () => {
 
 // admin layout
 const AdminLayout = () => {
+  const [isMenuOpen, setMenuOpen]= useState<boolean>(false);
+
+  const handleMobileMenu = () =>{
+    setMenuOpen((prev) => !prev);
+  }
+
   return (
     <div className="overflow-hidden relative h-dvh">
-      <AdminHeader />
+      <AdminHeader handleMobileMenu={handleMobileMenu} isMobileMenuOpen={isMenuOpen}/>
       <Container className="h-full my-3" maxWidth="xl">
-        <div className="grid grid-cols-6 gap-4 h-full">
-          <AdminSideBarComponent />
-          <div className="col-span-5 overflow-y-scroll mb-20 relative">
+        <Box className="grid sm:grid-cols-6 gap-4" sx={{ height: { xs:'calc(100% - 60px)', sm:'calc(100% - 100px)' } }}>
+          <div className="hidden sm:block">
+            <div className="h-full bg-primary text-white rounded-md shadow-sm">
+              <AdminSideBar />
+            </div>
+          </div>
+          <div className="col-span-5 overflow-y-scroll relative">
             <Outlet />
           </div>
-        </div>
+        </Box>
       </Container>
     </div>
   );

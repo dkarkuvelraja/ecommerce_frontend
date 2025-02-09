@@ -162,29 +162,6 @@ ${(props : StyledHR) => props.wid12 && `
   `}
 `
 
-export const AdminSideBar = styled.div`
-@media (max-width: 599px) {
-  display: none;
-}
-background-color : #F1F1F1;
-height : auto;
-border-radius : 23px;
-ul{
-padding: 10px;
-list-style-type : none;
-text-align : center;
-height : 100vh;
-li{
-padding : 10px;
-margin : 10px;
-color : black;
-cursor : pointer;
-}
-.active{
-  border-radius : 4px;
-  background: ${targetColor};
-  color : white;
-}}`
 
 export const ManageCategoryCss = styled.div`
 .addBtn{

@@ -16,6 +16,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { ChromePicker, ColorResult } from "react-color";
+import { SectionHeader } from "admin/Navigation/Header/SectionHeader";
 export default function AddListing() {
   const [inputs, setInputs] = useState<any>([
     { type: "text", placeholder: "Product Name", value: "", name: "productname" },
@@ -375,12 +376,11 @@ export default function AddListing() {
   return (
     <div>
       <Container className="admin-Content-view" maxWidth="xl">
+        <div className="flex justify-between items-center w-full">
+          <SectionHeader title="Add Listing" />
+        </div>
         <Grid2 container>
-          <Grid2 size={{ xs: 12, md: 12 }} sx={{ pt: 4, pl: 4 }}>
-            <div>
-              <Typography className="title">Add Listing</Typography>
-              <StyledHR wid12 />
-            </div>
+          <Grid2 size={{ xs: 12, md: 12 }}>
             {/* </Grid2> */}
             <Grid2 size={{ xs: 12, md: 12 }}>
               <AddListingCss>

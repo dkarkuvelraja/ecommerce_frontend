@@ -25,12 +25,16 @@ interface outlinedButtonProps {
 
 export function OutlinedButton({ name, handleClick, propoerty } : outlinedButtonProps){
     return(
-      <Button loading={propoerty?.isLoader || false } loadingPosition="start" startIcon={propoerty?.isStartIcon || null} disabled={propoerty?.isDisable || false} variant='outlined' onClick={() =>handleClick()} className='!border-primary !text-black !px-8 !capitalize hover:bg-primary hover:!text-white'>{name}</Button>
+      <Button classes={{
+        icon: 'text-xs sm:text-base !mr-4'
+      }} loading={propoerty?.isLoader || false } loadingPosition="start" startIcon={propoerty?.isStartIcon || null} disabled={propoerty?.isDisable || false} variant='outlined' onClick={() =>handleClick()} className='!border-primary !text-black !px-2 sm:!px-8 !text-xs sm:!text-sm !capitalize hover:bg-primary hover:!text-white'>{name}</Button>
     )
 }
 
 export function ContainedButton({ name, handleClick, propoerty } : outlinedButtonProps){
   return(
-    <Button loading={propoerty?.isLoader || false } loadingPosition="start" startIcon={propoerty?.isStartIcon || null} disabled={propoerty?.isDisable || false} variant='outlined' onClick={() =>handleClick()} className='!border-primary !px-8 !capitalize !bg-primary !text-white hover:bg-transparent hover:!text-black'>{name}</Button>
+    <Button classes={{
+      icon: 'text-xs sm:text-base !mr-4'
+    }} loading={propoerty?.isLoader || false } loadingPosition="start" startIcon={propoerty?.isStartIcon || null} disabled={propoerty?.isDisable || false} variant='outlined' onClick={() =>handleClick()} className='!border-primary !px-8 !capitalize !bg-primary !text-white hover:bg-transparent hover:!text-black'>{name}</Button>
   )
 }

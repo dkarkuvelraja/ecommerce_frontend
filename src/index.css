@@ -26,14 +26,29 @@ code {
   @apply cursor-pointer hover:text-primary;
 }
 
-.sidebar-menu:hover .icon{
-  @apply text-black
+.sidebar-menu{
+  @apply h-10 sm:h-auto
+}
+.sidebar-menu-button{
+  @apply !rounded-md hover:!text-white hover:shadow-sm hover:!bg-primary sm:hover:!text-black sm:hover:shadow-md sm:hover:!bg-white
+}
+
+.sidebar-menu-button .icon{
+  @apply text-xl sm:text-2xl sm:text-white
+}
+
+.sidebar-menu-button:hover .icon{
+  @apply text-white sm:text-black
 }
 
 .admin-Content-view{
-  @apply my-5 space-y-6
+  @apply my-2 sm:my-5 space-y-3 sm:space-y-6
 }
 
 .form-control-space-y{
   @apply space-y-3
+}
+
+.profile-menu .menu-item{
+  @apply !text-xs sm:!text-sm !min-h-6 sm:!min-h-12 !px-3 !py-1
 }
