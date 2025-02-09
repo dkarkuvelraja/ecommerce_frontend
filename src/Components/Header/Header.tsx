@@ -27,7 +27,7 @@ function Header() {
   };
   return (
     <>
-      {/* {open && <Login loginPopOpen={open} popClose={popClose} />} */} 
+       {open && <Login loginPopOpen={open} popClose={popClose} />}
       <Box className="hidden md:block bg-primary text-center p-2 text-sm">
         <span className="text-white">Get Exclusive Offers !!!</span>
       </Box>

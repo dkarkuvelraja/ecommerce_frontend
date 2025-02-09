@@ -12,34 +12,34 @@ import { productList } from '../utils';
 import { InputNumber } from '../Components/input/InputRange';
 import { GET_PRODUCT_BY_ID } from 'apollo/query';
 import { useQuery } from '@apollo/client';
-interface ProductData{
-  id : string
-  title : string
-  description : string
-  category_id : string
-  size_and_price : Array<{
-    _id : string
-    size : number
-    price : number
-    discount : number
-    display_price : number
-    colors  : Array<{
-      color : string
-      available_count : number
-      sold_out : boolean
-      __typename : string
-    }>
-    __typename : string
-  }>
-  status : string
-  image : Array<any>
-  sold_out_count : number
-  likes : number
-  total_available_count : number
-  createdAt : string
-  updatedAt: string
-  __typename : string
-}
+// interface ProductData{
+//   id : string
+//   title : string
+//   description : string
+//   category_id : string
+//   size_and_price : Array<{
+//     _id : string
+//     size : number
+//     price : number
+//     discount : number
+//     display_price : number
+//     colors  : Array<{
+//       color : string
+//       available_count : number
+//       sold_out : boolean
+//       __typename : string
+//     }>
+//     __typename : string
+//   }>
+//   status : string
+//   image : Array<any>
+//   sold_out_count : number
+//   likes : number
+//   total_available_count : number
+//   createdAt : string
+//   updatedAt: string
+//   __typename : string
+// }
 export default function ProductDetails() {
   const [activeImg, setActiveImg] = useState(0);
   const [productSize, setProductSize]= useState('s');
@@ -62,9 +62,9 @@ export default function ProductDetails() {
                 {
                     "color": "",
                     "available_count": 0,
-                    "sold_out": false,
-                    "__typename": ""
-                }
+                "sold_out": false,
+                "__typename": ""
+            }
             ],
             "__typename": "SizeAndPrice"
         }
