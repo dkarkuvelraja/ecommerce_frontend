@@ -1,6 +1,3 @@
-@tailwind utilities;
-
-
 .slick-next:before, .slick-prev:before{
     display: none !important;
 }

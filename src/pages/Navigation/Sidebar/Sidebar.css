@@ -1,0 +1,19 @@
+.sidebar-list .header {
+  @apply !bg-transparent !text-gray-400 sm:!text-white !static capitalize !text-xs sm:!text-sm mb-2 tracking-wide;
+}
+
+/* Sidebar css*/
+.sidebar-menu {
+  @apply h-10 sm:h-12 !p-2;
+}
+.sidebar-menu-button {
+  @apply !rounded-md !py-1.5 !px-3 space-x-1 hover:!text-white hover:shadow-sm hover:!bg-primary sm:hover:!text-black sm:hover:shadow sm:hover:!bg-white;
+}
+
+.sidebar-menu-button .icon {
+  @apply text-xl sm:text-xl sm:text-white;
+}
+
+.sidebar-menu-button:hover .icon {
+  @apply text-white sm:text-black;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import { AddShoppingCartOutlined, CurrencyRupee, FavoriteBorderOutlined, Star } from "@mui/icons-material";
-import { Card, CardActionArea, CardContent, CardMedia } from "@mui/material";
+import { Card, CardActionArea, CardContent, CardMedia, IconButton } from "@mui/material";
 
 interface ProductCardProps {
   imageSrc: string;
@@ -23,8 +23,12 @@ function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, o
       >
         <CardMedia component="img" image={imageSrc} className="w-full rounded-sm sm:rounded-md" alt="Product Image" />
         <div className="flex flex-col space-y-2 items-center justify-center absolute top-2 sm:top-3 right-2 z-20">
-          <FavoriteBorderOutlined className="!text-xs sm:!text-base !fill-white" />
-          <AddShoppingCartOutlined className="!text-xs sm:!text-base !fill-white" />
+          <IconButton size="small" className="hover:!bg-white card-action-button">
+            <FavoriteBorderOutlined className="!text-xs sm:!text-base !fill-white icon-fav" />
+          </IconButton>
+          <IconButton size="small" className="hover:!bg-white  card-action-button">
+            <AddShoppingCartOutlined className="!text-xs sm:!text-base !fill-white icon-cart" />
+          </IconButton>
         </div>
       </CardActionArea>
       <CardContent className="text-xs sm:text-sm space-y-0.5 sm:space-y-1 mt-1 sm:mt-1.5" sx={{ "&.MuiCardContent-root": { padding: "6px", backgroundColor: "transparent" } }}>

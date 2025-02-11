@@ -1,3 +1,8 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -8,9 +13,9 @@ body {
   @apply select-none
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*admin header */
+.header-icon-mui-border{
+  @apply !text-xl sm:!text-xl !text-gray-400 cursor-pointer
 }
 
 /* login modal css */
@@ -26,23 +31,13 @@ code {
   @apply cursor-pointer hover:text-primary;
 }
 
-.sidebar-menu{
-  @apply h-10 sm:h-auto
-}
-.sidebar-menu-button{
-  @apply !rounded-md hover:!text-white hover:shadow-sm hover:!bg-primary sm:hover:!text-black sm:hover:shadow-md sm:hover:!bg-white
-}
-
-.sidebar-menu-button .icon{
-  @apply text-xl sm:text-2xl sm:text-white
-}
-
-.sidebar-menu-button:hover .icon{
-  @apply text-white sm:text-black
+/* product css*/
+.card-action-button:hover .icon-fav, .card-action-button:hover .icon-cart{
+    @apply !fill-black
 }
 
 .admin-Content-view{
-  @apply my-2 sm:my-5 space-y-3 sm:space-y-6
+  @apply my-1.5 sm:my-3.5 space-y-3 sm:space-y-6
 }
 
 .form-control-space-y{
@@ -50,5 +45,9 @@ code {
 }
 
 .profile-menu .menu-item{
-  @apply !text-xs sm:!text-sm !min-h-6 sm:!min-h-12 !px-3 !py-1
+  @apply !text-xs sm:!text-sm !min-h-6 sm:!min-h-7 !px-3 !py-1
+}
+
+.custom-scroll-bar{
+  @apply scrollbar-thin scrollbar-thumb-primary scrollbar-track-slate-200 
 }

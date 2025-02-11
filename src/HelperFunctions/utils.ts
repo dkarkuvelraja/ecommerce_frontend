@@ -1,4 +1,4 @@
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import productImg1 from '../assets/images/products/product-1.png';
 import productImg2 from '../assets/images/products/product-2.png';
 import productImg3 from '../assets/images/products/product-3.png';
