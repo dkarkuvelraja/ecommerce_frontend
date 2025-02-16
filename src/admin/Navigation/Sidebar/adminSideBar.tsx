@@ -34,7 +34,8 @@ export default function AdminSideBar({ handleMobileMenu = () => {} }: adminSideB
     const message = logoutSuccess("Praveen");
     infoToast(message);
     setTimeout(() => {
-      document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+      localStorage.removeItem('loginUserToken')
+      // document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
       navigate("/");
     }, 2000);
   };
@@ -63,16 +64,18 @@ export default function AdminSideBar({ handleMobileMenu = () => {} }: adminSideB
 
   return (
     <>
-      <List sx={{ height: { xs:'calc(100% - 60px)', sm:'calc(100% - 80px)' } }}>
-        {sidebarMenu.map((menuitem, index: number) => {
-          const key = `menu-item-${index}`;
-          return (
-            <>
-              <CustomListItem key={key} handleRounte={menuitem.navigate} Icon={menuitem.icon} listName={menuitem.name} />
-            </>
-          );
-        })}
-      </List>
+      <div className="overflow-y-auto custom-scroll-bar pt-4 h-[calc(100%-60px)] sm:h-[calc(100%-80px)]">
+        <List>
+          {sidebarMenu.map((menuitem, index: number) => {
+            const key = `menu-item-${index}`;
+            return (
+              <>
+                <CustomListItem key={key} handleRounte={menuitem.navigate} Icon={menuitem.icon} listName={menuitem.name} />
+              </>
+            );
+          })}
+        </List>
+      </div>
       <Divider className="!border-white" />
       <List>
         <ListItem className="!p-2">
@@ -105,7 +108,7 @@ export default function AdminSideBar({ handleMobileMenu = () => {} }: adminSideB
         }}
         className="profile-menu"
         transformOrigin={{ horizontal: isSmallDevice ? 'right' : "left", vertical: "bottom" }}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "center", vertical: "top" }}
       >
         <MenuItem className="menu-item" onClick={() => handleProfile()}>
           Profile

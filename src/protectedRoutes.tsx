@@ -3,7 +3,8 @@ import { Navigate, Outlet } from 'react-router-dom'; // Using Navigate for redir
 import { getCookie } from './HelperFunctions/basicHelpers'; // Import getCookie function from your utils or directly in this file
 
 const PrivateRoute = ({ children } : any) => {
-  const accessToken = getCookie('accessToken');
+  const accessToken = localStorage.getItem('loginUserToken')
+  // const accessToken = getCookie('accessToken');
 
   // If there's no access token, redirect to the login page
   if (!accessToken) {

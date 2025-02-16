@@ -54,8 +54,8 @@ export default function Login({ onClose } : loginProps) {
         try {
           setLogin(true);
           const loginSubmission = await login({ variables: { data: loginData } });
-          console.log("loginSubmission ", loginSubmission)
           if (loginSubmission.data.login.status === 200) {
+            localStorage.setItem("loginUserToken", loginSubmission.data.login.response)
             Cookies.set("accessToken", loginSubmission.data.login.response, { expires: 7 });
             const message = loginSuccess('Praveen');
             sucessToast(message);

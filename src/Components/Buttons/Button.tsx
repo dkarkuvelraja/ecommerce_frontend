@@ -35,6 +35,6 @@ export function ContainedButton({ name, handleClick, propoerty } : outlinedButto
   return(
     <Button classes={{
       icon: 'text-xs sm:text-base !mr-4'
-    }} loading={propoerty?.isLoader || false } loadingPosition="start" startIcon={propoerty?.isStartIcon || null} disabled={propoerty?.isDisable || false} variant='outlined' onClick={() =>handleClick()} className='!border-primary !px-8 !capitalize !bg-primary !text-white hover:bg-transparent hover:!text-black'>{name}</Button>
+    }} loading={propoerty?.isLoader || false } loadingPosition="start" startIcon={propoerty?.isStartIcon || null} disabled={propoerty?.isDisable || false} variant='outlined' onClick={() =>handleClick()} className='!border-primary !px-8 !capitalize !bg-primary !text-white hover:!bg-transparent hover:!text-black'>{name}</Button>
   )
 }

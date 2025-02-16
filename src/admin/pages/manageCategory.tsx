@@ -259,7 +259,6 @@ export default function ManageCategory() {
           <div className="border border-gray-500 rounded-md p-4 drop-shadow-md">
             <DragDropContext onDragEnd={onDragEnd}>
               {Object.values(data.parents).map((parent: any) => {
-                const isChildPresent = parent.children?.length > 0;
                 return (
                   <div
                     key={parent.id}
@@ -271,15 +270,13 @@ export default function ManageCategory() {
                     <div
                       className="parentContent cursor-pointer space-x-1 text-base"
                       onClick={() => {
-                        if(isChildPresent){
                           handleParentClick(parent.id);
                           toggleDropdown(parent.id);
-                        }
                       }}
                     >
                       <span>{parent.title}</span>
                       {
-                        isChildPresent ? expanded[parent.id] ? <ArrowDropUp /> : <ArrowDropDown /> : null
+                        expanded[parent.id] ? <ArrowDropUp /> : <ArrowDropDown />
                       }
                       
                     </div>
@@ -341,7 +338,7 @@ export default function ManageCategory() {
                 )}
                 {preview && (
                   <ImagePreview>
-                    <img src={preview} style={{ maxWidth: "100%", maxHeight: "300px", marginTop: "10px" }} />
+                    <img src={preview} style={{ maxWidth: "100%", maxHeight: "300px", marginTop: "10px" }} alt="product" />
                   </ImagePreview>
                 )}
               </div>
