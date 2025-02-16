@@ -46,7 +46,9 @@ function Header(props: Props) {
       navigate("/");
     }, 2000)
   };
-
+  const redirection = () => {
+    navigate("/")
+  }
   return (
     <>
       <CssBaseline />
@@ -60,7 +62,7 @@ function Header(props: Props) {
           <Container maxWidth='xl'>
             <Toolbar sx={{ px: { xs: 0, sm: 3 }, minHeight: { xs: "48px", sm: "60px" } }}>
               <div className="flex justify-between w-full">
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center" onClick = {redirection}>
                   <img className="h-3 sm:h-6" src={logoDark} alt="logo" />
                   <img className="h-3 sm:h-6" src={logoDarkName} alt="company name" />
                 </div>

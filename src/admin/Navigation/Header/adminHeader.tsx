@@ -11,7 +11,9 @@ interface adminHeaderProps{
 
 export default function AdminHeader({ isMobileMenuOpen, handleMobileMenu }: adminHeaderProps) {
   const navigate = useNavigate();
-
+  const redirection = () => {
+    navigate("/")
+  }
   return (
     <>
       <AppBar elevation={0} className="!text-black !border-b">
@@ -23,7 +25,7 @@ export default function AdminHeader({ isMobileMenuOpen, handleMobileMenu }: admi
                   <MenuOpen className="!!text-xl sm:!text-2xl" />
                 </IconButton>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-2 items-center " onClick = {redirection}>
                 <img className="h-4 md:h-6" src={logoDark} alt="logo" />
                 <img className="h-4 md:h-6" src={logoDarkName} alt="company name" />
               </div>
