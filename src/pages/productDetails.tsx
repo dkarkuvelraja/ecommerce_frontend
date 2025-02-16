@@ -84,8 +84,11 @@ export default function ProductDetails() {
             // skip : !id,
           });
           useEffect(() => {
-            console.log("datadata",data.getProductById.responce) // Check this data
-            setProductData(data.getProductById.responce)
+            // console.log("datadata",data.getProductById.responce) // Check this data
+            if(data?.getProductById){
+              setProductData(data.getProductById.responce)
+            }
+
           },[data])
   const handleAddQuanity = () =>{
      setProductCount((count) => count +1);
