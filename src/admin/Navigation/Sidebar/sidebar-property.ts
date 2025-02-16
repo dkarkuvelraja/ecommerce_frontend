@@ -4,5 +4,5 @@ export const sidebarMenu = [
     { name: 'Manage Categories', navigate: '/admin/manageCategory', icon: Category },
     { name: 'User Management', navigate: '', icon: Person },
     { name: 'Listing Management', navigate: '/admin/manageListings', icon: List },
-    { name: 'AD Management', navigate: '', icon: AddBusiness }
+    { name: 'AD Management', navigate: '/admin/addAdvertisment', icon: AddBusiness }
 ]

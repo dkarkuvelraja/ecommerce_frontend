@@ -10,7 +10,8 @@ import { GET_ALL_CATEGORIES } from "../../apollo/query";
 import LoaderHorse from "../../Components/loaderHorse";
 import { toast } from "react-toastify";
 import { validation } from "HelperFunctions/validation";
-import { isValid } from "HelperFunctions/basicHelpers";
+import { isValid, s3ImgUrl } from "HelperFunctions/basicHelpers";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 // components
 import { SectionHeader, Header3 } from "admin/Navigation/Header/SectionHeader";
 import { ContainedButton, OutlinedButton } from "../../Components/Buttons/Button";
@@ -36,6 +37,7 @@ export default function ManageCategory() {
   const [parentOptions, setParentOptions] = useState<any>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [expanded, setExpanded] = useState<any>({ kids: true, adults: false, elders: false });
+  const [newImage,setNewImage] = useState<boolean>(false)
   const [formData, setFormData] = useState<any>({
     category_name: "",
     image: "",
@@ -103,7 +105,12 @@ export default function ManageCategory() {
     //   },
     // });
   };
-
+  const handleDeleteField = () => {
+    const data = formData;
+    data.image = ""
+    setFormData(data)
+    setPreview("")
+  }
   const toggleDropdown = (parentId: string) => {
     setExpanded({ ...expanded, [parentId]: !expanded[parentId] });
   };
@@ -117,6 +124,7 @@ export default function ManageCategory() {
         const reader = new FileReader(); // Initialize FileReader
         reader.onloadend = () => {
           setPreview(reader.result);
+         isEdit && setNewImage(true)
           setFormData((prev: any) =>
             isEdit
               ? { ...prev, [name]: files1[0], isNewImage: true }
@@ -149,7 +157,6 @@ export default function ManageCategory() {
     // delete formData.parent_id;
     // const formDataa = {...formData}
     const valid = validation("manageCategory", formData);
-    console.log("valid", valid);
     setErrors(valid);
     if (isValid(valid)) {
       try {
@@ -341,7 +348,11 @@ export default function ManageCategory() {
                 )}
                 {preview && (
                   <ImagePreview>
-                    <img src={preview} style={{ maxWidth: "100%", maxHeight: "300px", marginTop: "10px" }} />
+                    <div style={{ maxWidth: "100%", maxHeight: "300px", marginTop: "10px" }} className="relative">
+                    <CloseOutlinedIcon className="closeIconBtn" onClick={() => handleDeleteField()}/>
+                    <img src={isEdit && !newImage ? `${s3ImgUrl}${preview}` : preview } />
+
+                    </div>
                   </ImagePreview>
                 )}
               </div>

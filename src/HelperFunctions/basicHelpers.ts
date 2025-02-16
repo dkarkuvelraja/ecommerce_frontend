@@ -20,3 +20,6 @@ export function getCookie(name : string) {
     // Return null if the cookie is not found
     return null;
 }
+
+
+export const s3ImgUrl = "https://assets.lisparklez.com/"

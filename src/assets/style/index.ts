@@ -30,6 +30,26 @@ interface TextInputProps{
   wid100? : boolean
 }
 export const GlobalStyle = createGlobalStyle`
+::-webkit-scrollbar {
+  width: 10px;               /* Width of the scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f0f0f0;       /* Background of the scrollbar track */
+  border-radius: 6px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;          /* Color of the scrollbar handle */
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;          /* Color of the scrollbar handle on hover */
+}
   .minWidth45{
   min-width : 45px !important;
   }
@@ -238,7 +258,7 @@ width: 100%;
 `
 export const SelectInput = styled.select<SelectInputProps>`
 border : 1px solid ${mainColor};
-  padding: 10px 25px;
+  padding: 10px 8px;
   border-radius: 10px;
   width : ${(props : SelectInputProps) => props.wid100 ? "100%" : "30%"} ;
 `
@@ -307,11 +327,18 @@ position: absolute;
   right : -8px;}`
 
 export const ImagePreview = styled.div`
-img{
-margin-top: 10px;
+div,img{
+margin-top: 20px;
   height: 100px;
   width: 100px;
   object-fit: cover;}
+    .closeIconBtn{
+  position: absolute;
+  top: -12px;
+  background: orange;
+  border-radius: 15px;
+  padding: 4px;
+  right : -8px;}
 `
 
 export const PageLoader = styled.div`
