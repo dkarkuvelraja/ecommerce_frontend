@@ -60,11 +60,16 @@ export const validation = (page: string, data: any) => {
     case "addProduct":
       errors.title = !data.title ? "Title is Required" : "";
       errors.description = !data.description ? "Description is Required" : data.description.length < 10 ? "Description need atleat 10 letters" :  data.description.length > 500 ?   "Description need to be below 500 letters" : ""
+      errors.status = data.id ? !data.status ? "Status is Required" : "" : ""
       break;
     case "manageCategory": 
     errors.category_name = !data.category_name ? "Category title is required" : ""
     errors.image = !data.image ? "Image is required" : ""
     break;
+    case "adManagement":
+      console.log("dataaaaaa",data)
+      errors.image = !data.images ? "Image is required!" : "";
+      break;
     default:
       console.warn("Validation not implemented for this page:", page);
       break;

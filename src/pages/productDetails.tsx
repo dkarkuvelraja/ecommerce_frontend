@@ -70,30 +70,34 @@ export default function ProductDetails() {
         __typename: "SizeAndPrice",
       },
     ],
+    
+    "status": "",
+    "image": [ ],
+    "sold_out_count": 0,
+    "likes": 0,
+    "total_available_count": 0,
+    "createdAt": "",
+    "updatedAt": "",
+    "__typename": "Product"
+})
+    const { data }  = useQuery(GET_PRODUCT_BY_ID, {
+            variables : {getProductByIdId : "6793d5cbdcbfd502dc151408"},
+            // skip : !id,
+          });
+          useEffect(() => {
+            // console.log("datadata",data.getProductById.responce) // Check this data
+            if(data?.getProductById){
+              setProductData(data.getProductById.responce)
+            }
 
-    status: "",
-    image: [],
-    sold_out_count: 0,
-    likes: 0,
-    total_available_count: 0,
-    createdAt: "",
-    updatedAt: "",
-    __typename: "Product",
-  });
-  const { data } = useQuery(GET_PRODUCT_BY_ID, {
-    variables: { getProductByIdId: "6793d5cbdcbfd502dc151408" },
-    // skip : !id,
-  });
-  useEffect(() => {
-    setProductData(data?.getProductById?.responce);
-  }, [data]);
-  const handleAddQuanity = () => {
-    setProductCount((count) => count + 1);
-  };
-
-  const handleRemoveQuanity = () => {
-    if (productCount > 1) {
-      setProductCount((count) => count - 1);
+          },[data])
+  const handleAddQuanity = () =>{
+     setProductCount((count) => count +1);
+  }
+  
+  const handleRemoveQuanity = () =>{
+    if(productCount > 1){
+      setProductCount((count) => count-1);
     }
   };
 

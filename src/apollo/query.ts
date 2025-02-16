@@ -91,3 +91,18 @@ query GetProductById($getProductByIdId: ID!) {
     status
   }
 }`
+
+export const GET_ALL_ADS = gql`
+query GetAllAd {
+  getAllAd {
+    status
+    result
+    response {
+      _id
+      imageUrl
+      status
+      createdAt
+      updatedAt
+    }
+  }
+}`

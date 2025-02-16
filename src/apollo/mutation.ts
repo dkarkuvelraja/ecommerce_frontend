@@ -54,3 +54,19 @@ mutation EditProduct($data: EditProductInput!) {
     status
   }
 }`
+
+
+export const CREATE_AD = gql`mutation CreateAd($data: CreateAdInput!) {
+  createAd(data: $data) {
+    result
+    status
+  }
+}`
+
+export const DELETE_AD = gql`
+mutation DeleteAd($data: deleteCategoryInput!) {
+  deleteAd(data: $data) {
+    result
+    status
+  }
+}`

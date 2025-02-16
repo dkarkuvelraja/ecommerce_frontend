@@ -11,12 +11,13 @@ import { CREATE_PRODUCT, EDIT_CATEGORY } from "apollo/mutation";
 import { validation } from "HelperFunctions/validation";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { isValid } from "HelperFunctions/basicHelpers";
+import { isValid, s3ImgUrl } from "HelperFunctions/basicHelpers";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ChromePicker, ColorResult } from "react-color";
 import { SectionHeader } from "admin/Navigation/Header/SectionHeader";
+
 export default function AddListing() {
   const [inputs, setInputs] = useState<any>([
     { type: "text", placeholder: "Product Name", value: "", name: "productname" },
@@ -26,7 +27,9 @@ export default function AddListing() {
     { type: "file", placeholder: "Product Image", value: "", name: "productimage" },
     { type: "text", placeholder: "Price", value: "", name: "price" },
   ]);
+  const navigate = useNavigate()
   const [images, setImages] = useState<any>([]);
+  const [oldImages, setOldImages] = useState<any>()
   const [color, setColor] = useState("#FF0000");
   const [deletedImages, setDeletedImages] = useState<any>([]);
   const [createProduct] = useMutation(CREATE_PRODUCT);
@@ -79,28 +82,22 @@ export default function AddListing() {
     skip: !id,
   });
   useEffect(() => {
-    if (data) {
-      console.log("dataaaaaaa", data);
-    }
     if (categoriesData && data) {
       const editData = data.getProductById.responce;
       const categoriesResponse = categoriesData.getAllCategory.response;
       setEditedData(editData);
       const result = categoriesResponse.find((parent: { children: any[] }) => parent.children.some((child) => child._id === editData.category_id));
-      console.log("result", result);
       const formData = { parent_category: result._id, category_id: editData.category_id, title: editData.title, description: editData.description };
       const filedData = transformData(editData.size_and_price);
-      console.log("filedData", filedData);
       setFields(filedData);
       setFormData(formData);
       setChildOptions(result.children);
-      setImages(editData.image);
+      setOldImages(editData.image);
     }
   }, [data]);
   useEffect(() => {
     if (categoriesData) {
       const categoriesResponse = categoriesData.getAllCategory.response;
-      console.log("idddddddddddd", categoriesResponse);
       const parents: any = {};
 
       categoriesResponse.forEach((parent: { category_name: any; children: any }) => {
@@ -168,8 +165,12 @@ export default function AddListing() {
         preview: URL.createObjectURL(file), // Generate preview
       })
     );
-
-    setImages((prevImages: any) => [...prevImages, ...newImages]);
+    if(id){
+      setOldImages((prevImages: any) => [...prevImages, ...newImages])
+      setImages((prevImages: any) => [...prevImages, ...newImages]);
+    }else{
+      setImages((prevImages: any) => [...prevImages, ...newImages]);
+    }
   };
   const handleDragEnd = (sourceId: any, sourceIndex: number, targetIndex: number) => {
     const updatedImages = swap(images, sourceIndex, targetIndex);
@@ -197,10 +198,8 @@ export default function AddListing() {
     // setErrors(updatedErrors);
   };
   const handleInputChange = (index: number, field: string, value: string) => {
-    console.log("valueeeeeeeeeeee", value);
     const updatedFields: any = [...fields];
     const sanitizedValue: any = value.replace(/[^0-9]/g, "");
-    console.log("sanitizedValuesanitizedValue", sanitizedValue);
     updatedFields[index][field] = !["price", "discount"].includes(field) ? value : sanitizedValue === "" || sanitizedValue === 0 ? 0 : Number(value);
     setFields(updatedFields);
 
@@ -215,7 +214,6 @@ export default function AddListing() {
     // setErrors(updatedErrors);
   };
   const validateFields = (valid: any) => {
-    console.log("validate", valid);
     const newErrors: { [key: number]: { [key: string]: any } } = {};
 
     fields.forEach((field: any, fieldIndex: number) => {
@@ -258,8 +256,9 @@ export default function AddListing() {
       ...newErrors,
       ...valid,
     }));
-
-    return Object.keys(newErrors).length === 0; // Return true if no errors
+    
+    const validate = isValid(valid)
+    return validate && Object.keys(newErrors).length === 0; // Return true if no errors
   };
   const changeFunction = (name: any, value: string) => {
     setInputs((prevInputs: any[]) => prevInputs.map((input: any) => (input.name === name ? { ...input, value } : input)));
@@ -278,12 +277,10 @@ export default function AddListing() {
   const submit = async () => {
     const formDataStore = { ...formData, image: images, size_and_price: fields };
     const editFormDataStore = { ...formData, image: images, size_and_price: fields, delete_image: deletedImages, id: id };
-
-    const valid = validation("addProduct", formData);
+    const valid = validation("addProduct", {...formData,id : id});
     // setErrors((prev : any) => ({...prev,...valid}))
     delete formDataStore.parent_category;
     delete editFormDataStore.parent_category;
-    console.log("validvalid", valid);
     try {
       if (validateFields(valid)) {
         const data = id
@@ -298,6 +295,7 @@ export default function AddListing() {
               },
             });
         toast.success(id ? "Product updated successfully!" : "Product created successfully!");
+        navigate("/admin/manageListings")
       } else {
         toast.error("Validation failed. Please check the input fields.");
       }
@@ -324,7 +322,6 @@ export default function AddListing() {
     setImages(reorderedImages);
   };
   const removeImage = (index: any) => {
-    console.log("editedDataeditedData", editedData);
     if (id) {
       const image = images.filter((_: any, id: any) => id === index);
       if (editedData.image.includes(image[0])) {
@@ -351,7 +348,6 @@ export default function AddListing() {
     updatedFields[fieldIndex].colors[colorIndex][field] = field === "color" ? value : Number(value);
     setFields(updatedFields);
   };
-  console.log("errorsssssssss", errors);
   const restrictPasteToNumbers = (e: React.ClipboardEvent) => {
     const pastedData = e.clipboardData.getData("Text");
     if (!/^\d*$/.test(pastedData)) {
@@ -366,13 +362,13 @@ export default function AddListing() {
     }
   };
   const numberRestrictions = (event: any) => {
-    console.log("sssssssssssssssssss", event.charCode);
     if ((event.charCode >= 40 && event.charCode <= 57) || event.charCode === 46) {
       return true;
     } else {
       event.preventDefault();
     }
   };
+  const imagesMap = id ? oldImages : images
   return (
     <div>
       <Container className="admin-Content-view" maxWidth="xl">
@@ -591,7 +587,7 @@ export default function AddListing() {
                               flexWrap: "wrap",
                             }}
                           >
-                            {images.map((src: any, index: any) => (
+                            {imagesMap.map((src: any, index: any) => (
                               <Draggable key={src} draggableId={src} index={index}>
                                 {(provided) => (
                                   <div
@@ -605,7 +601,7 @@ export default function AddListing() {
                                     }}
                                   >
                                     <img
-                                      src={src.preview || src}
+                                      src={src.preview || `${s3ImgUrl}${src}`}
                                       alt="Draggable"
                                       style={{
                                         width: 100,
@@ -666,6 +662,11 @@ export default function AddListing() {
                             <option value="Active">Active</option>
                             <option value="InActive">In-Active</option>
                           </SelectInput>
+                          {errors.status && (
+                        <p style={{ color: "red", fontSize: "12px" }} className="marNone">
+                          {errors.status}
+                        </p>
+                      )}
                         </>
                       </Grid2>
                     </Grid2>

@@ -21,10 +21,11 @@ import Header from "./Navigation/Header/Header";
 import Footer from "./Navigation/Footer/Footer";
 import AdminHeader from "admin/Navigation/Header/adminHeader";
 import AdminSideBar from "admin/Navigation/Sidebar/adminSideBar";
-
+import { Advertisment } from "admin/pages/addAdvertisment";
 // instruction modal
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AdManagement } from "admin/pages/addManagement";
 import PrivateRoute from "protectedRoutes";
 
 // comon layout
@@ -89,7 +90,10 @@ const RootRouter = createBrowserRouter([
           { path: "addListing", element: <AddListing /> },
           { path: "addListing/:id", element: <AddListing /> },
           { path: "manageListings", element: <ManageListings /> },
-        ],
+          { path: "addAdvertisment", element: <Advertisment />},
+      { path: "addAdvertisment/:id", element: <Advertisment /> },
+      { path: "adManagement", element: <AdManagement />}
+    ],
       },
     ],
   },
