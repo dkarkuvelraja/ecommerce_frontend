@@ -26,6 +26,7 @@ import { Advertisment } from "admin/pages/addAdvertisment";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AdManagement } from "admin/pages/addManagement";
+import PrivateRoute from "protectedRoutes";
 
 // comon layout
 const DefaultLayout = () => {
@@ -40,23 +41,26 @@ const DefaultLayout = () => {
 
 // admin layout
 const AdminLayout = () => {
-  const [isMenuOpen, setMenuOpen]= useState<boolean>(false);
+  const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
 
-  const handleMobileMenu = () =>{
+  const handleMobileMenu = () => {
     setMenuOpen((prev) => !prev);
-  }
+  };
 
   return (
     <div className="overflow-hidden relative h-dvh">
-      <AdminHeader handleMobileMenu={handleMobileMenu} isMobileMenuOpen={isMenuOpen}/>
+      <AdminHeader handleMobileMenu={handleMobileMenu} isMobileMenuOpen={isMenuOpen} />
       <Container className="h-full my-3" maxWidth="xl">
-        <Box className="grid sm:grid-cols-6 gap-4" sx={{ height: { xs:'calc(100% - 60px)', sm:'calc(100% - 100px)' } }}>
+        <Box className="grid sm:grid-cols-6 gap-4 overflow-hidden h-[calc(100vh-60px)] sm:h-[calc(100vh-100px)]">
           <div className="hidden sm:block">
-            <div className="h-full bg-primary text-white rounded-md shadow-sm">
+            <Box
+              className="h-[calc(100vh-60px)] sm:h-[calc(100vh-100px)] bg-primary text-white rounded-md shadow-sm overflow-y-auto scroll-p-4 
+              scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-slate-700 scrollbar-track-slate-300 "
+            >
               <AdminSideBar />
-            </div>
+            </Box>
           </div>
-          <div className="col-span-5 overflow-y-scroll relative">
+          <div className="h-[calc(100vh-60px)] sm:h-[calc(100vh-100px)] col-span-5 overflow-y-auto relative custom-scroll-bar">
             <Outlet />
           </div>
         </Box>
@@ -76,18 +80,24 @@ const RootRouter = createBrowserRouter([
     ],
   },
   {
-    path: "/admin",
-    element: <AdminLayout />,
+    element: <PrivateRoute />,
     children: [
-      { path: "manageCategory", element: <ManageCategory /> },
-      { path: "addListing", element: <AddListing /> },
-      { path: "addListing/:id", element: <AddListing /> },
-      { path: "manageListings", element: <ManageListings /> },
-      { path: "addAdvertisment", element: <Advertisment />},
+      {
+        path: "/admin",
+        element: <AdminLayout />,
+        children: [
+          { path: "manageCategory", element: <ManageCategory /> },
+          { path: "addListing", element: <AddListing /> },
+          { path: "addListing/:id", element: <AddListing /> },
+          { path: "manageListings", element: <ManageListings /> },
+          { path: "addAdvertisment", element: <Advertisment />},
       { path: "addAdvertisment/:id", element: <Advertisment /> },
       { path: "adManagement", element: <AdManagement />}
     ],
+      },
+    ],
   },
+
   { path: "*", element: <NotFound /> },
 ]);
 

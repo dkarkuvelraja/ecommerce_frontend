@@ -1,13 +1,15 @@
-import { AppBar, Autocomplete, Avatar, Button, Container, CssBaseline, Divider, IconButton, ListItemIcon, Menu, MenuItem, TextField, Toolbar, Tooltip, useScrollTrigger } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import { AppBar, Autocomplete, Avatar, Button, Container, CssBaseline, Divider, IconButton, ListItemIcon, Menu, MenuItem, TextField, Toolbar, Tooltip } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import Login from "../../Components/Login";
 import { getCookie } from "../../HelperFunctions/basicHelpers";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FavoriteBorder, Logout, ShoppingCartOutlined } from "@mui/icons-material";
 import { infoToast, logoDark, logoDarkName } from "HelperFunctions/utils";
 import { logoutSuccess } from "HelperFunctions/message";
 import { ElevationScroll, HideOnScroll } from "../../Components/HeaderScroll";
+import { useQuery } from "@apollo/client";
+import { GET_CATEGORIES } from "apollo/query";
 
 
 interface Props {
@@ -16,15 +18,32 @@ interface Props {
 }
 
 function Header(props: Props) {
+  const location = useLocation();
   const navigate = useNavigate();
   const [isAuthModal, setIsAuthModal] = useState<boolean>(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const isMenuOpen = Boolean(menuAnchorEl);
-  const isAuth = getCookie("accessToken");
+  // const isAuth = getCookie("accessToken");
+  const isAuth = localStorage.getItem('loginUserToken');
+  const [categories, setCategories] = useState([]);
+  //fetch data
+  const { data: categoryData, refetch } = useQuery(GET_CATEGORIES, {
+    notifyOnNetworkStatusChange: true,
+  });
+
+  useEffect(()=>{
+    refetch();
+  }, [location.pathname,refetch])
+
+  useEffect(()=>{
+    const categories = categoryData?.getAllCategory?.response || [];
+    setCategories(categories);
+  }, [categoryData])
 
   const handleLogModal = useCallback(() => {
     setIsAuthModal(false);
   }, []);
+
 
   const handleMenuOpen = (e : any) =>{
     setMenuAnchorEl(e.target)
@@ -42,7 +61,8 @@ function Header(props: Props) {
     const message = logoutSuccess('Praveen');
     infoToast(message);
     setTimeout(()=>{
-      document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+      localStorage.removeItem('loginUserToken');
+      // document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
       navigate("/");
     }, 2000)
   };
@@ -145,16 +165,12 @@ function Header(props: Props) {
           <Container maxWidth="xl">
             <div className="p-2 text-xs md:text-sm overflow-scroll md:overflow-hidden">
               <ul className="nav-menu flex justify-center space-x-3 md:space-x-20 w-min md:w-full">
-                <li>Home</li>
-                <li>Kurthis</li>
-                <li>Tops</li>
-                <li className="w-12 md:w-auto">T-shirts</li>
-                <li>Shirts</li>
-                <li>Jeans</li>
-                <li>Skirts</li>
-                <li className="w-20 md:w-auto">Bottom Wears</li>
-                <li>Loungwear</li>
-                <li className="w-20 md:w-auto">Shape Wear</li>
+                <li onClick={()=> navigate('/')}>Home</li>
+                {
+                  categories?.map((item : any, index)=> (
+                    <li>{item?.category_name}</li>
+                  ))
+                }
               </ul>
             </div>
           </Container>

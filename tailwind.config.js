@@ -16,6 +16,16 @@ module.exports = {
       }
     }
   },
-  plugins: [],
+  plugins: [
+    // ...
+    require("tailwind-scrollbar")({
+      nocompatible: true,
+    }),
+  ],
+  variants: {
+    extend: {
+      scrollbar: ["rounded"], // Enable rounded scrollbar variants
+    },
+  },
 }
 

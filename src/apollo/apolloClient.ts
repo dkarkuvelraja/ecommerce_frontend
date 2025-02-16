@@ -1,39 +1,41 @@
-// import { ApolloClient, InMemoryCache } from '@apollo/client';
-
-// const client = new ApolloClient({
-//   uri: 'https://li-sparkles-backend-demo.onrender.com/', // Replace with your GraphQL endpoint
-//   cache: new InMemoryCache(),
-// });
-
-// export default client;
-
-
 import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { createUploadLink } from 'apollo-upload-client'
-// const client1 = new ApolloClient({
-//   uri: 'https://li-sparkles-backend-demo.onrender.com/', // Replace with your GraphQL endpoint
-//   cache: new InMemoryCache(),
-// });
-const client = new ApolloClient({
-  link: createUploadLink({
-    uri: "https://li-sparkles-backend-demo.onrender.com/", // Replace with your GraphQL endpoint
+import { createUploadLink } from "apollo-upload-client";
+import { setContext } from "@apollo/client/link/context";
+
+const clientUri = process.env.REACT_APP_BASE_API_URL;
+
+// GraphQL endpoint
+const uploadLink = createUploadLink({
+  uri: clientUri,
+});
+
+// Fix: Define proper types for setContext function
+const authLink = setContext((operation: any, prevContext: { headers?: Record<string, string> }) => {
+  const token: string | null = localStorage.getItem("loginUserToken");
+
+  // List of operations that should NOT require authentication
+  const publicOperations: string[] = ["Login"];
+
+  // Ensure `headers` exist in previous context, defaulting to an empty object
+  const headers = prevContext.headers ? { ...prevContext.headers } : {};
+  // Exclude token for public operations
+  if (publicOperations.includes(operation.operationName) || !operation.operationName) {
+    return { headers };
+  }
+
+  // Attach token for authenticated requests
+  return {
     headers: {
-      cookie:
-        (typeof window === "undefined"
-          ?"ctx?.req?.headers.cookie"
-          : undefined) || "",
+      ...headers,
+      Authorization: token ? `Bearer ${token}` : "",
     },
-    fetch,
-    // fetchOptions: { credentials: "include" }, // Ensure credentials are included
-  }),
+  };
+});
+
+// Create Apollo Client
+const client = new ApolloClient({
+  link: authLink.concat(uploadLink),
   cache: new InMemoryCache(),
-  // credentials: "include", // Include credentials globally
-  headers: {
-    cookie:
-      (typeof window === "undefined"
-        ? "ctx?.req?.headers.cookie"
-        : undefined) || "",
-  },
 });
 
 export default client;

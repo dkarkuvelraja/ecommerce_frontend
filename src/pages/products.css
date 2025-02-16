@@ -1,4 +1,4 @@
-.productSize{
+.productSize, .productColor{
     @apply flex text-xs md:text-sm space-x-1 md:space-x-2;
 }
 
@@ -8,4 +8,8 @@
 
 .productSize .active{
     @apply bg-black text-white hover:border-transparent;
+}
+
+.productColor{
+
 }
