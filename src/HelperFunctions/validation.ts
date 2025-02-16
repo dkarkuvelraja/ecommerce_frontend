@@ -68,7 +68,7 @@ export const validation = (page: string, data: any) => {
     break;
     case "adManagement":
       console.log("dataaaaaa",data)
-      errors.image = !data.image ? "Image is required!" : "";
+      errors.image = !data.images ? "Image is required!" : "";
       break;
     default:
       console.warn("Validation not implemented for this page:", page);

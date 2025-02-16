@@ -25,6 +25,7 @@ import { Advertisment } from "admin/pages/addAdvertisment";
 // instruction modal
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AdManagement } from "admin/pages/addManagement";
 
 // comon layout
 const DefaultLayout = () => {
@@ -82,7 +83,9 @@ const RootRouter = createBrowserRouter([
       { path: "addListing", element: <AddListing /> },
       { path: "addListing/:id", element: <AddListing /> },
       { path: "manageListings", element: <ManageListings /> },
-      { path: "addAdvertisment", element: <Advertisment />}
+      { path: "addAdvertisment", element: <Advertisment />},
+      { path: "addAdvertisment/:id", element: <Advertisment /> },
+      { path: "adManagement", element: <AdManagement />}
     ],
   },
   { path: "*", element: <NotFound /> },
