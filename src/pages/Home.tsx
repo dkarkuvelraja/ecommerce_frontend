@@ -1,20 +1,15 @@
-import { Box, Container, Divider } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import React from "react";
 import "./home.css";
-import bannerImg from "../../assets/images/banner.png";
-import enthiCollection from "../../assets/images/enthic_collection.png";
-import festivalImg from "../../assets/images/festival_sale.png";
-import bageImg from "../../assets/images/icons/badge.png";
-import payementImg from "../../assets/images/icons/payment.png";
-import dayReturnImg from "../../assets/images/icons/day_return.png";
-import SectionHeader from "../../Navigation/Header/SectionHeader";
-import { ProductCardSlider, RatingsSlider } from "../../components/carousel";
-import { LargeButtonArrow } from "../../components/buttons/Button";
-
+import SectionHeader from "../Navigation/Header/SectionHeader";
+import { ProductCardSlider, RatingsSlider } from "../components/carousel";
+import { LargeButtonArrow } from "../components/buttons/Button";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { newArrivalList, productList, saleList, sellingList } from "../../HelperFunctions/utils";
+import { newArrivalList, productList, saleList, sellingList } from "../HelperFunctions/utils";
+import { bannerImg, enthiCollection, festivalImg } from "config/property/image-property";
+import InstructSection from "../components/InstructSection";
 
 export default function Home() {
   const settings = {
@@ -89,24 +84,7 @@ export default function Home() {
         </div>
       </Box>
       <Container maxWidth="xl">
-        <div className="grid sm:grid-cols-3 gap-5 sm:gap-3 w-full">
-          <div className="step-action-div">
-            <img src={bageImg} alt="badge" />
-            <h5>Premium Quality</h5>
-            <p>All the clothing products are made from 100% premium quality fabric.</p>
-          </div>
-          <div className="step-action-div">
-            <img src={payementImg} alt="payment" />
-            <h5>Secure Payments</h5>
-            <p>Highly Secured SSL-Protected Payment Gateway.</p>
-          </div>
-          <div className="step-action-div">
-            <img src={dayReturnImg} alt="day_return" />
-            <h5>7 Days Return</h5>
-            <p>Return or exchange the orders within 7 days of delivery.</p>
-          </div>
-        </div>
-        <Divider sx={{ borderWidth: 1, my:3 }} />
+        <InstructSection isBottom={true} />
         <div className="section">
           <div className="flex justify-center">
             <SectionHeader classStyles="mb-4" title="Let’s see How much love we got!" />

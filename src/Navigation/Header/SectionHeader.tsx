@@ -3,7 +3,7 @@ import React from 'react'
 
 interface SectionHeaderPorps{
     title: string,
-    classStyles: string
+    classStyles?: string
 }
 
 function SectionHeader({ title, classStyles }: SectionHeaderPorps) {

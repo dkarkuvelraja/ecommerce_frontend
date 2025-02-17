@@ -5,7 +5,8 @@ import Login from "../../components/Login";
 import { getCookie } from "../../HelperFunctions/basicHelpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FavoriteBorder, Logout, ShoppingCartOutlined } from "@mui/icons-material";
-import { infoToast, logoDark, logoDarkName } from "HelperFunctions/utils";
+import { infoToast } from "HelperFunctions/utils";
+import { logoName_dark, logo_dark } from "config/property/image-property";
 import { logoutSuccess } from "HelperFunctions/message";
 import { ElevationScroll, HideOnScroll } from "../../components/HeaderScroll";
 import { useQuery } from "@apollo/client";
@@ -83,8 +84,8 @@ function Header(props: Props) {
             <Toolbar sx={{ px: { xs: 0, sm: 3 }, minHeight: { xs: "48px", sm: "60px" } }}>
               <div className="flex justify-between w-full">
                 <div className="flex gap-2 items-center" onClick = {redirection}>
-                  <img className="h-3 sm:h-6" src={logoDark} alt="logo" />
-                  <img className="h-3 sm:h-6" src={logoDarkName} alt="company name" />
+                  <img className="h-3 sm:h-6" src={logo_dark} alt="logo" />
+                  <img className="h-3 sm:h-6" src={logoName_dark} alt="company name" />
                 </div>
                 <div className="grow">
                   <div className="flex items-center justify-end md:gap-16">
@@ -140,16 +141,17 @@ function Header(props: Props) {
                       </div>
                       <Menu elevation={0} anchorEl={menuAnchorEl} open={isMenuOpen} onClose={() =>handleMenuClose()} onClick={()=>handleMenuClose()}
                           classes={{ 
-                            paper: '!border !text-sm mt-2'
+                            paper: '!border !text-sm mt-2 px-3'
                           }}
                           className="profile-menu"
                           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                          anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
                         >
-                          <MenuItem className="menu-item" onClick={() => handleProfile()}>Profile</MenuItem>
+                          <MenuItem disableRipple className="menu-item" onClick={() => handleProfile()}>Profile</MenuItem>
+                          <MenuItem disableRipple className="menu-item" onClick={() => navigate('wishlist')}>Wish List</MenuItem>
                           <Divider />
-                          <MenuItem className="menu-item" onClick={() => logOut()}>
-                            <ListItemIcon className="!min-w-5">
+                          <MenuItem disableRipple className="menu-item" onClick={() => logOut()}>
+                            <ListItemIcon className="!min-w-7">
                               <Logout className="!text-base" />
                             </ListItemIcon>
                             Logout

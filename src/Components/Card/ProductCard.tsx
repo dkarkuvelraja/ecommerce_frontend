@@ -9,9 +9,10 @@ interface ProductCardProps {
   ratingCount: any;
   actualprice: any;
   originalPrice: any;
+  isWishlist?: boolean
 }
 
-function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, originalPrice }: ProductCardProps) {
+function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, originalPrice, isWishlist= false }: ProductCardProps) {
   return (
     <Card style={{ boxShadow: "none", borderRadius: 0 }}>
       <CardActionArea
@@ -22,14 +23,14 @@ function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, o
         sx={{ "& .MuiTouchRipple-root": { display: "none" } }}
       >
         <CardMedia component="img" image={imageSrc} className="w-full rounded-sm sm:rounded-md" alt="Product Image" />
-        <div className="flex flex-col space-y-2 items-center justify-center absolute top-2 sm:top-3 right-2 z-20">
+        {!isWishlist && (<div className="flex flex-col space-y-2 items-center justify-center absolute top-2 sm:top-3 right-2 z-20">
           <IconButton size="small" className="hover:!bg-white card-action-button">
             <FavoriteBorderOutlined className="!text-xs sm:!text-base !fill-white icon-fav" />
           </IconButton>
           <IconButton size="small" className="hover:!bg-white  card-action-button">
             <AddShoppingCartOutlined className="!text-xs sm:!text-base !fill-white icon-cart" />
           </IconButton>
-        </div>
+        </div>) }
       </CardActionArea>
       <CardContent className="text-xs sm:text-sm space-y-0.5 sm:space-y-1 mt-1 sm:mt-1.5" sx={{ "&.MuiCardContent-root": { padding: "6px", backgroundColor: "transparent" } }}>
         <div className="text-xs sm:text-sm">{produtName}</div>

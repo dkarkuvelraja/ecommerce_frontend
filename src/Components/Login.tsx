@@ -5,15 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Dialog, DialogContent, DialogTitle, Divider, IconButton } from "@mui/material";
 
-import logoName from "../assets/images/logo/logo-name-light.png";
-import logo from "../assets/images/logo/logo-light.png";
-
 import LoginImg from "../assets/images/loginImg.png";
 import { TextFieldWithLabel } from "./input/TextField";
 import { OutlinedButton } from "./buttons/Button";
 import { X } from "lucide-react";
 import { loginSuccess } from "HelperFunctions/message";
 import { sucessToast } from "HelperFunctions/utils";
+import { logo_light, logoName_light } from "config/property/image-property";
 
 interface loginProps{
   onClose: Function
@@ -91,8 +89,8 @@ export default function Login({ onClose } : loginProps) {
         <div className="grid md:grid-cols-2 h-full">
           <div className="text-white space-y-5 p-5 px-2 hidden md:block">
             <div className="flex gap-2 items-center">
-              <img className="h-6" src={logo} alt="logo" />
-              <img className="h-6" src={logoName} alt="company name" />
+              <img className="h-6" src={logo_light} alt="logo" />
+              <img className="h-6" src={logoName_light} alt="company name" />
             </div>
             <div className="tracking-wide">
               <h2 className="text-4xl font-semibold">Welcome!</h2>

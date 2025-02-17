@@ -1,9 +1,9 @@
 import React from "react";
 import { AppBar, Badge, Container, Drawer, IconButton, Toolbar, Tooltip } from "@mui/material";
-import { logoDark, logoDarkName } from "HelperFunctions/utils";
 import { useNavigate } from "react-router-dom";
 import { CloseOutlined, MenuOpen, Notifications } from "@mui/icons-material";
 import AdminSideBar from "../Sidebar/adminSideBar";
+import { logo_dark, logoName_dark } from "config/property/image-property";
 
 interface adminHeaderProps{ 
   isMobileMenuOpen: boolean, handleMobileMenu: Function 
@@ -26,8 +26,8 @@ export default function AdminHeader({ isMobileMenuOpen, handleMobileMenu }: admi
                 </IconButton>
               </div>
               <div className="flex gap-2 items-center " onClick = {redirection}>
-                <img className="h-4 md:h-6" src={logoDark} alt="logo" />
-                <img className="h-4 md:h-6" src={logoDarkName} alt="company name" />
+                <img className="h-4 md:h-6" src={logo_dark} alt="logo" />
+                <img className="h-4 md:h-6" src={logoName_dark} alt="company name" />
               </div>
               <div className="sm:grow">
                 <div className="flex items-center justify-end space-x-3">
@@ -62,8 +62,8 @@ export default function AdminHeader({ isMobileMenuOpen, handleMobileMenu }: admi
       >
         <div className="flex justify-between p-2 border-b">
           <div className="flex gap-2 items-center">
-            <img className="h-4" src={logoDark} alt="logo" />
-            <img className="h-4" src={logoDarkName} alt="company name" />
+            <img className="h-4" src={logo_dark} alt="logo" />
+            <img className="h-4" src={logoName_dark} alt="company name" />
           </div>
           <div>
             <IconButton className="!p-1" onClick={() => handleMobileMenu()}>

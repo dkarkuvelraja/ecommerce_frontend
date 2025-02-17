@@ -11,6 +11,7 @@ import { productList } from "../HelperFunctions/utils";
 import { InputNumber } from "../components/input/InputRange";
 import { GET_PRODUCT_BY_ID } from "apollo/query";
 import { useQuery } from "@apollo/client";
+import InstructSection from "../components/InstructSection";
 // interface ProductData{
 //   id : string
 //   title : string
@@ -205,6 +206,9 @@ export default function ProductDetails() {
           <LargeButtonArrow />
         </div>
       </Container>
+      <div className="my-14">
+        <InstructSection isTop={true} />
+      </div>
     </>
   );
 }

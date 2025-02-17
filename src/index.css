@@ -56,8 +56,8 @@ code {
 }
 
 .profile-menu .menu-item{
-  @apply !text-xs sm:!text-sm !min-h-6 sm:!min-h-7 !px-3 !py-1
+  @apply !text-xs sm:!text-sm !min-h-6 sm:!min-h-7 !p-1
 }
-.custom-scroll-bar{
+.custom-scroll-bar, html{
   @apply scrollbar-thin scrollbar-thumb-primary scrollbar-track-slate-200 
 }

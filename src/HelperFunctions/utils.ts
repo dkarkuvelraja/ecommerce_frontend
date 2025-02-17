@@ -8,11 +8,6 @@ import productImg6 from '../assets/images/products/product-6.png';
 import productImg7 from '../assets/images/products/product-7.png';
 import productImg8 from '../assets/images/products/product-8.png';
 
-import logoName_dark from "../assets/images/logo/logo-name-dark.png";
-import logo_dark from "../assets/images/logo/logo-dark.png";
-import logoName_light from "../assets/images/logo/logo-name-light.png";
-import logo_light from "../assets/images/logo/logo-light.png";
-
 export const productList =[
     { src: productImg1 },
     { src: productImg2 },
@@ -50,11 +45,6 @@ export const saleList =[
     { src: productImg4 },
     { src: productImg3 },
 ]
-
-export const logoDark = logo_dark;
-export const logoDarkName = logoName_dark;
-export const logoLight = logo_light;
-export const logoLightName = logoName_light
 
 const toastOptions = {
     autoClose: 2000,
