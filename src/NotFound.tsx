@@ -1,5 +1,5 @@
 
-import { OutlinedButton } from './Components/Buttons/Button'
+import { OutlinedButton } from './components/buttons/Button'
 import { Container } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'

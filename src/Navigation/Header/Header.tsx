@@ -1,13 +1,13 @@
 import { AppBar, Autocomplete, Avatar, Button, Container, CssBaseline, Divider, IconButton, ListItemIcon, Menu, MenuItem, TextField, Toolbar, Tooltip } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { Search } from "lucide-react";
-import Login from "../../Components/Login";
+import Login from "../../components/Login";
 import { getCookie } from "../../HelperFunctions/basicHelpers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FavoriteBorder, Logout, ShoppingCartOutlined } from "@mui/icons-material";
 import { infoToast, logoDark, logoDarkName } from "HelperFunctions/utils";
 import { logoutSuccess } from "HelperFunctions/message";
-import { ElevationScroll, HideOnScroll } from "../../Components/HeaderScroll";
+import { ElevationScroll, HideOnScroll } from "../../components/HeaderScroll";
 import { useQuery } from "@apollo/client";
 import { GET_CATEGORIES } from "apollo/query";
 

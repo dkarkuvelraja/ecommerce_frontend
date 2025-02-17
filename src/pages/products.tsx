@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // components
 import { Box, Divider, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
-import ProductCard from "../Components/Card/ProductCard";
+import ProductCard from "../components/card/ProductCard";
 // styles
 import "./products.css";
 import { productList } from "HelperFunctions/utils";

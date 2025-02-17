@@ -8,8 +8,8 @@ import bageImg from "../../assets/images/icons/badge.png";
 import payementImg from "../../assets/images/icons/payment.png";
 import dayReturnImg from "../../assets/images/icons/day_return.png";
 import SectionHeader from "../../Navigation/Header/SectionHeader";
-import { ProductCardSlider, RatingsSlider } from "../../Components/Slider";
-import { LargeButtonArrow } from "../../Components/Buttons/Button";
+import { ProductCardSlider, RatingsSlider } from "../../components/carousel";
+import { LargeButtonArrow } from "../../components/buttons/Button";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

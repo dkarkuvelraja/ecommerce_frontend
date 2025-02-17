@@ -10,7 +10,7 @@ import logo from "../assets/images/logo/logo-light.png";
 
 import LoginImg from "../assets/images/loginImg.png";
 import { TextFieldWithLabel } from "./input/TextField";
-import { OutlinedButton } from "./Buttons/Button";
+import { OutlinedButton } from "./buttons/Button";
 import { X } from "lucide-react";
 import { loginSuccess } from "HelperFunctions/message";
 import { sucessToast } from "HelperFunctions/utils";
