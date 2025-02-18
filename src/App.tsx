@@ -108,6 +108,11 @@ const RootRouter = createBrowserRouter([
 // import GlobalStyle from '../'
 function App() {
   const theme = createTheme({
+    palette:{
+      primary: {
+        main: '#F68B29'
+      }
+    },
     components: {
       MuiAppBar: {
         styleOverrides: {
