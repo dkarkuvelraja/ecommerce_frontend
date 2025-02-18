@@ -61,3 +61,7 @@ code {
 .custom-scroll-bar, html{
   @apply scrollbar-thin scrollbar-thumb-primary scrollbar-track-slate-200 
 }
+
+.line-height-0{
+  line-height: 0px;
+}

@@ -3,7 +3,7 @@
     "jsx": "react",
     "baseUrl": "./src",
     "paths": {
-      "@components/*": ["Components/*"]
+      "@components/*": ["components/*"]
     },
     "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     "module": "commonjs",                                /* Specify what module code is generated. */

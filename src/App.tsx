@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 // pages
 import Home from "./pages/Home";
-import ProductDetails from "./pages/productDetails";
-import Products from "pages/products";
+import ProductDetails from "pages/ProductDetails";
+import Products from "pages/Products";
 import Wishlist from "./pages/Wishlist";
 // admin pages
 import ManageCategory from "admin/pages/manageCategory";
@@ -18,8 +18,8 @@ import client from "./apollo/apolloClient";
 import { Box, Container, createTheme, ThemeProvider } from "@mui/material";
 import { GlobalStyle } from "./assets/style/index";
 // components
-import Header from "./Navigation/Header/Header";
-import Footer from "./Navigation/Footer/Footer";
+import Header from "Navigation/Header/Header";
+import Footer from "Navigation/Footer/Footer";
 import AdminHeader from "admin/Navigation/Header/adminHeader";
 import AdminSideBar from "admin/Navigation/Sidebar/adminSideBar";
 import { Advertisment } from "admin/pages/addAdvertisment";
@@ -28,6 +28,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AdManagement } from "admin/pages/addManagement";
 import PrivateRoute from "protectedRoutes";
+import ShoppingCart from "pages/ShoppingCart";
 
 // comon layout
 const DefaultLayout = () => {
@@ -76,9 +77,10 @@ const RootRouter = createBrowserRouter([
     element: <DefaultLayout />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "productDetails", element: <ProductDetails /> },
+      { path: "productdetails", element: <ProductDetails /> },
       { path: "products", element: <Products /> },
-      { path: 'wishlist', element: <Wishlist />}
+      { path: 'wishlist', element: <Wishlist />},
+      { path: 'mycart', element: <ShoppingCart />}
     ],
   },
   {

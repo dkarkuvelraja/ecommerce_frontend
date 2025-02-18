@@ -10,7 +10,7 @@ function SectionHeader({ title, classStyles }: SectionHeaderPorps) {
   return (
     <>
         <Box className={classStyles}>
-            <h2 className='text-lg md:text-2xl font-semibold'>{title}</h2>
+            <h2 className='text-lg md:text-xl font-semibold'>{title}</h2>
             <span className='border-b-2 border-primary block mt-2 w-20'></span>
         </Box>
     </>
