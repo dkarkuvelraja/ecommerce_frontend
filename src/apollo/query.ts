@@ -107,6 +107,24 @@ query GetAllAd {
       status
       createdAt
       updatedAt
+      url
     }
+  }
+}`
+
+export const GET_USERS = gql`
+query GetAllUserAdminTable($orderBy: SortInput, $limit: Int, $skip: Int) {
+  getAllUserAdminTable(orderBy: $orderBy, limit: $limit, skip: $skip) {
+    status
+    result
+    responce {
+      _id
+      firstName
+      lastName
+      email
+      phone_number
+      status
+    }
+    count
   }
 }`

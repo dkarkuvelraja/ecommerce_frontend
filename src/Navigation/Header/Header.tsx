@@ -59,10 +59,11 @@ function Header(props: Props) {
   }
 
   const logOut = () => {
-    const message = logoutSuccess('Praveen');
+    const message = logoutSuccess('User');
     infoToast(message);
     setTimeout(()=>{
       localStorage.removeItem('loginUserToken');
+      localStorage.removeItem('isAdmin');
       // document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
       navigate("/");
     }, 2000)

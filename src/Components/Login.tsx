@@ -15,20 +15,20 @@ import { logo_light, logoName_light } from "config/property/image-property";
 import { validation } from "HelperFunctions/validation";
 import { isValid } from "HelperFunctions/basicHelpers";
 
-interface loginProps{
+interface loginProps {
   onClose: Function
 }
-interface SignUpFormData{ firstName: string;lastName : string; email: string; password: string; phone_number: string };
-const initialState = { firstName: "",lastName : "", email: "", password: "", phone_number: "" }
-export default function Login({ onClose } : loginProps) {
+interface SignUpFormData { firstName: string; lastName: string; email: string; password: string; phone_number: string };
+const initialState = { firstName: "", lastName: "", email: "", password: "", phone_number: "" }
+export default function Login({ onClose }: loginProps) {
   const [tabActive, setTabActive] = useState({ islogin: true, isSignup: false });
   const [loginData, setLoginData] = useState<{ email: string; password: string }>({ email: "", password: "" });
-  const [isLogin, setLogin]= useState<boolean>(false);
+  const [isLogin, setLogin] = useState<boolean>(false);
   const [signupData, setSignupData] = useState<SignUpFormData>(initialState);
   const [login] = useMutation(USER_LOGIN);
-  const [signUpErrors,setSignUpErrors] = useState<SignUpFormData>(initialState);
+  const [signUpErrors, setSignUpErrors] = useState<SignUpFormData>(initialState);
   const [submitForm] = useMutation(USER_RGN);
-  
+
   const navigate = useNavigate();
 
 
@@ -72,15 +72,17 @@ export default function Login({ onClose } : loginProps) {
           const loginSubmission = await login({ variables: { data: loginData } });
           if (loginSubmission.data.login.status === 200) {
             localStorage.setItem("loginUserToken", loginSubmission.data.login.response)
+            localStorage.setItem("isAdmin", loginSubmission.data.login.is_admin)
+
             Cookies.set("accessToken", loginSubmission.data.login.response, { expires: 7 });
-            const message = loginSuccess('Praveen');
+            const message = loginSuccess('User');
             sucessToast(message);
-            setTimeout(()=>{
+            setTimeout(() => {
               onClose();
               // navigate("/admin/managelistings");
               setLogin(false);
             }, 200)
-          }else if(loginSubmission.data.login.status === 400){
+          } else if (loginSubmission.data.login.status === 400) {
             errorToast(loginSubmission.data.login.result)
             setLogin(false);
           }
@@ -89,30 +91,30 @@ export default function Login({ onClose } : loginProps) {
           console.error(e);
         }
       }
-    }else{
-          const errors = validation("signUp", signupData)
-          setSignUpErrors(errors)
-          if (isValid(errors)) {
-            console.log("Object.keys(errors).length > 0", Object.keys(errors))
-            // const data = formData
-            try {
+    } else {
+      const errors = validation("signUp", signupData)
+      setSignUpErrors(errors)
+      if (isValid(errors)) {
+        console.log("Object.keys(errors).length > 0", Object.keys(errors))
+        // const data = formData
+        try {
           setLogin(true);
 
-              const submitData = await submitForm({ variables: { data: signupData } });
-              // props.handleClose()
-              if(submitData.data.Register.status === 200){
-                sucessToast(submitData.data.Register.result);
-          setLogin(false);
-                setTabActive({ islogin: true, isSignup: false })
+          const submitData = await submitForm({ variables: { data: signupData } });
+          // props.handleClose()
+          if (submitData.data.Register.status === 200) {
+            sucessToast(submitData.data.Register.result);
+            setLogin(false);
+            setTabActive({ islogin: true, isSignup: false })
 
-              }else{
-          setLogin(false);
+          } else {
+            setLogin(false);
             errorToast(submitData.data.Register.result)
-              }
-            } catch (e) {
-              console.error(e)
-            }
           }
+        } catch (e) {
+          console.error(e)
+        }
+      }
     }
   };
 
@@ -168,20 +170,20 @@ export default function Login({ onClose } : loginProps) {
             ) : (
               <div className="grid gap-4">
                 <div className="grid md:grid-cols-2 gap-3">
-                  <TextFieldWithLabel label="Full name" placeHolder="Full name" type="text" name = "firstName" handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.firstName} />
-            {/* {signUpErrors.firstName && <p className="errorText" style={{ color: "red" }}>{signUpErrors.firstName}</p>} */}
+                  <TextFieldWithLabel label="Full name" placeHolder="Full name" type="text" name="firstName" handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.firstName} />
+                  {/* {signUpErrors.firstName && <p className="errorText" style={{ color: "red" }}>{signUpErrors.firstName}</p>} */}
 
-                  <TextFieldWithLabel label="Last Name" placeHolder="Last Name" type="text" name = "lastName" handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.lastName}/>
+                  <TextFieldWithLabel label="Last Name" placeHolder="Last Name" type="text" name="lastName" handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.lastName} />
                 </div>
                 <div className="grid md:grid-cols-2 gap-3">
-                <TextFieldWithLabel label="Email Id" placeHolder="Email" type="email" name = "email"  handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.email}/>
-                  <TextFieldWithLabel label="Mobile number" placeHolder="Mobile number" type="text" name = "phone_number" handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.phone_number} />
+                  <TextFieldWithLabel label="Email Id" placeHolder="Email" type="email" name="email" handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.email} />
+                  <TextFieldWithLabel label="Mobile number" placeHolder="Mobile number" type="text" name="phone_number" handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.phone_number} />
                 </div>
-                <TextFieldWithLabel label="Password" placeHolder="Password" type="password" name = "password" handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.password}/>
+                <TextFieldWithLabel label="Password" placeHolder="Password" type="password" name="password" handleOnChange={(e: any) => handleChange(e)} errors={signUpErrors.password} icon = {true}/>
               </div>
             )}
             <div className="flex justify-center w-full">
-              <OutlinedButton propoerty={{ 
+              <OutlinedButton propoerty={{
                 isLoader: isLogin,
                 isDisable: isLogin
               }} name={`${tabActive.islogin ? "Submit" : "SignUp"}`} handleClick={(e: any) => handleSubmit(e)} />

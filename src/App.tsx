@@ -29,7 +29,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AdManagement } from "admin/pages/addManagement";
 import PrivateRoute from "protectedRoutes";
 import ShoppingCart from "pages/ShoppingCart";
-
+import UserManagement from "admin/pages/userManagement";
 // comon layout
 const DefaultLayout = () => {
   return (
@@ -95,6 +95,7 @@ const RootRouter = createBrowserRouter([
           { path: "addListing", element: <AddListing /> },
           { path: "addListing/:id", element: <AddListing /> },
           { path: "manageListings", element: <ManageListings /> },
+          {path : "userManagement",element : <UserManagement/>},
           { path: "addAdvertisment", element: <Advertisment />},
       { path: "addAdvertisment/:id", element: <Advertisment /> },
       { path: "adManagement", element: <AdManagement />}

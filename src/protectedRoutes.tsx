@@ -4,10 +4,12 @@ import { getCookie } from './HelperFunctions/basicHelpers'; // Import getCookie 
 
 const PrivateRoute = ({ children } : any) => {
   const accessToken = localStorage.getItem('loginUserToken')
+  const isAdmin = localStorage.getItem('isAdmin')
+
   // const accessToken = getCookie('accessToken');
 
   // If there's no access token, redirect to the login page
-  if (!accessToken) {
+  if (!isAdmin) {
     return <Navigate to="/" replace />;
   }
 
