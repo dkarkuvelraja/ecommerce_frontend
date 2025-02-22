@@ -17,6 +17,8 @@ import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { ChromePicker, ColorResult } from "react-color";
 import { SectionHeader } from "admin/Navigation/Header/SectionHeader";
+import { ToggleField } from "admin/fieldInputs/toggleField";
+import LoaderHorse from "components/loaderHorse";
 
 export default function AddListing() {
   const [inputs, setInputs] = useState<any>([
@@ -52,7 +54,9 @@ export default function AddListing() {
   const inputRefs: any = useRef([]); // Ref for multiple input areas
   const [categoriesResponse, setCategoriesResponse] = useState<any>([]);
   const [formData, setFormData] = useState<any>({ parent_category: "", category_id: "" });
+  const [listingToogles, setListingToogles] = useState({ "top_selling_products": false, "clearance_sale": false, "new_arrivals": false, "explore_products": false })
   const { data: categoriesData, loading, error } = useQuery(GET_ALL_CATEGORIES);
+  const [loader,setLoader] = useState<boolean>(false)
   // const {data : productById} = useQuery(GET_PRODUCT_BY_ID)
   // const [fields, setFields] = useState([
   //   { available_count: "", discount: "", price: "", size: "",color : "#000000" },
@@ -82,20 +86,24 @@ export default function AddListing() {
     skip: !id,
   });
   useEffect(() => {
+    setLoader(true)
     if (categoriesData && data) {
       const editData = data.getProductById.responce;
       const categoriesResponse = categoriesData.getAllCategory.response;
       setEditedData(editData);
       const result = categoriesResponse.find((parent: { children: any[] }) => parent.children.some((child) => child._id === editData.category_id));
-      const formData = { parent_category: result._id, category_id: editData.category_id, title: editData.title, description: editData.description };
+      const formData = { parent_category: result._id, category_id: editData.category_id, title: editData.title, description: editData.description};
+      setListingToogles({ "top_selling_products": editData.top_selling_products, "clearance_sale": editData.clearance_sale, "new_arrivals": editData.new_arrivals, "explore_products": editData.explore_products })
       const filedData = transformData(editData.size_and_price);
       setFields(filedData);
       setFormData(formData);
       setChildOptions(result.children);
       setOldImages(editData.image);
     }
+    setLoader(false)
   }, [data]);
   useEffect(() => {
+    setLoader(true)
     if (categoriesData) {
       const categoriesResponse = categoriesData.getAllCategory.response;
       const parents: any = {};
@@ -119,6 +127,7 @@ export default function AddListing() {
       setCategoriesResponse(categoriesResponse);
       // options = parentOptions
     }
+    setLoader(false)
   }, [categoriesData]);
   const handleChangeComplete = (color: ColorResult, fieldIndex: any, colorIndex: number, field: string) => {
     setColor(color.hex);
@@ -165,10 +174,10 @@ export default function AddListing() {
         preview: URL.createObjectURL(file), // Generate preview
       })
     );
-    if(id){
+    if (id) {
       setOldImages((prevImages: any) => [...prevImages, ...newImages])
       setImages((prevImages: any) => [...prevImages, ...newImages]);
-    }else{
+    } else {
       setImages((prevImages: any) => [...prevImages, ...newImages]);
     }
   };
@@ -213,6 +222,13 @@ export default function AddListing() {
     }
     // setErrors(updatedErrors);
   };
+
+  const handleToggle = (key: string) => {
+    setListingToogles((prevState: any) => ({
+      ...prevState,
+      [key]: !prevState[key], // Toggle the value
+    }));
+  };
   const validateFields = (valid: any) => {
     const newErrors: { [key: number]: { [key: string]: any } } = {};
 
@@ -256,7 +272,7 @@ export default function AddListing() {
       ...newErrors,
       ...valid,
     }));
-    
+
     const validate = isValid(valid)
     return validate && Object.keys(newErrors).length === 0; // Return true if no errors
   };
@@ -277,29 +293,35 @@ export default function AddListing() {
   const submit = async () => {
     const formDataStore = { ...formData, image: images, size_and_price: fields };
     const editFormDataStore = { ...formData, image: images, size_and_price: fields, delete_image: deletedImages, id: id };
-    const valid = validation("addProduct", {...formData,id : id});
+    const valid = validation("addProduct", { ...formData, id: id });
     // setErrors((prev : any) => ({...prev,...valid}))
     delete formDataStore.parent_category;
     delete editFormDataStore.parent_category;
+    const formDataWithToggle = {...formDataStore,...listingToogles}
+    const editFormDataStoreToggle = {...editFormDataStore,...listingToogles}
+    setLoader(true)
     try {
       if (validateFields(valid)) {
         const data = id
           ? await editProduct({
-              variables: {
-                data: editFormDataStore,
-              },
-            })
+            variables: {
+              data: editFormDataStoreToggle,
+            },
+          })
           : await createProduct({
-              variables: {
-                data: formDataStore,
-              },
-            });
+            variables: {
+              data: formDataWithToggle,
+            },
+          });
+        setLoader(false)
         toast.success(id ? "Product updated successfully!" : "Product created successfully!");
         navigate("/admin/manageListings")
       } else {
+    setLoader(false)
         toast.error("Validation failed. Please check the input fields.");
       }
     } catch (error) {
+    setLoader(false)
       toast.error("An error occurred while creating the product.");
     }
   };
@@ -371,6 +393,7 @@ export default function AddListing() {
   const imagesMap = id ? oldImages : images
   return (
     <div>
+      {loader && <LoaderHorse />}
       <Container className="admin-Content-view" maxWidth="xl">
         <div className="flex justify-between items-center w-full">
           <SectionHeader title="Add Listing" />
@@ -490,7 +513,7 @@ export default function AddListing() {
                             value={field.size}
                             placeholder={"Size"}
                             error={!!errors[fieldIndex]?.size}
-                            // onPaste={(e: React.ClipboardEvent<Element>) => restrictPasteToNumbers(e)}
+                          // onPaste={(e: React.ClipboardEvent<Element>) => restrictPasteToNumbers(e)}
                           />
                         </Grid2>
                         <Grid2 size={{ xs: 12, md: 4 }}>
@@ -523,7 +546,7 @@ export default function AddListing() {
                                   type="text"
                                   value={colorField.color} // Use the common color state
                                   readOnly
-                                  // Use colorField.color here
+                                // Use colorField.color here
                                 />
                               </div>
 
@@ -663,10 +686,10 @@ export default function AddListing() {
                             <option value="InActive">In-Active</option>
                           </SelectInput>
                           {errors.status && (
-                        <p style={{ color: "red", fontSize: "12px" }} className="marNone">
-                          {errors.status}
-                        </p>
-                      )}
+                            <p style={{ color: "red", fontSize: "12px" }} className="marNone">
+                              {errors.status}
+                            </p>
+                          )}
                         </>
                       </Grid2>
                     </Grid2>
@@ -748,9 +771,63 @@ export default function AddListing() {
           ) : null}
         </>
       ))} */}
+      {formData.category_id && (
+                <Grid2 container>
+                  <Grid2 size={{ xs: 12, md: 3 }} className="d-flex align-items-center">
+                    <Typography variant="h6" className="font_16">
+                      Top Selling Products :
+                    </Typography>
+                  </Grid2>
+                  <Grid2 size={{ xs: 12, md: 9 }}>
+
+                    <ToggleField
+                      isOn={listingToogles.top_selling_products}
+                      handleToggle={() => handleToggle("top_selling_products")}
+                    />
+                  </Grid2>
+
+                  <Grid2 size={{ xs: 12, md: 3 }} className="d-flex align-items-center">
+                    <Typography variant="h6" className="font_16">
+                      Clearance Sale :
+                    </Typography>
+                  </Grid2>
+                  <Grid2 size={{ xs: 12, md: 9 }}>
+
+                    <ToggleField
+                      isOn={listingToogles.clearance_sale}
+                      handleToggle={() => handleToggle("clearance_sale")}
+                    />
+                  </Grid2>
+                  <Grid2 size={{ xs: 12, md: 3 }} className="d-flex align-items-center">
+                    <Typography variant="h6" className="font_16">
+                      New Arrivals :
+                    </Typography>
+                  </Grid2>
+                  <Grid2 size={{ xs: 12, md: 9 }}>
+                    <ToggleField
+                      isOn={listingToogles.new_arrivals}
+                      handleToggle={() => handleToggle("new_arrivals")}
+                    />
+                  </Grid2>
+                  <Grid2 size={{ xs: 12, md: 3 }} className="d-flex align-items-center">
+                    <Typography variant="h6" className="font_16">
+                      Explore Products :
+                    </Typography>
+                  </Grid2>
+                  <Grid2 size={{ xs: 12, md: 9 }}>
+                    <ToggleField
+                      isOn={listingToogles.explore_products}
+                      handleToggle={() => handleToggle("explore_products")}
+                    />
+
+                  </Grid2>
                 <Button saveBtn onClick={submit}>
                   Save
                 </Button>
+                </Grid2>
+
+      )}
+
               </AddListingCss>
             </Grid2>
           </Grid2>

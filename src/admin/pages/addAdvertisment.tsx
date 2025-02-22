@@ -4,7 +4,7 @@ import { Button, ImageInput } from "assets/style";
 import React, { useEffect, useRef, useState } from "react";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { ToggleField } from "admin/fieldInputs/toggleField";
-import { CREATE_AD, DELETE_AD } from "apollo/mutation";
+import { CREATE_AD, DELETE_AD,EDIT_AD } from "apollo/mutation";
 import { useMutation, useQuery } from "@apollo/client";
 import { validation } from "HelperFunctions/validation";
 import { isValid, s3ImgUrl } from "HelperFunctions/basicHelpers";
@@ -13,14 +13,18 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import LoaderHorse from "../../components/loaderHorse";
+import TextInputComponent from "admin/fieldInputs/TextInput";
+import { errorToast, sucessToast } from "HelperFunctions/utils";
 
 export function Advertisment() {
   const navigate = useNavigate()
   const [images, setImages] = useState<any>()
+  const [url,setUrl] = useState<string>("")
   const [errors,setErrors] = useState<any>()
   const [isOn, setIsOn] = useState<boolean>(false)
   const [createAd] = useMutation(CREATE_AD);
   const [deleteAd] = useMutation(DELETE_AD);
+  const [editAd] = useMutation(EDIT_AD)
   const [progress,setProgress] = useState<boolean>(false)
         const { data, loading, error, refetch } = useQuery(GET_ALL_ADS);
   const fileInputRef = useRef<HTMLInputElement | any>(null);
@@ -32,9 +36,10 @@ export function Advertisment() {
   useEffect(() => {
     if(data){
       const selectedAd = data.getAllAd?.response?.filter((it : any) => it._id === id)
-      console.log("selectedAddd",selectedAd);
       if(selectedAd?.length > 0){
         setImages(`${s3ImgUrl}${selectedAd[0].imageUrl}`)
+        setUrl(selectedAd[0].url)
+        setIsOn(selectedAd[0].status === "active" ? true : false)
       }
     }
   },[data])
@@ -51,16 +56,56 @@ export function Advertisment() {
     setImages(newImages);
   };
   const submit = async () => {
-    const validate = validation("adManagement",{images})
+    const validate = validation("adManagement",{images,url})
     setErrors(validate)
     if(isValid(validate)){
-      await createAd({
-        variables : {
-          data : {
-            image : images
+    setProgress(true)
+      if(!id){
+        try{
+          const addData =   await createAd({
+            variables : {
+              data : {
+                image : images[0],
+                url : url
+              }
+            }
+          }) 
+          if(addData.data.createAd.status === 200){
+            sucessToast(addData.data.createAd.result)
           }
+    setProgress(false)
+    navigate("/admin/adManagement")
+
+        }catch{
+          errorToast("Something went wrong!")
+    setProgress(false)
         }
-      }) 
+      }else{
+        try{
+          const editData =  await editAd({
+            variables : {
+              data : {
+                // image : images[0],
+                id,
+                url : url,
+                status : isOn ? "Active" : "inActive"
+              }
+            }
+          })  
+          if(editData.data.editAd.status === 200){
+            sucessToast(editData.data.editAd.result)
+    setProgress(false)
+    navigate("/admin/adManagement")
+
+          }else{
+            errorToast(editData.data.editAd.result)
+    setProgress(false)
+
+          }
+        }catch{
+          errorToast("Something went wrong!")
+        }
+      }
     }
   }
   const handleToggle = () => {
@@ -79,20 +124,22 @@ const adDeleted =  await deleteAd({
 if(adDeleted.data.deleteAd.status === 200){
      toast.success("Ad Deleted successfully!");
     setProgress(false)
-     navigate("admin/adManagement")
+     navigate("/admin/adManagement")
   
 }else{
   setProgress(false)
         toast.error("An error occurred while deleting the Ad.");
   
 }
-console.log(adDeleted.data.deleteAd.status);
     }catch{
       toast.error("An error occurred while deleting the Ad.");
 
     }
   }
-  console.log("imagesss", errors);
+  const changeFormData = (e : any) => {
+    const {value} = e.target;
+    setUrl(value)
+  }
   return (
      
     <Container className="admin-Content-view" maxWidth="xl">
@@ -101,6 +148,10 @@ console.log(adDeleted.data.deleteAd.status);
         <SectionHeader title="Add Advertisement" />
       </div>
       <Grid2 container>
+      <Grid2 size = {{xs : 12,md : 2}} className = "mt-5 flex items-center">
+          <p>Image : </p>
+        </Grid2>
+        <Grid2 size = {{xs : 12,md : 10}} className = "mt-5">
         <ImageInput onClick={handleDivClick}>
           <input type="file" name="image" onChange={handleImageChange} placeholder="Image" style={{ display: "none" }} ref={fileInputRef} />
           <p>Image</p>
@@ -108,20 +159,37 @@ console.log(adDeleted.data.deleteAd.status);
         </ImageInput>
         {errors?.image &&
         <p className = "text-red-500">Image is Required!</p>}
+        </Grid2>
         {images?.length > 0 &&
           <>
-            <Grid2 size={{ xs: 12, md: 12 }}>
+            <Grid2 size={{ xs: 12, md: 12 }} className = "flex justify-center">
               <img className="mt-5 rounded-lg h-96 " src={images[0].preview || images} />
             </Grid2>
           </>
         }
-        <Grid2 size={{ xs: 12, md: 12 }}>
-          {id &&
-          <div className="flex">
-          <span className="my-5 mr-5">Status :</span><ToggleField isOn={isOn} handleToggle={handleToggle} />
-          </div>
-          }
+        <Grid2 size = {{xs : 12,md : 2}} className = "mt-5 flex items-center">
+          <p>Url : </p>
         </Grid2>
+        <Grid2 size = {{xs : 12,md : 10}} className = "mt-5">
+          <>
+          <TextInputComponent change={(e: React.ChangeEvent<HTMLSelectElement>) => changeFormData(e)} name="Url" value={url} placeholder="Url" wid100={true} error={errors?.url} />
+                    {errors?.url &&
+        <p className = "text-red-500">Url is Required!</p>}
+          </>
+        </Grid2>
+          {id &&
+          <>
+        <Grid2 size={{ xs: 12, md: 2 }} className = "flex items-center">
+        <p>Status : </p>
+
+        </Grid2>
+        <Grid2 size={{ xs: 12, md: 10 }}>
+          <div className="flex">
+          <ToggleField isOn={isOn} handleToggle={handleToggle} />
+          </div>
+        </Grid2>
+          </>
+          }
         <Button saveBtn onClick={submit}>
           Save
         </Button>

@@ -16,7 +16,7 @@ import { SectionHeader } from "admin/Navigation/Header/SectionHeader";
 import { OutlinedButton } from "../../components/Buttons/Button";
 // Api
 import { useQuery } from "@apollo/client";
-import { GET_ALL_LISTINGS } from "apollo/query";
+import { GET_USERS } from "apollo/query";
 import { ToggleField } from "admin/fieldInputs/toggleField";
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
@@ -31,7 +31,7 @@ function createData(name: string, calories: number, fat: number, carbs: number, 
 //   createData('Gingerbread', 356, 16.0, 49, 3.9),
 // ];
 
-export default function ManageListings() {
+export default function UserManagement() {
   const [variables, setVariables] = useState<any>({
     orderBy: { field: "likes", order: 1 },
     limit: 5,
@@ -43,13 +43,13 @@ export default function ManageListings() {
   const [totalCount, setTotalCount] = useState(0);
   const navigate = useNavigate();
   const [rows, setRows] = useState<any>();
-  const { data, loading, error, refetch } = useQuery(GET_ALL_LISTINGS, {
+  const { data, refetch } = useQuery(GET_USERS, {
     variables,
   });
   useEffect(() => {
-    if (data?.getAllProductAdminTable) {
-      setRows(data.getAllProductAdminTable.responce);
-      setTotalCount(data.getAllProductAdminTable.count);
+    if (data?.getAllUserAdminTable) {
+      setRows(data.getAllUserAdminTable.responce);
+      setTotalCount(data.getAllUserAdminTable.count);
     }
   }, [data]);
   const sort = (type: string) => {
@@ -98,64 +98,65 @@ export default function ManageListings() {
   return (
     <Container className="admin-Content-view" maxWidth="xl">
       <div className="flex justify-between items-center w-full">
-        <SectionHeader title="Listing Management" />
-        <OutlinedButton propoerty={{ isStartIcon : <Add /> }} name="Add Listing" handleClick={handleAddFields} />
+        <SectionHeader title="User Management" />
+        {/* <OutlinedButton propoerty={{ isStartIcon : <Add /> }} name=" Listing" handleClick={handleAddFields} /> */}
       </div>
       <div className="flex flex-col space-y-2">
         <TableContainer style={{ boxShadow: "none" }} component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell onClick={() => sort("title")}>
-                  <strong style={{ display: "flex" }}>
-                    Title <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                <TableCell align="center" onClick={() => sort("_id")}>
+                  <strong className = "flex justify-center">
+                    ID <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
                   </strong>
                 </TableCell>
-                <TableCell align="center" onClick={() => sort("category_name")}>
-                  <strong style={{ display: "flex" }}>
-                    Category Name <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                <TableCell align="center" onClick={() => sort("firstName")}>
+                  <strong className = "flex justify-center">
+                    First Name <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
                   </strong>
                 </TableCell>
-                <TableCell align="center" onClick={() => sort("explore_products")}>
-                  <strong style={{ display: "flex" }}>
-                  Explore Products <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                <TableCell align="center" onClick={() => sort("lastName")}>
+                  <strong className = "flex justify-center">
+                  Last Name <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
                   </strong>
                 </TableCell>
-                <TableCell align="center" onClick={() => sort("new_arrivals")}>
-                  <strong style={{ display: "flex" }}>
-                  New Arrivals <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                <TableCell align="center" onClick={() => sort("phone_number")}>
+                  <strong className = "flex justify-center">
+                  Phone Number<span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
                   </strong>
                 </TableCell>
-                <TableCell align="center" onClick={() => sort("top_selling_products")}>
-                  <strong style={{ display: "flex" }}>
-                  Top Selling Products <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                <TableCell align="center" onClick={() => sort("email")}>
+                  <strong className = "flex justify-center">
+                  Email <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
                   </strong>
                 </TableCell>
-                <TableCell align="center" onClick={() => sort("clearance_sale")}>
-                  <strong style={{ display: "flex" }}>
-                  Clearance Sale <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
-                  </strong>
-                </TableCell>
-                <TableCell align="center" onClick={() => sort("Total Available Count")}>
-                  <strong style={{ display: "flex" }}>
-                    Total Available Count <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                <TableCell align="center" onClick={() => sort("status")}>
+                  <strong className = "flex justify-center">
+                  Status <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
                   </strong>
                 </TableCell>
 
                 {/* <TableCell align="center"><strong>Likes</strong></TableCell>
             <TableCell align="center"><strong>Sold Out Count</strong></TableCell>*/}
-                <TableCell align="center">
+                {/* <TableCell align="center">
                   <strong>Actions</strong>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
               {rows?.map((row: any, index: number) => (
                 <TableRow key={index}>
-                  <TableCell onClick={() => navigateToListings(row._id)} ><p className="font-semibold cursor-pointer">
-                  {row.title}</p></TableCell>
-                  <TableCell align="center">{row.category_name || "N/A"}</TableCell>
-                  <TableCell align="center" className=""> <ToggleField
+                  {/* <TableCell onClick={() => navigateToListings(row._id)} ><p className="font-semibold cursor-pointer">
+                  {row.title}</p></TableCell> */}
+                  <TableCell align="center">{row._id || "N/A"}</TableCell>
+                  <TableCell align="center">{row.firstName || "N/A"}</TableCell>
+                  <TableCell align="center">{row.lastName || "N/A"}</TableCell>
+                  <TableCell align="center">{row.phone_number || "N/A"}</TableCell>
+                  <TableCell align="center">{row.email || "N/A"}</TableCell>
+                  <TableCell align="center">{row.status || "N/A"}</TableCell>
+
+                  {/* <TableCell align="center" className=""> <ToggleField
                                         isOn={row.explore_products} disable = {true}
                                       /></TableCell>
                                 <TableCell align="center" className=""> <ToggleField
@@ -166,12 +167,12 @@ export default function ManageListings() {
                                       /></TableCell>
                                       <TableCell align="center" className=""> <ToggleField
                                         isOn={row.clearance_sale} disable = {true}
-                                      /></TableCell>            
+                                      /></TableCell>             */}
                   {/* <TableCell align="center">{row.sold_out_count}</TableCell> */}
-                  <TableCell align="center">{row.total_available_count}</TableCell>
+                  {/* <TableCell align="center">{row.total_available_count}</TableCell>
                   <TableCell align="center" style={{ width: "150px", minWidth: "150px", cursor: "pointer" }} onClick={() => handleEditClick(row._id)}>
                     <ModeEdit />
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 // pages
 import Home from "./pages/Home";
-import ProductDetails from "pages/ProductDetails";
-import Products from "pages/Products";
+import ProductDetails from "pages/productDetails";
+import Products from "pages/products";
 import Wishlist from "./pages/Wishlist";
 // admin pages
 import ManageCategory from "admin/pages/manageCategory";
@@ -29,7 +29,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AdManagement } from "admin/pages/addManagement";
 import PrivateRoute from "protectedRoutes";
 import ShoppingCart from "pages/ShoppingCart";
-
+import UserManagement from "admin/pages/userManagement";
 // comon layout
 const DefaultLayout = () => {
   return (
@@ -78,6 +78,7 @@ const RootRouter = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "productdetails", element: <ProductDetails /> },
+      { path: "productdetails/:id", element: <ProductDetails /> },
       { path: "products", element: <Products /> },
       { path: 'wishlist', element: <Wishlist />},
       { path: 'mycart', element: <ShoppingCart />}
@@ -94,6 +95,7 @@ const RootRouter = createBrowserRouter([
           { path: "addListing", element: <AddListing /> },
           { path: "addListing/:id", element: <AddListing /> },
           { path: "manageListings", element: <ManageListings /> },
+          {path : "userManagement",element : <UserManagement/>},
           { path: "addAdvertisment", element: <Advertisment />},
       { path: "addAdvertisment/:id", element: <Advertisment /> },
       { path: "adManagement", element: <AdManagement />}

@@ -31,10 +31,11 @@ export default function AdminSideBar({ handleMobileMenu = () => {} }: adminSideB
   };
 
   const logOut = () => {
-    const message = logoutSuccess("Praveen");
+    const message = logoutSuccess("User");
     infoToast(message);
     setTimeout(() => {
-      localStorage.removeItem('loginUserToken')
+      localStorage.removeItem('loginUserToken');
+      localStorage.removeItem('isAdmin');
       // document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
       navigate("/");
     }, 2000);
@@ -85,7 +86,7 @@ export default function AdminSideBar({ handleMobileMenu = () => {} }: adminSideB
                 <AccountCircle className="!text-white sm:!text-gray-600 !text-lg" />
               </ListItemIcon>
               <ListItemText className="!flex-initial !text-white sm:!text-gray-600" sx={{ "& .MuiTypography-root": { fontSize: { sm: "0.875rem" }, fontWeight: 500, letterSpacing: "0.0275rem", width: "fit-content" } }}>
-                Praveen
+                User
               </ListItemText>
             </ListItemButton>
             <Divider orientation="vertical" flexItem className="!border-white sm:!border-gray-500 !self-center !border !h-6" />

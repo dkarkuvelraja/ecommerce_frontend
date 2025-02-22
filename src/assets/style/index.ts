@@ -82,6 +82,12 @@ margin : 10px 0px; }
 .errorRed{
 border : 1px solid red !important;
 }
+.passwordVisible{
+position : absolute;
+    right: 10px;
+    top: 5px;
+    width: 18px;
+    color: gray !important;}
 .btnMargin{
 margin : -2px 0px !important;}
 `;

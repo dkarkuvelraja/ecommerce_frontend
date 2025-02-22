@@ -13,6 +13,7 @@ export const USER_RGN = gql
     status
     result
     response
+    is_admin
   }
 }`
 
@@ -66,6 +67,14 @@ export const CREATE_AD = gql`mutation CreateAd($data: CreateAdInput!) {
 export const DELETE_AD = gql`
 mutation DeleteAd($data: deleteCategoryInput!) {
   deleteAd(data: $data) {
+    result
+    status
+  }
+}`
+
+export const EDIT_AD = gql`
+mutation EditAd($data: EditAdInput!) {
+  editAd(data: $data) {
     result
     status
   }
