@@ -13,7 +13,7 @@ import { SortIcon } from "assets/imageSvg/sortIcon";
 import { Add, ModeEdit } from "@mui/icons-material";
 // components
 import { SectionHeader } from "admin/Navigation/Header/SectionHeader";
-import { OutlinedButton } from "../../components/buttons/Button";
+import { OutlinedButton } from "../../components/Buttons/Button";
 // Api
 import { useQuery } from "@apollo/client";
 import { GET_ALL_ADS } from "apollo/query";
@@ -35,7 +35,6 @@ export function AdManagement() {
       });
       useEffect(() => {
         if (data) {
-          console.log("allCategories", data.getAllAd);
           setRows(data.getAllAd.response);
         //   setTotalCount(data.getAllAd.count);
         setTotalCount(5)
@@ -55,14 +54,12 @@ export function AdManagement() {
         navigate(`/admin/addAdvertisment/${id}`); // Navigate to the addlisting page with ID
       }
       const handleChangeRowsPerPage = (event: any) => {
-        console.log("eeeeeeeeeeeeee", event.target);
         setRowsPerPage(parseInt(event.target.value, 10));
         // setPage(0);
         setVariables((prev: any) => ({ ...prev, limit: parseInt(event.target.value) }));
         refetch();
       };
       const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
-        console.log("eeeeeeeeeeeeee123", newPage);
         setVariables((prev: any) => ({ ...prev, skip: newPage }));
         refetch();
     
@@ -83,8 +80,6 @@ export function AdManagement() {
       const handleAddFields = () => {
         navigate("/admin/addAdvertisment");
       };
-      console.log("rows");
-      console.log("rowsrows",rows);
 return(
     <Container className="admin-Content-view" maxWidth="xl">
     <div className="flex justify-between items-center w-full">

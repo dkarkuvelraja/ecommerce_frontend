@@ -35,7 +35,7 @@ export function ToggleField(props : any) {
   return (
     <div className = "my-5">
 
-<CustomSwitch checked={props.isOn} onChange={props.handleToggle} />
+<CustomSwitch checked={props.isOn} onChange={props.handleToggle} disabled={props.disable} />
     </div>
 );
 };

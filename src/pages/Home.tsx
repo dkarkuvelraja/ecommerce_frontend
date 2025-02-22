@@ -3,7 +3,7 @@ import React from "react";
 import "./home.css";
 import SectionHeader from "../Navigation/Header/SectionHeader";
 import { ProductCardSlider, RatingsSlider } from "../components/carousel";
-import { LargeButtonArrow } from "../components/buttons/Button";
+import { LargeButtonArrow } from "../components/Buttons/Button";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

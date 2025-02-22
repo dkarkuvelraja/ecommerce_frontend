@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 // pages
 import Home from "./pages/Home";
-import ProductDetails from "pages/ProductDetails";
-import Products from "pages/Products";
+import ProductDetails from "pages/productDetails";
+import Products from "pages/products";
 import Wishlist from "./pages/Wishlist";
 // admin pages
 import ManageCategory from "admin/pages/manageCategory";
@@ -78,6 +78,7 @@ const RootRouter = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "productdetails", element: <ProductDetails /> },
+      { path: "productdetails/:id", element: <ProductDetails /> },
       { path: "products", element: <Products /> },
       { path: 'wishlist', element: <Wishlist />},
       { path: 'mycart', element: <ShoppingCart />}

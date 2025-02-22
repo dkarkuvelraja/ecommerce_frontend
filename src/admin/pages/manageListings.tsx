@@ -13,10 +13,11 @@ import { SortIcon } from "assets/imageSvg/sortIcon";
 import { Add, ModeEdit } from "@mui/icons-material";
 // components
 import { SectionHeader } from "admin/Navigation/Header/SectionHeader";
-import { OutlinedButton } from "../../components/buttons/Button";
+import { OutlinedButton } from "../../components/Buttons/Button";
 // Api
 import { useQuery } from "@apollo/client";
 import { GET_ALL_LISTINGS } from "apollo/query";
+import { ToggleField } from "admin/fieldInputs/toggleField";
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
   return { name, calories, fat, carbs, protein };
@@ -46,8 +47,7 @@ export default function ManageListings() {
     variables,
   });
   useEffect(() => {
-    if (data) {
-      console.log("allCategories", data.getAllProductAdminTable);
+    if (data?.getAllProductAdminTable) {
       setRows(data.getAllProductAdminTable.responce);
       setTotalCount(data.getAllProductAdminTable.count);
     }
@@ -66,14 +66,12 @@ export default function ManageListings() {
     navigate(`/admin/addlisting/${id}`); // Navigate to the addlisting page with ID
   }
   const handleChangeRowsPerPage = (event: any) => {
-    console.log("eeeeeeeeeeeeee", event.target);
     setRowsPerPage(parseInt(event.target.value, 10));
     // setPage(0);
     setVariables((prev: any) => ({ ...prev, limit: parseInt(event.target.value) }));
     refetch();
   };
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
-    console.log("eeeeeeeeeeeeee123", newPage);
     setVariables((prev: any) => ({ ...prev, skip: newPage }));
     refetch();
 
@@ -94,7 +92,9 @@ export default function ManageListings() {
   const handleAddFields = () => {
     navigate("/admin/addlisting");
   };
-
+  const navigateToListings = (id : string) => {
+    navigate(`/productDetails/${id}`)
+  }
   return (
     <Container className="admin-Content-view" maxWidth="xl">
       <div className="flex justify-between items-center w-full">
@@ -116,14 +116,24 @@ export default function ManageListings() {
                     Category Name <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
                   </strong>
                 </TableCell>
-                <TableCell align="center" onClick={() => sort("Likes")}>
+                <TableCell align="center" onClick={() => sort("explore_products")}>
                   <strong style={{ display: "flex" }}>
-                    Likes <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                  Explore Products <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
                   </strong>
                 </TableCell>
-                <TableCell align="center" onClick={() => sort("Sold Out Count")}>
+                <TableCell align="center" onClick={() => sort("new_arrivals")}>
                   <strong style={{ display: "flex" }}>
-                    Sold Out Count <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                  New Arrivals <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                  </strong>
+                </TableCell>
+                <TableCell align="center" onClick={() => sort("top_selling_products")}>
+                  <strong style={{ display: "flex" }}>
+                  Top Selling Products <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
+                  </strong>
+                </TableCell>
+                <TableCell align="center" onClick={() => sort("clearance_sale")}>
+                  <strong style={{ display: "flex" }}>
+                  Clearance Sale <span style={{ marginTop: "5px", marginLeft: "5px" }}>{SortIcon}</span>
                   </strong>
                 </TableCell>
                 <TableCell align="center" onClick={() => sort("Total Available Count")}>
@@ -142,10 +152,22 @@ export default function ManageListings() {
             <TableBody>
               {rows?.map((row: any, index: number) => (
                 <TableRow key={index}>
-                  <TableCell>{row.title}</TableCell>
+                  <TableCell onClick={() => navigateToListings(row._id)} ><p className="font-semibold cursor-pointer">
+                  {row.title}</p></TableCell>
                   <TableCell align="center">{row.category_name || "N/A"}</TableCell>
-                  <TableCell align="center">{row.likes}</TableCell>
-                  <TableCell align="center">{row.sold_out_count}</TableCell>
+                  <TableCell align="center" className=""> <ToggleField
+                                        isOn={row.explore_products} disable = {true}
+                                      /></TableCell>
+                                <TableCell align="center" className=""> <ToggleField
+                                        isOn={row.new_arrivals} disable = {true}
+                                      /></TableCell> 
+                                      <TableCell align="center" className=""> <ToggleField
+                                        isOn={row.top_selling_products} disable = {true}
+                                      /></TableCell>
+                                      <TableCell align="center" className=""> <ToggleField
+                                        isOn={row.clearance_sale} disable = {true}
+                                      /></TableCell>            
+                  {/* <TableCell align="center">{row.sold_out_count}</TableCell> */}
                   <TableCell align="center">{row.total_available_count}</TableCell>
                   <TableCell align="center" style={{ width: "150px", minWidth: "150px", cursor: "pointer" }} onClick={() => handleEditClick(row._id)}>
                     <ModeEdit />

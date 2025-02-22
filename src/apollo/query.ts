@@ -13,7 +13,7 @@ export const GET_CATEGORIES = gql `
 `
 
 export const GET_ALL_CATEGORIES = gql`
-query Query {
+query {
   getAllCategory {
     status
     result
@@ -46,12 +46,14 @@ query GetAllProductAdminTable($orderBy: SortInput, $limit: Int, $skip: Int) {
   getAllProductAdminTable(orderBy: $orderBy, limit: $limit, skip: $skip) {
     count
     responce {
-      category_name
-      likes
-      sold_out_count
-      title
-      total_available_count
       _id
+      title
+      category_name
+      explore_products
+      new_arrivals
+      top_selling_products 
+      clearance_sale
+      total_available_count
     }
     result
     status
@@ -62,6 +64,8 @@ query GetAllProductAdminTable($orderBy: SortInput, $limit: Int, $skip: Int) {
 export const GET_PRODUCT_BY_ID = gql`
 query GetProductById($getProductByIdId: ID!) {
   getProductById(id: $getProductByIdId) {
+    status
+    result
     responce {
       id
       title
@@ -81,14 +85,14 @@ query GetProductById($getProductByIdId: ID!) {
       }
       status
       image
-      sold_out_count
-      likes
       total_available_count
+      explore_products
+      new_arrivals
+      top_selling_products
+      clearance_sale
       createdAt
       updatedAt
     }
-    result
-    status
   }
 }`
 

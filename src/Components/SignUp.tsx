@@ -3,7 +3,7 @@ import { USER_RGN } from '../apollo/mutation';
 import { useMutation } from '@apollo/client';
 import { validation } from '../HelperFunctions/validation';
 import { isValid } from '../HelperFunctions/basicHelpers';
-import TextField from './fields/textField';
+import TextField from './Fields/textField';
 import { Box, Button, Container, Grid2 } from '@mui/material';
 
 interface IFormData {
@@ -17,7 +17,6 @@ interface IFormData {
 }
 
 function SignUp(props: any) {
-  console.log("propssss",props)
   const [formData, setFormData] = useState<IFormData>({
     firstName: "",
     lastName: "",
@@ -48,16 +47,12 @@ function SignUp(props: any) {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); // Prevent page reload
-    console.log("Form submitted:", formData);
     const errors = validation("signUp", formData)
     setErrors(errors)
-    console.log("errrors", errors)
     if (isValid(errors)) {
-      console.log("Object.keys(errors).length > 0", Object.keys(errors))
       // const data = formData
       try {
         const submitData = await submitForm({ variables: { data: formData } });
-        console.log("submitData", submitData)
         setFormData({
           firstName: "",
           lastName: "",

@@ -2,10 +2,10 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import ProductCard from "../card/ProductCard";
+import ProductCard from "../Card/ProductCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./slider.css";
-import RatingCard from "../card/RatingCard";
+import RatingCard from "../Card/RatingCard";
 
 interface SliderProps {
   products: any;
