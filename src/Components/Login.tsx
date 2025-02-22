@@ -77,7 +77,7 @@ export default function Login({ onClose } : loginProps) {
       maxWidth="md"
       fullWidth
       PaperProps={{
-        classes: { root: "!bg-gradient-to-r from-primary to-secondary !max-w-2xl !rounded-md md:!h-3/5 !overflow-hidden relative" },
+        classes: { root: "!bg-gradient-to-r from-primary to-secondary !max-w-2xl !rounded-md md:!h-3/5 !overflow-hidden relative animate__animated animate__bounceIn" },
       }}
     >
       <DialogTitle className="absolute -top-1 !p-0 right-2">

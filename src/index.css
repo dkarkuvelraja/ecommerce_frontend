@@ -26,6 +26,18 @@ code {
   @apply cursor-pointer hover:text-primary;
 }
 
+.header-drop-down::before {
+  content: " ";
+  position: absolute;
+  top: -14px; /* Adjust position */
+  left: 4px; /* Adjust based on dropdown width */
+  width: 18px;
+  height: 18px;
+  background-color: white;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
 /* product css*/
 .card-action-button:hover .icon-fav, .card-action-button:hover .icon-cart{
     @apply !fill-black

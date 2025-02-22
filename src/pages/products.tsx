@@ -35,9 +35,9 @@ export default function Products() {
       <Container maxWidth="lg" className="space-y-5 my-12">
         <Box className="grid grid-cols-3 md:grid-cols-5 gap-6">
           <div className="flex flex-col">
-            <div className="flex justify-between mb-3 text-base">
+            <div className="flex justify-between mb-3 text-base items-center">
               <h3 className="font-medium">Filters</h3>
-              <span className="text-primary cursor-pointer select-none">Reset</span>
+              <span className="text-primary text-sm cursor-pointer select-none">Reset</span>
             </div>
             <Divider />
             <List>

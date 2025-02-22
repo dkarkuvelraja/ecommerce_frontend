@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AddShoppingCartOutlined, CurrencyRupee, FavoriteBorderOutlined, Star } from "@mui/icons-material";
 import { Card, CardActionArea, CardContent, CardMedia, IconButton } from "@mui/material";
 
@@ -13,9 +13,15 @@ interface ProductCardProps {
 }
 
 function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, originalPrice, isWishlist = false }: ProductCardProps) {
+  const [animate, setAnimate] = useState(false);
   return (
     <Card style={{ boxShadow: "none", borderRadius: 0 }}>
       <CardActionArea
+        onMouseEnter={() => {
+          void document.body.offsetWidth;
+          setAnimate(true); // Reapply animation
+        }}
+        onMouseLeave={() => setAnimate(false)}
         className="relative shadow-sm !rounded-sm sm:!rounded-md cart-action-area"
         classes={{
           focusHighlight: "!opacity-55 z-10 ",
@@ -28,7 +34,7 @@ function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, o
             <IconButton size="small" className="hover:!bg-white card-action-button">
               <FavoriteBorderOutlined className="!text-xs sm:!text-base !fill-white icon-fav" />
             </IconButton>
-            <IconButton size="small" className="hover:!bg-white  card-action-button">
+            <IconButton size="small" className={`hover:!bg-white  card-action-button  ${animate ? "animate__animated animate__slideInRight animate__faster" : "!hidden"}`}>
               <AddShoppingCartOutlined className="!text-xs sm:!text-base !fill-white icon-cart" />
             </IconButton>
           </div>
