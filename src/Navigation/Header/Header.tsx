@@ -1,17 +1,16 @@
-import { AppBar, Autocomplete, Avatar, Button, Container, CssBaseline, Divider, IconButton, ListItemIcon, Menu, MenuItem, TextField, Toolbar, Tooltip } from "@mui/material";
+import { AppBar, Autocomplete, Avatar, Button, Card, CardContent, CardMedia, Container, CssBaseline, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, TextField, Toolbar, Tooltip } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import Login from "../../components/Login";
 import { getCookie } from "../../HelperFunctions/basicHelpers";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FavoriteBorder, Logout, ShoppingCartOutlined } from "@mui/icons-material";
-import { infoToast } from "HelperFunctions/utils";
+import { FavoriteBorder, KeyboardArrowRight, Logout, ShoppingCartOutlined } from "@mui/icons-material";
+import { infoToast, productList } from "HelperFunctions/utils";
 import { logoName_dark, logo_dark } from "config/property/image-property";
 import { logoutSuccess } from "HelperFunctions/message";
 import { ElevationScroll, HideOnScroll } from "../../components/HeaderScroll";
 import { useQuery } from "@apollo/client";
 import { GET_CATEGORIES } from "apollo/query";
-
 
 interface Props {
   window?: () => Window;
@@ -23,40 +22,40 @@ function Header(props: Props) {
   const navigate = useNavigate();
   const [isAuthModal, setIsAuthModal] = useState<boolean>(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const [openProductEl, setOpenProductEl] = useState<string>("");
   const isMenuOpen = Boolean(menuAnchorEl);
   // const isAuth = getCookie("accessToken");
-  const isAuth = localStorage.getItem('loginUserToken');
+  const isAuth = localStorage.getItem("loginUserToken");
   const [categories, setCategories] = useState([]);
   //fetch data
   const { data: categoryData, refetch } = useQuery(GET_CATEGORIES, {
     notifyOnNetworkStatusChange: true,
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     refetch();
-  }, [location.pathname,refetch])
+  }, [location.pathname, refetch]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const categories = categoryData?.getAllCategory?.response || [];
     setCategories(categories);
-  }, [categoryData])
+  }, [categoryData]);
 
   const handleLogModal = useCallback(() => {
     setIsAuthModal(false);
   }, []);
 
+  const handleMenuOpen = (e: any) => {
+    setMenuAnchorEl(e.target);
+  };
 
-  const handleMenuOpen = (e : any) =>{
-    setMenuAnchorEl(e.target)
-  }
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+  };
 
-  const handleMenuClose = () =>{
-    setMenuAnchorEl(null)
-  }
-
-  const handleProfile = () =>{
+  const handleProfile = () => {
     navigate("/admin/managelistings");
-  }
+  };
 
   const logOut = () => {
     const message = logoutSuccess('User');
@@ -66,11 +65,11 @@ function Header(props: Props) {
       localStorage.removeItem('isAdmin');
       // document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
       navigate("/");
-    }, 2000)
+    }, 2000);
   };
   const redirection = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
   return (
     <>
       <CssBaseline />
@@ -81,10 +80,10 @@ function Header(props: Props) {
               <h6 className="text-white tracking-wide">Get Exclusive Offers !!!</h6>
             </Container>
           </HideOnScroll>
-          <Container maxWidth='xl'>
+          <Container maxWidth="xl">
             <Toolbar sx={{ px: { xs: 0, sm: 3 }, minHeight: { xs: "48px", sm: "60px" } }}>
               <div className="flex justify-between w-full">
-                <div className="flex gap-2 items-center" onClick = {redirection}>
+                <div className="flex gap-2 items-center" onClick={redirection}>
                   <img className="h-3 sm:h-6" src={logo_dark} alt="logo" />
                   <img className="h-3 sm:h-6" src={logoName_dark} alt="company name" />
                 </div>
@@ -122,14 +121,22 @@ function Header(props: Props) {
                     />
                     <div className="flex items-center space-x-1 sm:space-x-3">
                       <div className="hover:text-primary cursor-pointer flex items-center">
-                        <FavoriteBorder className="!text-lg md:!text-2xl !font-normal !text-gray-400" />
+                        <Tooltip title="Wish List">
+                          <IconButton size="small" onClick={() => navigate("/wishlist")}>
+                            <FavoriteBorder className="!text-lg md:!text-2xl !font-normal !text-gray-400" />
+                          </IconButton>
+                        </Tooltip>
                       </div>
                       <div className="flex items-center gap-1 cursor-pointer hover:text-primary">
-                        <ShoppingCartOutlined className="!text-lg md:!text-2xl !text-gray-400" />
+                        <Tooltip title="cart">
+                          <IconButton size="small" onClick={() => navigate("/mycart")}>
+                            <ShoppingCartOutlined className="!text-lg md:!text-2xl !text-gray-400" />
+                          </IconButton>
+                        </Tooltip>
                       </div>
                       <div className="">
                         {isAuth ? (
-                          <Tooltip title='Account Settings'>
+                          <Tooltip title="Account Settings">
                             <IconButton size="small" onClick={(e) => handleMenuOpen(e)}>
                               <Avatar className="!text-sm sm:!text-base !size-6 sm:!size-8">U</Avatar>
                             </IconButton>
@@ -140,23 +147,32 @@ function Header(props: Props) {
                           </Button>
                         )}
                       </div>
-                      <Menu elevation={0} anchorEl={menuAnchorEl} open={isMenuOpen} onClose={() =>handleMenuClose()} onClick={()=>handleMenuClose()}
-                          classes={{ 
-                            paper: '!border !text-sm mt-2 px-3'
-                          }}
-                          className="profile-menu"
-                          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                          anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                        >
-                          <MenuItem disableRipple className="menu-item" onClick={() => handleProfile()}>Profile</MenuItem>
-                          <MenuItem disableRipple className="menu-item" onClick={() => navigate('wishlist')}>Wish List</MenuItem>
-                          <Divider />
-                          <MenuItem disableRipple className="menu-item" onClick={() => logOut()}>
-                            <ListItemIcon className="!min-w-7">
-                              <Logout className="!text-base" />
-                            </ListItemIcon>
-                            Logout
-                          </MenuItem>
+                      <Menu
+                        elevation={0}
+                        anchorEl={menuAnchorEl}
+                        open={isMenuOpen}
+                        onClose={() => handleMenuClose()}
+                        onClick={() => handleMenuClose()}
+                        classes={{
+                          paper: "!border !text-sm mt-2 px-3",
+                        }}
+                        className="profile-menu"
+                        transformOrigin={{ horizontal: "right", vertical: "top" }}
+                        anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+                      >
+                        <MenuItem disableRipple className="menu-item" onClick={() => handleProfile()}>
+                          Profile
+                        </MenuItem>
+                        <MenuItem disableRipple className="menu-item" onClick={() => navigate("wishlist")}>
+                          Wish List
+                        </MenuItem>
+                        <Divider />
+                        <MenuItem disableRipple className="menu-item" onClick={() => logOut()}>
+                          <ListItemIcon className="!min-w-7">
+                            <Logout className="!text-base" />
+                          </ListItemIcon>
+                          Logout
+                        </MenuItem>
                       </Menu>
                     </div>
                   </div>
@@ -166,15 +182,46 @@ function Header(props: Props) {
           </Container>
           <Divider />
           <Container maxWidth="xl">
-            <div className="p-2 text-xs md:text-sm overflow-scroll md:overflow-hidden">
-              <ul className="nav-menu flex justify-center space-x-3 md:space-x-20 w-min md:w-full">
-                <li onClick={()=> navigate('/')}>Home</li>
-                {
-                  categories?.map((item : any, index)=> (
-                    <li>{item?.category_name}</li>
-                  ))
-                }
-              </ul>
+            <div className="p-2 text-xs md:text-sm overflow-scroll md:overflow-visible">
+              <List className="flex justify-center space-x-3 md:space-x-20 w-min md:w-full !p-0">
+                <ListItemButton className="!w-fit !flex-none !p-0" onClick={() => navigate("/")}>
+                  <ListItemText classes={{ primary: "w-fit !text-sm", root: "!flex-initial !min-w-fit !m-0" }} primary="Home" />
+                </ListItemButton>
+                {categories?.map((item: any, index) => {
+                  const cutstomId = `header-menu-${index}`;
+                  return (
+                    <div className="relative" onMouseEnter={() => setOpenProductEl(cutstomId)} onMouseLeave={() => setOpenProductEl("")}>
+                      <ListItemButton disableRipple className="!w-fit !flex-none !p-0 !bg-transparent">
+                        <ListItemText classes={{ primary: "w-fit !text-sm", root: "!flex-initial !min-w-fit !m-0" }} primary={item?.category_name} />
+                      </ListItemButton>
+                      <div className={`${openProductEl === cutstomId ? "block" : "hidden"} mt-2 header-drop-down absolute animate__animated animate__headShake p-3 border bg-white left-0 top-full drop-shadow shadow-md rounded w-[500px]`}>
+                        <div className="grid grid-cols-3 gap-2">
+                          <div>
+                            <div className="h-64 border"></div>
+                          </div>
+                          <div className="col-span-2 space-y-2">
+                            {productList.slice(0, 4)?.map((item) => (
+                              <Card className="flex p-1 border-1 border-primary">
+                                <CardMedia sx={{ objectPosition: "top" }} className="!size-14 rounded-sm" component="img" image={item.src} alt="cart" />
+                                <CardContent className="flex-1 space-y-2 !py-2">
+                                  <div className="w-full h-full flex justify-between items-center">
+                                    <div>
+                                      <h4 className="text-sm">Slim Fit T-Shirt</h4>
+                                    </div>
+                                    <div className="bg-primary drop-shadow rounded">
+                                      <KeyboardArrowRight className="!text-white" />
+                                    </div>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </List>
             </div>
           </Container>
           <Divider />

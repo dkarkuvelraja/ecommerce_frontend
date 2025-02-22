@@ -3,7 +3,7 @@ import { USER_RGN } from '../apollo/mutation';
 import { useMutation } from '@apollo/client';
 import { validation } from '../HelperFunctions/validation';
 import { isValid } from '../HelperFunctions/basicHelpers';
-import TextField from './Fields/textField';
+import TextField from './fields/textField';
 import { Box, Button, Container, Grid2 } from '@mui/material';
 
 interface IFormData {

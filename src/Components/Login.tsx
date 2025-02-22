@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogTitle, Divider, IconButton } from "@mui/ma
 
 import LoginImg from "../assets/images/loginImg.png";
 import { TextFieldWithLabel } from "./input/TextField";
-import { OutlinedButton } from "./Buttons/Button";
+import { OutlinedButton } from "./buttons/Button";
 import { X } from "lucide-react";
 import { loginSuccess } from "HelperFunctions/message";
 import { errorToast, sucessToast } from "HelperFunctions/utils";
@@ -124,7 +124,7 @@ export default function Login({ onClose }: loginProps) {
       maxWidth="md"
       fullWidth
       PaperProps={{
-        classes: { root: "!bg-gradient-to-r from-primary to-secondary !max-w-2xl !rounded-md md:!h-3/5 !overflow-hidden relative" },
+        classes: { root: "!bg-gradient-to-r from-primary to-secondary !max-w-2xl !rounded-md md:!h-3/5 !overflow-hidden relative animate__animated animate__bounceIn" },
       }}
     >
       <DialogTitle className="absolute -top-1 !p-0 right-2">

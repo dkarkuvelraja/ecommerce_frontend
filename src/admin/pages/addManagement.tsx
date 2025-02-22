@@ -13,7 +13,7 @@ import { SortIcon } from "assets/imageSvg/sortIcon";
 import { Add, ModeEdit } from "@mui/icons-material";
 // components
 import { SectionHeader } from "admin/Navigation/Header/SectionHeader";
-import { OutlinedButton } from "../../components/Buttons/Button";
+import { OutlinedButton } from "../../components/buttons/Button";
 // Api
 import { useQuery } from "@apollo/client";
 import { GET_ALL_ADS } from "apollo/query";

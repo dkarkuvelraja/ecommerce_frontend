@@ -14,7 +14,7 @@ import { isValid, s3ImgUrl } from "HelperFunctions/basicHelpers";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 // components
 import { SectionHeader, Header3 } from "admin/Navigation/Header/SectionHeader";
-import { ContainedButton, OutlinedButton } from "../../components/Buttons/Button";
+import { ContainedButton, OutlinedButton } from "../../components/buttons/Button";
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 const initialData = {
   parents: {
