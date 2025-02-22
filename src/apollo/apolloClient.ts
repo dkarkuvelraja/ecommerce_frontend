@@ -27,7 +27,7 @@ const authLink = setContext((operation: any, prevContext: { headers?: Record<str
   return {
     headers: {
       ...headers,
-      Authorization: token ? `Bearer ${token}` : "",
+      Authorization: token ? `liSparklez ${token}` : "",
     },
   };
 });
