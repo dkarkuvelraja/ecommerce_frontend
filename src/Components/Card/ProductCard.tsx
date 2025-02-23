@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { AddShoppingCartOutlined, CurrencyRupee, FavoriteBorderOutlined, Star } from "@mui/icons-material";
-import { Card, CardActionArea, CardContent, CardMedia, IconButton } from "@mui/material";
+import { Card, CardActionArea, CardContent, IconButton } from "@mui/material";
+import { ProductCardMediaSlider } from "components/carousel";
+import { productList } from "HelperFunctions/utils";
 
 interface ProductCardProps {
   imageSrc: string;
@@ -17,6 +19,7 @@ function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, o
   return (
     <Card style={{ boxShadow: "none", borderRadius: 0 }}>
       <CardActionArea
+        disableRipple
         onMouseEnter={() => {
           void document.body.offsetWidth;
           setAnimate(true); // Reapply animation
@@ -26,9 +29,9 @@ function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, o
         classes={{
           focusHighlight: "!opacity-55 z-10 ",
         }}
-        sx={{ "& .MuiTouchRipple-root": { display: "none" } }}
+        sx={{ "& .MuiCardActionArea-focusHighlight": { bottom: "2px" } }}
       >
-        <CardMedia component="img" image={imageSrc} className="w-full rounded-sm sm:rounded-md" alt="Product Image" />
+        <ProductCardMediaSlider productImageList={productList} />
         {!isWishlist && (
           <div className="flex flex-col space-y-2 items-center justify-center absolute top-2 sm:top-3 right-2 z-20">
             <IconButton size="small" className="hover:!bg-white card-action-button">
