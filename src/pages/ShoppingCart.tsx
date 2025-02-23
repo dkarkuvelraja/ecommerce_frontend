@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, CardMedia, Container } from "@mui/material";
 import SectionHeader from "Navigation/Header/SectionHeader";
 import { useNavigate } from "react-router-dom";
-import { OutlinedButton } from "@components/Buttons/Button";
+import { OutlinedButton } from "../components/Buttons/Button";
 import InstructSection from "components/InstructSection";
 import { productList } from "HelperFunctions/utils";
 import { CurrencyRupee } from "@mui/icons-material";
