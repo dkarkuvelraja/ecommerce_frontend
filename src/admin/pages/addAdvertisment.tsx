@@ -12,7 +12,7 @@ import { GET_ALL_ADS } from "apollo/query";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import LoaderHorse from "../../components/loaderHorse";
+import LoaderHorse from "../../Components/loaderHorse";
 import TextInputComponent from "admin/fieldInputs/TextInput";
 import { errorToast, sucessToast } from "HelperFunctions/utils";
 

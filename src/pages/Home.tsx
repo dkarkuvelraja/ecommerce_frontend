@@ -2,14 +2,14 @@ import { Box, Container } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./home.css";
 import SectionHeader from "../Navigation/Header/SectionHeader";
-import { ProductCardSlider, RatingsSlider } from "../components/carousel";
-import { LargeButtonArrow } from "../components/Buttons/Button";
+import { ProductCardSlider, RatingsSlider } from "../Components/carousel";
+import { LargeButtonArrow } from "../Components/Buttons/Button";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { newArrivalList, productList, saleList, sellingList } from "../HelperFunctions/utils";
 import { bannerImg, enthiCollection, festivalImg } from "config/property/image-property";
-import InstructSection from "../components/InstructSection";
+import InstructSection from "../Components/InstructSection";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_HOMEPAGEDATA } from "apollo/query";
 

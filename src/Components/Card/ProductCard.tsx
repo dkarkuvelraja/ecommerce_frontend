@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AddShoppingCartOutlined, CurrencyRupee, FavoriteBorderOutlined, Star } from "@mui/icons-material";
 import { Card, CardActionArea, CardContent, IconButton } from "@mui/material";
-import { ProductCardMediaSlider } from "components/carousel";
+import { ProductCardMediaSlider } from "Components/carousel";
 import { productList } from "HelperFunctions/utils";
 
 interface ProductCardProps {

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 // components
 import { Box, Checkbox, Chip, Container, Divider, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
-import ProductCard from "../components/Card/ProductCard";
+import ProductCard from "../Components/Card/ProductCard";
 // styles
 import "./products.css";
 import { productList } from "HelperFunctions/utils";
-import InstructSection from "../components/InstructSection";
+import InstructSection from "../Components/InstructSection";
 
 export default function Products() {
   const [minPrice, setMinPrice] = useState(10000);

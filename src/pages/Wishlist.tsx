@@ -1,9 +1,9 @@
 import React from 'react'
 import { Container } from '@mui/material'
-import InstructSection from '../components/InstructSection'
-import { OutlinedButton } from '../components/Buttons/Button'
+import InstructSection from '../Components/InstructSection'
+import { OutlinedButton } from '../Components/Buttons/Button'
 import { useNavigate } from 'react-router-dom'
-import ProductCard from '../components/Card/ProductCard'
+import ProductCard from '../Components/Card/ProductCard'
 import { productList } from 'HelperFunctions/utils'
 import SectionHeader from '../Navigation/Header/SectionHeader'
 

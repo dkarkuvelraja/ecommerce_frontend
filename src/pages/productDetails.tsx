@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 // components
 import { Box, Container, Divider } from "@mui/material";
 import SectionHeader from "../Navigation/Header/SectionHeader";
-import ProductCard from "../components/Card/ProductCard";
+import ProductCard from "../Components/Card/ProductCard";
 // styles
 import "./products.css";
 // images
-import { ContainedButton, LargeButtonArrow, OutlinedButton } from "../components/Buttons/Button";
+import { ContainedButton, LargeButtonArrow, OutlinedButton } from "../Components/Buttons/Button";
 import { productList } from "../HelperFunctions/utils";
-import { InputNumber } from "../components/input/InputRange";
+import { InputNumber } from "../Components/input/InputRange";
 import { GET_PRODUCT_BY_ID } from "apollo/query";
 import { useQuery } from "@apollo/client";
-import InstructSection from "../components/InstructSection";
+import InstructSection from "../Components/InstructSection";
 import { s3ImgUrl } from "HelperFunctions/basicHelpers";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";

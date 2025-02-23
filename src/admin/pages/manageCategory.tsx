@@ -7,14 +7,14 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_CATEGORY, DELETE_CATEGORY, UPDATE_CATEGORY } from "../../apollo/mutation";
 import { GET_ALL_CATEGORIES } from "../../apollo/query";
-import LoaderHorse from "../../components/loaderHorse";
+import LoaderHorse from "../../Components/loaderHorse";
 import { toast } from "react-toastify";
 import { validation } from "HelperFunctions/validation";
 import { isValid, s3ImgUrl } from "HelperFunctions/basicHelpers";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 // components
 import { SectionHeader, Header3 } from "admin/Navigation/Header/SectionHeader";
-import { ContainedButton, OutlinedButton } from "../../components/Buttons/Button";
+import { ContainedButton, OutlinedButton } from "../../Components/Buttons/Button";
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 const initialData = {
   parents: {

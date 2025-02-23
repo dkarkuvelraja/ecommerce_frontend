@@ -18,7 +18,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ChromePicker, ColorResult } from "react-color";
 import { SectionHeader } from "admin/Navigation/Header/SectionHeader";
 import { ToggleField } from "admin/fieldInputs/toggleField";
-import LoaderHorse from "components/loaderHorse";
+import LoaderHorse from "Components/loaderHorse";
 import { errorToast, sucessToast } from "HelperFunctions/utils";
 
 export default function AddListing() {
