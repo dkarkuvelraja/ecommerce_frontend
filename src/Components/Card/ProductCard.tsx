@@ -3,7 +3,7 @@ import { AddShoppingCartOutlined, CurrencyRupee, FavoriteBorderOutlined, Star } 
 import { Card, CardActionArea, CardContent, IconButton } from "@mui/material";
 import { ProductCardMediaSlider } from "Components/carousel";
 import { productList } from "HelperFunctions/utils";
-
+import { useNavigate } from "react-router-dom";
 interface ProductCardProps {
   imageSrc: string;
   produtName: string;
@@ -12,12 +12,18 @@ interface ProductCardProps {
   actualprice: any;
   originalPrice: any;
   isWishlist?: boolean;
+  id?: string
 }
 
-function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, originalPrice, isWishlist = false }: ProductCardProps) {
+function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, originalPrice, isWishlist = false,id }: ProductCardProps) {
   const [animate, setAnimate] = useState(false);
+  const navigate = useNavigate()
+  const handleRoute = () => {
+    console.log("sssssssssssssssssssss");
+    navigate(`/productDetails/${id}`)
+  }
   return (
-    <Card style={{ boxShadow: "none", borderRadius: 0 }}>
+    <Card style={{ boxShadow: "none", borderRadius: 0 }} >
       <CardActionArea
         disableRipple
         onMouseEnter={() => {
@@ -31,7 +37,7 @@ function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, o
         }}
         sx={{ "& .MuiCardActionArea-focusHighlight": { bottom: "2px" } }}
       >
-        <ProductCardMediaSlider productImageList={imageSrc} />
+        <ProductCardMediaSlider productImageList={!id ?  productList : imageSrc} />
         {!isWishlist && (
           <div className="flex flex-col space-y-2 items-center justify-center absolute top-2 sm:top-3 right-2 z-20">
             <IconButton size="small" className="hover:!bg-white card-action-button">
@@ -43,7 +49,7 @@ function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, o
           </div>
         )}
       </CardActionArea>
-      <CardContent className="text-xs sm:text-sm space-y-0.5 sm:space-y-1 mt-1 sm:mt-1.5" sx={{ "&.MuiCardContent-root": { padding: "6px", backgroundColor: "transparent" } }}>
+      <CardContent className="text-xs sm:text-sm space-y-0.5 sm:space-y-1 mt-1 sm:mt-1.5 cursor-pointer" sx={{ "&.MuiCardContent-root": { padding: "6px", backgroundColor: "transparent" } }}  onClick = {handleRoute}>
         <div className="text-xs sm:text-sm">{produtName}</div>
         <div className="flex justify-between items-center">
           <div className="flex space-x-1 items-center">

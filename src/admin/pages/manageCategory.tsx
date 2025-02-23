@@ -159,7 +159,8 @@ export default function ManageCategory() {
     console.log("formDataaa",formData,newImage);
     const valid = validation("manageCategory", formData);
     if( isEdit && !newImage){
-      formData.image = null
+      delete formData.image
+      formData.isNewImage = false
     }
     setErrors(valid);
     if (isValid(valid)) {

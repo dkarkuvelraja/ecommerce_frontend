@@ -71,7 +71,7 @@ export const ProductCardSlider = ({ products }: SliderProps) => {
       <Slider {...settings}>
         {products?.map((item: any) => (
           <div className="p-3">
-            <ProductCard imageSrc={item.image} produtName={item.title} rating={4.3} ratingCount={470} actualprice={item?.size_and_price[0]?.display_price} originalPrice={item?.size_and_price[0]?.price} />
+            <ProductCard imageSrc={item.image} produtName={item.title} rating={4.3} ratingCount={470} actualprice={item?.size_and_price[0]?.display_price} originalPrice={item?.size_and_price[0]?.price} id ={item?.id} />
           </div>
         ))}
       </Slider>
@@ -159,7 +159,7 @@ export const ProductCardMediaSlider = ({ productImageList }: { productImageList:
     <div className="slider-container slider-product-image-list">
       <Slider {...settings}>
         {productImageList?.map((item: any) => (
-          <CardMedia component="img" image={s3ImgUrl+item} className="w-full rounded-sm sm:rounded-md" alt="Product Image" />
+          <CardMedia component="img" image={item?.src ? item.src : s3ImgUrl+item} className="w-full rounded-sm sm:rounded-md" alt="Product Image" />
         ))}
       </Slider>
     </div>
