@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./slider.css";
 import RatingCard from "../card/RatingCard";
 import { CardMedia } from "@mui/material";
+import { s3ImgUrl } from "HelperFunctions/basicHelpers";
 
 interface SliderProps {
   products: any;
@@ -68,9 +69,9 @@ export const ProductCardSlider = ({ products }: SliderProps) => {
   return (
     <div className="slider-container">
       <Slider {...settings}>
-        {products.map((item: any) => (
+        {products?.map((item: any) => (
           <div className="p-3">
-            <ProductCard imageSrc={item.src} produtName={"Slim Fit T-Shirt"} rating={4.3} ratingCount={470} actualprice={500} originalPrice={700} />
+            <ProductCard imageSrc={item.image} produtName={item.title} rating={4.3} ratingCount={470} actualprice={item?.size_and_price[0]?.display_price} originalPrice={item?.size_and_price[0]?.price} />
           </div>
         ))}
       </Slider>
@@ -157,8 +158,8 @@ export const ProductCardMediaSlider = ({ productImageList }: { productImageList:
   return (
     <div className="slider-container slider-product-image-list">
       <Slider {...settings}>
-        {productImageList.map((item: any) => (
-          <CardMedia component="img" image={item?.src} className="w-full rounded-sm sm:rounded-md" alt="Product Image" />
+        {productImageList?.map((item: any) => (
+          <CardMedia component="img" image={s3ImgUrl+item} className="w-full rounded-sm sm:rounded-md" alt="Product Image" />
         ))}
       </Slider>
     </div>

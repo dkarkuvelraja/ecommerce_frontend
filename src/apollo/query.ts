@@ -128,3 +128,53 @@ query GetAllUserAdminTable($orderBy: SortInput, $limit: Int, $skip: Int) {
     count
   }
 }`
+
+export const GET_ALL_HOMEPAGEDATA = gql`
+query GetHomePageData {
+  getHomePageData {
+    status
+    result
+    responce {
+      clearance_sale {
+        id
+        title
+        size_and_price {
+          size
+          price
+          display_price
+        }
+        image
+      }
+      explore_products {
+        id
+        title
+        size_and_price {
+          size
+          price
+          display_price
+        }
+        image
+      }
+      new_arrivals {
+        id
+        title
+        size_and_price {
+          size
+          price
+          display_price
+        }
+        image
+      }
+      top_selling_products {
+        id
+        title
+        size_and_price {
+          size
+          price
+          display_price
+        }
+        image
+      }
+    }
+  }
+}`

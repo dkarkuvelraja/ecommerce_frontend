@@ -31,7 +31,7 @@ function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, o
         }}
         sx={{ "& .MuiCardActionArea-focusHighlight": { bottom: "2px" } }}
       >
-        <ProductCardMediaSlider productImageList={productList} />
+        <ProductCardMediaSlider productImageList={imageSrc} />
         {!isWishlist && (
           <div className="flex flex-col space-y-2 items-center justify-center absolute top-2 sm:top-3 right-2 z-20">
             <IconButton size="small" className="hover:!bg-white card-action-button">

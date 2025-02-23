@@ -79,3 +79,11 @@ mutation EditAd($data: EditAdInput!) {
     status
   }
 }`
+
+export const DELETE_PRODUCT = gql`
+mutation DeleteProduct($deleteProductId: ID!) {
+  deleteProduct(id: $deleteProductId) {
+    status
+    result
+  }
+}`

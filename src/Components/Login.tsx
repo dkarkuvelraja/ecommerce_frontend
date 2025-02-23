@@ -95,7 +95,6 @@ export default function Login({ onClose }: loginProps) {
       const errors = validation("signUp", signupData)
       setSignUpErrors(errors)
       if (isValid(errors)) {
-        console.log("Object.keys(errors).length > 0", Object.keys(errors))
         // const data = formData
         try {
           setLogin(true);

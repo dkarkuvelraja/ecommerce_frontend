@@ -47,6 +47,9 @@ export default function ManageListings() {
     variables,
   });
   useEffect(() => {
+    refetch();
+  },[])
+  useEffect(() => {
     if (data?.getAllProductAdminTable) {
       setRows(data.getAllProductAdminTable.responce);
       setTotalCount(data.getAllProductAdminTable.count);

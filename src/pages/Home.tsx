@@ -1,5 +1,5 @@
 import { Box, Container } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./home.css";
 import SectionHeader from "../Navigation/Header/SectionHeader";
 import { ProductCardSlider, RatingsSlider } from "../components/carousel";
@@ -10,8 +10,17 @@ import "slick-carousel/slick/slick-theme.css";
 import { newArrivalList, productList, saleList, sellingList } from "../HelperFunctions/utils";
 import { bannerImg, enthiCollection, festivalImg } from "config/property/image-property";
 import InstructSection from "../components/InstructSection";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_HOMEPAGEDATA } from "apollo/query";
 
 export default function Home() {
+  const {data} = useQuery(GET_ALL_HOMEPAGEDATA)
+  const [homePageData,setHomePageData] = useState<any>()
+  useEffect(() => {
+if(data){
+  setHomePageData(data.getHomePageData.responce)
+}
+  },[data])
   const settings = {
     dots: true,
     arrows: false,
@@ -41,18 +50,18 @@ export default function Home() {
       <Container maxWidth="xl">
         <div className="section">
           <SectionHeader classStyles="mb-2 md:mb-4" title="Explore Products" />
-          <ProductCardSlider products={productList} />
+          <ProductCardSlider products={homePageData?.explore_products} />
         </div>
         <div className="section">
           <SectionHeader classStyles="mb-4" title="New Arrivals" />
-          <ProductCardSlider products={newArrivalList} />
+          <ProductCardSlider products={homePageData?.new_arrivals} />
           <div className="viewMore">
             <LargeButtonArrow />
           </div>
         </div>
         <div className="section">
           <SectionHeader classStyles="mb-4" title="Top Selling Products" />
-          <ProductCardSlider products={sellingList} />
+          <ProductCardSlider products={homePageData?.top_selling_products} />
           <div className="viewMore">
             <LargeButtonArrow />
           </div>
@@ -67,7 +76,7 @@ export default function Home() {
       <Container maxWidth="xl">
         <div className="section">
           <SectionHeader classStyles="mb-4" title="Clearance sale" />
-          <ProductCardSlider products={saleList} />
+          <ProductCardSlider products={homePageData?.clearance_sale} />
         </div>
       </Container>
       <Box className="my-16 relative h-40 md:h-96">

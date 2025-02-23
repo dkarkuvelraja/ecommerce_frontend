@@ -156,7 +156,11 @@ export default function ManageCategory() {
   const submit = async () => {
     // delete formData.parent_id;
     // const formDataa = {...formData}
+    console.log("formDataaa",formData,newImage);
     const valid = validation("manageCategory", formData);
+    if( isEdit && !newImage){
+      formData.image = null
+    }
     setErrors(valid);
     if (isValid(valid)) {
       try {

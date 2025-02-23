@@ -7,7 +7,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { GET_ALL_CATEGORIES, GET_PRODUCT_BY_ID } from "apollo/query";
 import { GridContextProvider, GridDropZone, GridItem, swap } from "react-grid-dnd";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { CREATE_PRODUCT, EDIT_CATEGORY } from "apollo/mutation";
+import { CREATE_PRODUCT, EDIT_CATEGORY,DELETE_PRODUCT } from "apollo/mutation";
 import { validation } from "HelperFunctions/validation";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
@@ -19,6 +19,7 @@ import { ChromePicker, ColorResult } from "react-color";
 import { SectionHeader } from "admin/Navigation/Header/SectionHeader";
 import { ToggleField } from "admin/fieldInputs/toggleField";
 import LoaderHorse from "components/loaderHorse";
+import { errorToast, sucessToast } from "HelperFunctions/utils";
 
 export default function AddListing() {
   const [inputs, setInputs] = useState<any>([
@@ -36,6 +37,7 @@ export default function AddListing() {
   const [deletedImages, setDeletedImages] = useState<any>([]);
   const [createProduct] = useMutation(CREATE_PRODUCT);
   const [editProduct] = useMutation(EDIT_CATEGORY);
+  const [deleteProduct] = useMutation(DELETE_PRODUCT);
   const [items, setItems] = React.useState([1, 2, 3, 4]);
   const options: Array<any> = ["Electronics", "Clothing", "Accessories"];
   const [parentOptions, setParentOptions] = useState<any>([]);
@@ -325,6 +327,24 @@ export default function AddListing() {
       toast.error("An error occurred while creating the product.");
     }
   };
+  const deleteBtn = async () => {
+    try{
+      const deleteProductData = await deleteProduct({
+        variables: {
+          deleteProductId : id,
+        },
+      })
+      if(deleteProductData.data.deleteProduct.status === 200){
+        sucessToast(deleteProductData.data.deleteProduct.result)
+        navigate("/admin/manageListings")
+      }else{
+        errorToast(deleteProductData.data.deleteProduct.result)
+      }
+    }catch{
+      errorToast("Something went wrong!")
+
+    }
+  }
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
 
@@ -592,7 +612,7 @@ export default function AddListing() {
         style={{ marginBottom: "20px" }}
       /> */}
                     <ImageInput onClick={handleDivClick}>
-                      <input type="file" name="image" onChange={handleImageChange} placeholder="Image" style={{ display: "none" }} ref={fileInputRef} />
+                      <input type="file" name="image" onChange={handleImageChange} multiple placeholder="Image" style={{ display: "none" }} ref={fileInputRef} />
                       <p>Image</p>
                       <AddOutlinedIcon className="icon" />
                     </ImageInput>
@@ -824,6 +844,11 @@ export default function AddListing() {
                 <Button saveBtn onClick={submit}>
                   Save
                 </Button>
+                {id &&
+                <Button cancelBtn onClick={deleteBtn}>
+                  Delete
+                </Button>
+                }
                 </Grid2>
 
       )}
