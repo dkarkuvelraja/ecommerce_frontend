@@ -31,11 +31,10 @@ function ProductCard({ imageSrc, produtName, rating, ratingCount, actualprice, o
           setAnimate(true); // Reapply animation
         }}
         onMouseLeave={() => setAnimate(false)}
-        className="relative shadow-sm !rounded-sm sm:!rounded-md cart-action-area"
+        className="relative shadow-sm !rounded-sm sm:!rounded-md cart-action-area h-60"
         classes={{
           focusHighlight: "!opacity-55 z-10 ",
         }}
-        sx={{ "& .MuiCardActionArea-focusHighlight": { bottom: "2px" } }}
       >
         <ProductCardMediaSlider productImageList={!id ?  productList : imageSrc} />
         {!isWishlist && (

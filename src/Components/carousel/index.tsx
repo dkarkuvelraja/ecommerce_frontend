@@ -156,10 +156,10 @@ export const ProductCardMediaSlider = ({ productImageList }: { productImageList:
   };
 
   return (
-    <div className="slider-container slider-product-image-list">
-      <Slider {...settings}>
+    <div className="slider-container slider-product-image-list h-full">
+      <Slider {...settings} className="max-h-full">
         {productImageList?.map((item: any) => (
-          <CardMedia component="img" image={item?.src ? item.src : s3ImgUrl+item} className="w-full rounded-sm sm:rounded-md" alt="Product Image" />
+          <img src={item?.src ? item.src : s3ImgUrl+item} className="h-full rounded-sm sm:rounded-md object-cover object-top" alt="ProductImage" />
         ))}
       </Slider>
     </div>

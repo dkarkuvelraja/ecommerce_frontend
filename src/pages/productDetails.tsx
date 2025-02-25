@@ -8,7 +8,7 @@ import "./products.css";
 // images
 import { ContainedButton, LargeButtonArrow, OutlinedButton } from "../Components/Buttons/Button";
 import { productList } from "../HelperFunctions/utils";
-import { InputNumber } from "../Components/input/InputRange";
+import { InputNumber } from "../Components/Input/InputRange";
 import { GET_PRODUCT_BY_ID } from "apollo/query";
 import { useQuery } from "@apollo/client";
 import InstructSection from "../Components/InstructSection";

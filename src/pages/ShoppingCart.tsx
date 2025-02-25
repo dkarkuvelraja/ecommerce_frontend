@@ -6,7 +6,7 @@ import { OutlinedButton } from "../Components/Buttons/Button";
 import InstructSection from "Components/InstructSection";
 import { productList } from "HelperFunctions/utils";
 import { CurrencyRupee } from "@mui/icons-material";
-import { InputNumber } from "Components/input/InputRange";
+import { InputNumber } from "Components/Input/InputRange";
 
 function ShoppingCart() {
   const navigate = useNavigate();

@@ -26,6 +26,10 @@
     @apply w-7 h-7 bg-white rounded-full drop-shadow-md ring ring-1 ring-slate-200 absolute flex items-center justify-center;
 }
 
+.slider-product-image-list .slick-list, .slider-product-image-list .slick-slide, .slider-product-image-list .slick-slide div:first-child{
+    @apply h-60
+}
+
 .slider-product-image-list .slick-dots{
     bottom: 9px !important;
     left: -4px;

@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { Dialog, DialogContent, DialogTitle, Divider, IconButton } from "@mui/material";
 
 import LoginImg from "../assets/images/loginImg.png";
-import { TextFieldWithLabel } from "./input/TextField";
+import { TextFieldWithLabel } from "./Input/TextField";
 import { OutlinedButton } from "./Buttons/Button";
 import { X } from "lucide-react";
 import { loginSuccess } from "HelperFunctions/message";

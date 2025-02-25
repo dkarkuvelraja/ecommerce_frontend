@@ -184,7 +184,7 @@ function Header(props: Props) {
           <Container maxWidth="xl">
             <div className="p-2 text-xs md:text-sm overflow-scroll md:overflow-visible">
               <List className="flex justify-center space-x-3 md:space-x-20 w-min md:w-full !p-0">
-                <ListItemButton className="!w-fit !flex-none !p-0" onClick={() => navigate("/")}>
+                <ListItemButton disableRipple className="!w-fit !flex-none !p-0 !bg-transparent" onClick={() => navigate("/")}>
                   <ListItemText classes={{ primary: "w-fit !text-sm", root: "!flex-initial !min-w-fit !m-0" }} primary="Home" />
                 </ListItemButton>
                 {categories?.map((item: any, index) => {
