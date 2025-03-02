@@ -178,3 +178,19 @@ query GetHomePageData {
     }
   }
 }`
+
+export const FETCH_ACTIVE_ADS = gql`
+query FetchActiveAds {
+  fetchActiveAds {
+    status
+    result
+    response {
+      _id
+      imageUrl
+      url
+      status
+      createdAt
+      updatedAt
+    }
+  }
+}`

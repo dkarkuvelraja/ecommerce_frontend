@@ -3,10 +3,10 @@ import { Card, CardContent, CardMedia, Container } from "@mui/material";
 import SectionHeader from "Navigation/Header/SectionHeader";
 import { useNavigate } from "react-router-dom";
 import { OutlinedButton } from "../Components/Buttons/Button";
-import InstructSection from "Components/InstructSection";
+import InstructSection from "../Components/InstructSection";
 import { productList } from "HelperFunctions/utils";
 import { CurrencyRupee } from "@mui/icons-material";
-import { InputNumber } from "Components/Input/InputRange";
+import { InputNumber } from "../Components/input/InputRange"
 
 function ShoppingCart() {
   const navigate = useNavigate();

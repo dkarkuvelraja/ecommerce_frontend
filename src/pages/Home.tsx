@@ -11,16 +11,22 @@ import { newArrivalList, productList, saleList, sellingList } from "../HelperFun
 import { bannerImg, enthiCollection, festivalImg } from "config/property/image-property";
 import InstructSection from "../Components/InstructSection";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_HOMEPAGEDATA } from "apollo/query";
+import { GET_ALL_HOMEPAGEDATA,FETCH_ACTIVE_ADS } from "apollo/query";
 
 export default function Home() {
   const {data} = useQuery(GET_ALL_HOMEPAGEDATA)
+  const {data : adData} = useQuery(FETCH_ACTIVE_ADS)
   const [homePageData,setHomePageData] = useState<any>()
   useEffect(() => {
 if(data){
   setHomePageData(data.getHomePageData.responce)
 }
   },[data])
+  useEffect(() => {
+    if(adData){
+      console.log("adDataadData",adData);
+    }
+  })
   const settings = {
     dots: true,
     arrows: false,
